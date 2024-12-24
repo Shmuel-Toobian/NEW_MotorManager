@@ -1,0 +1,92 @@
+.carItem {
+  display: flex;
+  align-items: center;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s, height 0.3s ease;
+  cursor: pointer;
+  overflow: hidden;
+  height: 200px;
+  width: 250px;
+}
+
+
+.carItem:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.carItem img {
+  width: 120px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-right: 16px;
+}
+
+.carItem div {
+  flex: 1;
+}
+
+.carItem h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.carItem p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.carItem.expanded {
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.delete,
+.edit {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  margin-right: 10px;
+  transition: all 0.3s ease;
+}
+
+.delete {
+  background-color: red;
+}
+
+.delete:hover {
+  background-color: black;
+}
+
+.edit:hover {
+  background-color: #0056b3;
+}
+
+.delete:active,
+.edit:active {
+  transform: scale(0.98);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+  width: 100%;
+}

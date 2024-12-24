@@ -1,0 +1,68 @@
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, black, #15597c);
+  height: 604px; 
+  margin: 0;
+  padding: 0;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 500px; /* גודל מקסימלי גדול יותר */
+  padding: 30px; /* ריווח פנימי גדול יותר */
+  background-color: #ffffff;
+  border-radius: 10px; /* רדיוס מעט גדול יותר */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* צל עמוק יותר */
+  width: 300px;
+}
+
+.loginHeading {
+  margin-bottom: 25px;
+  color: #333;
+}
+
+.loginInput {
+  width: 100%;
+  padding: 14px; /* ריווח פנימי גדול יותר */
+  margin-bottom: 20px; /* מרווח בין האלמנטים */
+  border: 1px solid #ccc;
+  border-radius: 10px; /* רדיוס מעט גדול יותר */
+  font-size: 18px; /* טקסט גדול יותר */
+  color: #333;
+  outline: none;
+}
+
+.loginInput:focus {
+  border-color: blue;
+  box-shadow: 0 0 8px rgba(76, 175, 80, 0.4); /* אפקט פוקוס גדול יותר */
+}
+
+.loginButton {
+  width: 100%;
+  padding: 14px; /* ריווח פנימי גדול יותר */
+  background-color: #4d90fe;
+  color: white;
+  border: none;
+  border-radius: 10px; /* רדיוס מעט גדול יותר */
+  font-size: 18px; /* טקסט גדול יותר */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.loginButton:hover {
+  background-color: #357ae8;
+}
+
+.loginButton:active {
+  background-color: #3367d6;
+}
+
+.loginError {
+  color: #e74c3c;
+  font-size: 16px; /* טקסט גדול יותר */
+  margin-bottom: 20px;
+}

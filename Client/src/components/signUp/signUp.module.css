@@ -1,0 +1,60 @@
+.signUp {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, black, #15597c);
+  height: 604px; 
+  margin: 0; /* ביטול מרווחים של body */
+  padding: 0;
+}
+
+.signupForm {
+  max-width: 400px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.signupTitle {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.signupError {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.signupInput {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.signupInput:focus {
+  outline: none;
+  border-color: green;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+}
+
+.signupButton {
+  width: 100%;
+  padding: 12px;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.signupButton:hover {
+  background-color: #45a049;
+}

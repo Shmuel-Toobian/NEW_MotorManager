@@ -1,0 +1,36 @@
+.main{
+  text-align: center;
+}
+.form{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30%;
+
+}
+.inp{
+  display: flex;
+  flex-direction: column;
+}
+form{
+  
+  border: 2px solid black;
+  width: 300px;
+  height: 300px;
+  border-radius: 20px;
+  margin: 0 auto;
+  margin-top: 120px;
+  padding: 40px;
+
+}
+label{
+  font-size: small;
+  margin-left: 10px;
+  padding-top: 15px;
+
+}
+input{
+  width: 200px;
+  margin-left: 20px;
+ 
+}

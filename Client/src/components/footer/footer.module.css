@@ -1,0 +1,52 @@
+.footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background: linear-gradient(135deg, #2b5876, #4e4376);
+    border-top: 4px solid white;
+}
+
+.title {
+    color: white;
+    cursor: none;
+}
+
+.icons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.icon {
+    font-size: 30px;
+    color: white;
+    margin: 0 15px;
+    cursor: pointer;
+    position: relative;
+    left: 0px;
+    transition: color 0.7s ease;
+}
+
+.icon:hover {
+    transform: scale(1.2);
+}
+
+.whatsapp:hover {
+    color: green;
+}
+
+.youtube:hover {
+    color: red;
+}
+
+.facebook:hover {
+    color: blue;
+}
+
+.instagram:hover {
+    color: purple;
+}
+
+.twitter:hover {
+    color: black;
+}

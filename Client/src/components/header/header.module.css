@@ -1,0 +1,87 @@
+.header {
+  width: 100%;
+  padding: 20px;
+  background: linear-gradient(135deg, #2b5876, #4e4376);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+}
+
+.navs {
+  display: flex;
+  gap: 30px;
+  margin-right: 30px;
+}
+
+.navItem {
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.navItem:hover {
+  color: #00d4ff;
+  text-decoration: underline;
+}
+
+.navItem::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: #00d4ff;
+  transition: width 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.navItem:hover::after {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 15px;
+  }
+
+  .navs {
+    gap: 15px;
+  }
+
+  .navItem {
+    font-size: 16px;
+  }
+}
+
+.navOut::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: red;
+  transition: width 0.3s ease;
+  transform: translateX(-50%);
+}
+.navOut:hover {
+  color: brown;
+  text-decoration: underline;
+}
+.navOut {
+  color: red;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.navOut:hover::after {
+  width: 100%;
+}

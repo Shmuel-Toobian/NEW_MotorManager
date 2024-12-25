@@ -1,117 +1,109 @@
- .container {
-   display: flex;
-   flex-direction: column;
-   padding: 50px;
-   background: linear-gradient(135deg, black, #15597c);
-   color: white;
-   min-height: 100vh;
- }
- .miniContainer{
+.container {
   display: flex;
   flex-direction: column;
+  padding: 50px;
+  background: linear-gradient(135deg, black, #15597c);
+  color: white;
+  min-height: 100vh;
+}
+
+.form {
+  width: 500px;
+  /* הגברת רוחב הטופס */
+  padding: 40px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  color: white;
+  text-align: center;
+  min-height: 600px;
+  /* הגדרת גובה מינימלי כדי להכיל את כל התוכן */
+}
+
+h1 {
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+.searchContainer {
+  display: flex;
   align-items: center;
- }
+  margin-bottom: 30px;
+}
+
+.input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #fff;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
 
 
- .form {
-   width: 500px;
-   /* הגברת רוחב הטופס */
-   padding: 40px;
-   background-color: rgba(255, 255, 255, 0.2);
-   border-radius: 15px;
-   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-   backdrop-filter: blur(10px);
-   color: white;
-   text-align: center;
-   min-height: 600px;
-   /* הגדרת גובה מינימלי כדי להכיל את כל התוכן */
- }
+.searchIcon {
+  color: white;
+  font-size: 20px;
+  margin-left: 10px;
+  cursor: pointer;
+}
 
- h1 {
-   font-size: 30px;
-   margin-bottom: 20px;
- }
+.addButton {
+  padding: 10px 20px;
+  background-color: #00d4ff;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
 
- .searchContainer {
-   display: flex;
-   align-items: center;
-   margin-bottom: 30px;
- }
+.addButton:hover {
+  background-color: #00b4d8;
+}
 
- .input {
-   padding: 10px;
-   border-radius: 5px;
-   border: 1px solid #fff;
-   background-color: rgba(255, 255, 255, 0.2);
-   color: white;
- }
+.form {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+}
 
+.inputGroup {
+  margin-bottom: 20px;
+}
 
- .searchIcon {
-   color: white;
-   font-size: 20px;
-   margin-left: 10px;
-   cursor: pointer;
- }
+.checkboxGroup {
+  margin-bottom: 20px;
+}
 
- .addButton {
-   padding: 10px 20px;
-   background-color: #00d4ff;
-   border: none;
-   color: white;
-   font-size: 16px;
-   cursor: pointer;
- }
+.submitButton {
+  padding: 10px 20px;
+  background-color: #00d4ff;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
 
- .addButton:hover {
-   background-color: #00b4d8;
- }
+.submitButton:hover {
+  background-color: #00b4d8;
+}
 
- .form {
-   background-color: rgba(255, 255, 255, 0.2);
-   padding: 20px;
-   border-radius: 10px;
-   width: 400px;
- }
+.error {
+  margin-top: 20px;
+  color: #ff4d4f;
+  font-size: 1rem;
+}
 
- .inputGroup {
-   margin-bottom: 20px;
- }
+.carsList {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 30px; 
+  margin-left: 100px;
+}
 
- .checkboxGroup {
-   margin-bottom: 20px;
- }
-
- .submitButton {
-   padding: 10px 20px;
-   background-color: #00d4ff;
-   border: none;
-   color: white;
-   font-size: 16px;
-   cursor: pointer;
- }
-
- .submitButton:hover {
-   background-color: #00b4d8;
- }
-
- .error {
-   margin-top: 20px;
-   color: #ff4d4f;
-   font-size: 1rem;
- }
-
- .carsList {
-   display: flex;
-   flex-direction: row;
-   flex-wrap: wrap;
-   align-items: start;
-   justify-content: space-between;
-   gap: 50px;
-   margin-left: 20px;
- }
-
- .carItem {
-   min-width: 450px;
-   max-width: 450px;
- }
+.carItem {
+  flex: 0 1 calc(25% - 20px); 
+  box-sizing: border-box; 
+}

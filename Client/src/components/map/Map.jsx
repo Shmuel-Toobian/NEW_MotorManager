@@ -1,54 +1,53 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, Marker, Popup, Tooltip } from 'react-leaflet';
-import { OpenStreetMapProvider } from "leaflet-geosearch"
+import { OpenStreetMapProvider } from "leaflet-geosearch";
 import MyMarker from './MyMarker';
+import { useLocation } from 'react-router-dom';
 
 const Map = () => {
+    const { state } = useLocation();
     const [position, setPosition] = useState([32.06178114416816, 34.815025961985384]);
-    const [str, setStr] = useState("")
-    const [name , setName] = useState("")
+    const [name, setName] = useState("");
     const mapProvider = new OpenStreetMapProvider();
 
-    const myRef = useRef("null")
-
-    const locationSearch = async () => {
-        let cities = await
-            mapProvider.search({ query: str });
-
-        console.log(cities);
-        if (cities.length > 0){
-            setPosition([cities[0].y, cities[0].x])
-            setName(cities[0].label)
+    useEffect(() => {    
+            
+        if (state?.location) {
+            locationSearch(state.location);
         }
-    }
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        locationSearch();
-        myRef.current.value=""
+    }, [state]);
 
-    }
+    const locationSearch = async (query) => {
+        try {
+            console.log("Searching for location:", query);
+            const cities = await mapProvider.search({ query });
+            
+            if (cities.length > 0) {
+                console.log("Found location:", cities[0]);
+                setPosition([cities[0].y, cities[0].x]);
+                setName(cities[0].label);
+            } else {
+                console.log("No location found");
+            }
+        } catch (error) {
+            console.error("Error searching location:", error);
+        }
+    };
+
     return (
         <div className='text-center'>
-            <form onSubmit={handleSubmit} className='my-2'>
-                <input ref={myRef} onChange={(e) => setStr(e.target.value)} type="text" />
-                <button className='btn btn-info ms-2'>search</button>
-            </form>
             <MapContainer className='my-4' center={position} zoom={13} style={{
-                height: '400px', width:
-                    '100%'
+                height: '400px', width: '100%'
             }}>
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    attribution='&copy; <a
-        href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>
-        contributors'
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 />
-
-                <MyMarker pos={position} x={name}/>
-        
+                <MyMarker pos={position} x={name} />
             </MapContainer>
         </div>
-    )
+    );
 }
-export default Map
+
+export default Map;

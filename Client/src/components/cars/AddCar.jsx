@@ -5,7 +5,7 @@ import style from "./cars.module.css";
 import { useNavigate } from "react-router-dom";
 
 const AddCar = () => {
-      axios.defaults.withCredentials = true
+  axios.defaults.withCredentials = true;
 
   const navigate = useNavigate();
   const [picture, setPicture] = useState("");
@@ -18,6 +18,7 @@ const AddCar = () => {
   const [dateTest, setDateTest] = useState("");
   const [MOT, setMOT] = useState(false);
   const [dateMOT, setDateMOT] = useState("");
+  const [location, setLocation] = useState("");
 
   const handleTestChange = () => setTest((prevState) => !prevState);
   const handleMOTChange = () => setMOT((prevState) => !prevState);
@@ -33,12 +34,13 @@ const AddCar = () => {
     dateTest,
     MOT,
     dateMOT,
+    location,
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('carrrrrr', carData);
-    
+    console.log("carrrrrr", carData);
+
     try {
       const response = await axios.post("http://localhost:3000/cars", carData);
       console.log("Car added:", response.data);
@@ -115,11 +117,7 @@ const AddCar = () => {
 
         <div className={style.checkboxGroup}>
           <label>
-            <input
-              type="checkbox"
-              checked={test}
-              onChange={handleTestChange}
-            />
+            <input type="checkbox" checked={test} onChange={handleTestChange} />
             Technical Inspection Passed
           </label>
           {test && (
@@ -134,11 +132,7 @@ const AddCar = () => {
 
         <div className={style.checkboxGroup}>
           <label>
-            <input
-              type="checkbox"
-              checked={MOT}
-              onChange={handleMOTChange}
-            />
+            <input type="checkbox" checked={MOT} onChange={handleMOTChange} />
             MOT Passed
           </label>
           {MOT && (
@@ -149,6 +143,13 @@ const AddCar = () => {
               onChange={(e) => setDateMOT(e.target.value)}
             />
           )}
+
+          <input
+            className={style.input}
+            placeholder="Location"
+            type="text"
+            onChange={(e) => setLocation(e.target.value)}
+          />
         </div>
 
         <button type="submit" className={style.submitButton}>

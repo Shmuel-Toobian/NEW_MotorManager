@@ -1,9 +1,26 @@
 import React, { useState } from "react";
 import style from "./car.module.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const Car = ({ picture, typeCar, model, color, carNumber, kilometer, test, MOT, getCars }) => {
+const Car = ({
+  picture,
+  typeCar,
+  model,
+  color,
+  carNumber,
+  kilometer,
+  test,
+  MOT,
+  location,
+  dateTest,
+  dateMOT,
+  getCars,
+}) => {
+  console.log("Car props:", { location, dateTest, dateMOT });
   axios.defaults.withCredentials = true;
+
+  const navigete = useNavigate()
 
   const [isExpanded, setIsExpanded] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -15,6 +32,7 @@ const Car = ({ picture, typeCar, model, color, carNumber, kilometer, test, MOT, 
     kilometer: "",
     test: null,
     MOT: null,
+    location: ""
   });
 
   // פונקציה לשינוי הערכים
@@ -36,6 +54,7 @@ const Car = ({ picture, typeCar, model, color, carNumber, kilometer, test, MOT, 
       kilometer: updatedData.kilometer || kilometer,
       test: updatedData.test === null ? test : updatedData.test,
       MOT: updatedData.MOT === null ? MOT : updatedData.MOT,
+      location: updatedData.location || location,
     };
 
     try {
@@ -43,31 +62,53 @@ const Car = ({ picture, typeCar, model, color, carNumber, kilometer, test, MOT, 
       getCars(); // עדכון הרשימה בקומפוננטת Cars
       setIsEditing(false); // סיום מצב עריכה
     } catch (error) {
-      console.error("Error updating car:", error.response?.data || error.message);
+      console.error(
+        "Error updating car:",
+        error.response?.data || error.message
+      );
     }
   };
 
-  // פונקציה למחיקת רכב
- 
-const handleDelete = async () => {
-  try {
-    console.log("Attempting to delete car with number:", carNumber);
-    await axios.delete(`http://localhost:3000/cars/${carNumber}`);
-    getCars();
-  } catch (error) {
-    console.error("Error deleting car:", error.response?.data || error.message);
-  }
-};
 
+  const goMap = (e) => {
+    e.stopPropagation();
+    navigete("/map", { 
+      state: { 
+        location: location 
+      }
+    });
+  }
+  
+
+  // פונקציה למחיקת רכב
+
+  const handleDelete = async () => {
+    try {
+      console.log("Attempting to delete car with number:", carNumber);
+      await axios.delete(`http://localhost:3000/cars/${carNumber}`);
+      getCars();
+    } catch (error) {
+      console.error(
+        "Error deleting car:",
+        error.response?.data || error.message
+      );
+    }
+  };
 
   return (
     <div
       className={`${style.carItem} ${isExpanded ? style.expanded : ""}`}
       onClick={() => setIsExpanded(!isExpanded)}
     >
-      <img src={picture} alt={`${typeCar} ${model}`} className={style.carImage} />
+      <img
+        src={picture}
+        alt={`${typeCar} ${model}`}
+        className={style.carImage}
+      />
       <div>
-        <h3>{typeCar} - {model}</h3>
+        <h3>
+          {typeCar} - {model}
+        </h3>
         <p>Car Number: {carNumber}</p>
         {isExpanded && (
           <>
@@ -75,6 +116,9 @@ const handleDelete = async () => {
             <p>Kilometers: {kilometer}</p>
             <p>Technical Inspection: {test ? "Passed" : "Not Passed"}</p>
             <p>MOT: {MOT ? "Passed" : "Not Passed"}</p>
+            <p>Location: {location || "No location specified"}</p>
+            {dateTest && <p>Test Date: {new Date(dateTest).toLocaleDateString()}</p>}
+            {dateMOT && <p>MOT Date: {new Date(dateMOT).toLocaleDateString()}</p>}
             <button
               className={style.delete}
               onClick={(e) => {
@@ -93,6 +137,11 @@ const handleDelete = async () => {
             >
               {isEditing ? "Cancel Edit" : "Edit Car"}
             </button>
+
+                <button onClick={(e) => goMap(e)} className={style.addButton}>
+                  <i className="bi bi-geo-alt-fill"></i>
+                </button>
+
             {isEditing && (
               <form className={style.form} onClick={(e) => e.stopPropagation()}>
                 <input
@@ -129,7 +178,9 @@ const handleDelete = async () => {
                   <input
                     type="checkbox"
                     name="test"
-                    checked={updatedData.test === null ? test : updatedData.test}
+                    checked={
+                      updatedData.test === null ? test : updatedData.test
+                    }
                     onChange={handleChange}
                   />
                   Test Passed
@@ -143,6 +194,14 @@ const handleDelete = async () => {
                   />
                   MOT Passed
                 </label>
+
+                <input
+                  name="location"
+                  value={updatedData.location}
+                  onChange={handleChange}
+                  placeholder="location"
+                />
+
                 <button type="button" onClick={handleUpdate}>
                   Save
                 </button>
@@ -156,4 +215,3 @@ const handleDelete = async () => {
 };
 
 export default Car;
-

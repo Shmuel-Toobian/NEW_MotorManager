@@ -52,6 +52,10 @@ const carSchema = new mongoose.Schema({
         required: [true, 'dateMOT is requierd!']
 
     },
+    location:{
+        type: String,
+
+    }
 
 
 });

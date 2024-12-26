@@ -1,4 +1,3 @@
-
 // Cars.jsx
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom"; // עבור הניווט
@@ -52,6 +51,9 @@ const Cars = () => {
             kilometer={car.kilometer}
             test={car.test}
             MOT={car.MOT}
+            location={car.location}
+            dateTest={car.dateTest}
+            dateMOT={car.dateMOT}
             getCars={getCars}
           />
         ))}

@@ -1,0 +1,215 @@
+.addCarContainer {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+.progressBar {
+  position: relative;
+  height: 4px;
+  background: #e0e0e0;
+  margin-bottom: 3rem;
+  border-radius: 4px;
+}
+
+.progress {
+  position: absolute;
+  height: 100%;
+  background: #2196f3;
+  transition: width 0.3s ease;
+  border-radius: 4px;
+}
+
+.steps {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  width: 100%;
+  top: -10px;
+}
+
+.step {
+  width: 24px;
+  height: 24px;
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  color: #757575;
+  transition: all 0.3s ease;
+}
+
+.step.active {
+  border-color: #2196f3;
+  background: #2196f3;
+  color: white;
+}
+
+.formStep {
+  animation: fadeIn 0.5s ease;
+}
+
+.inputGroup {
+  margin-bottom: 1.5rem;
+}
+
+.formInput {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.formInput:focus {
+  border-color: #2196f3;
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+  outline: none;
+}
+
+.checkboxGroup {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: #f5f5f5;
+  border-radius: 8px;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.dateInput {
+  margin-top: 1rem;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.nextBtn, 
+.prevBtn, 
+.submitBtn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.nextBtn {
+  background: #2196f3;
+  color: white;
+  margin-left: auto;
+}
+
+.prevBtn {
+  background: #e0e0e0;
+  color: #757575;
+}
+
+.submitBtn {
+  background: #4caf50;
+  color: white;
+  margin-left: auto;
+}
+
+.nextBtn:hover, 
+.submitBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.prevBtn:hover {
+  background: #d5d5d5;
+}
+
+.imagePreview {
+  margin-top: 1rem;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.imagePreview img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.colorPreview {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-top: 0.5rem;
+  border: 2px solid #e0e0e0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .addCarContainer {
+    margin: 1rem;
+    padding: 1rem;
+  }
+
+  .buttonGroup {
+    flex-direction: column;
+  }
+
+  .nextBtn, 
+  .prevBtn, 
+  .submitBtn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Add some basic form styling */
+.addCarForm {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Add heading styles */
+.formStep h2 {
+  margin-bottom: 2rem;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+/* Add some spacing between form elements */
+.formStep {
+  margin-bottom: 2rem;
+}
+
+/* Make sure the container has a background */
+.addCarContainer {
+  background: #ffffff;
+  min-height: 500px;
+}

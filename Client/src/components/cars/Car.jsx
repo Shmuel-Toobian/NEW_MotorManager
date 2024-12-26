@@ -58,14 +58,25 @@ const Car = ({
     };
 
     try {
-      await axios.put(`http://localhost:3000/cars/${carNumber}`, finalData);
-      getCars(); // עדכון הרשימה בקומפוננטת Cars
-      setIsEditing(false); // סיום מצב עריכה
+      // קידוד מספר הרכב ב-URL
+      const encodedCarNumber = encodeURIComponent(carNumber);
+      console.log("Updating car number:", encodedCarNumber); // לבדיקה
+
+      const response = await axios.put(
+        `http://localhost:3000/cars/${encodedCarNumber}`,
+        finalData
+      );
+      
+      console.log("Update response:", response.data); // לבדיקה
+      getCars(); // עדכון הרשימה
+      setIsEditing(false);
     } catch (error) {
       console.error(
         "Error updating car:",
         error.response?.data || error.message
       );
+      // הוספת הודעת שגיאה למשתמש
+      alert("שגיאה בעדכון הרכב. אנא בדוק את הנתונים ונסה שוב.");
     }
   };
 

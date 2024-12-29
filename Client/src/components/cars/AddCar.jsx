@@ -1,14 +1,13 @@
-// AddCar.jsx
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import style from "./addCar.module.css";
 
 const AddCar = () => {
-  axios.defaults.withCredentials = true;
-  const navigate = useNavigate();
-  
-  const [currentStep, setCurrentStep] = useState(1);
+  // הגדרת state להעלאת תמונה
+  const [uploading, setUploading] = useState(false);
+
+  // הגדרת state למילוי הטופס
   const [formData, setFormData] = useState({
     picture: "",
     typeCar: "",
@@ -23,6 +22,13 @@ const AddCar = () => {
     location: ""
   });
 
+  // ניווט לדף אחר אחרי הוספת רכב
+  const navigate = useNavigate();
+
+  // שלב הנוכחי בטופס
+  const [currentStep, setCurrentStep] = useState(1);
+
+  // פונקציה לעדכון ערכים בטופס
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData(prev => ({
@@ -31,30 +37,72 @@ const AddCar = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // פונקציה להעלאת התמונה
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    setUploading(true); // סימן שההעלאה התחילה
+    const formDataImg = new FormData();
+    formDataImg.append("file", file);
+    formDataImg.append("upload_preset", "carsProject");
+
     try {
-      await axios.post("http://localhost:3000/cars", formData);
-      navigate("/cars");
+      const response = await fetch(
+        "https://api.cloudinary.com/v1_1/dcro5sucx/image/upload",
+        {
+          method: "POST",
+          body: formDataImg,
+        }
+      );
+
+      const data = await response.json();
+      console.log(data.secure_url);
+
+      // עדכון ה-URL של התמונה ב-formData
+      setFormData(prev => ({ ...prev, picture: data.secure_url }));
     } catch (error) {
-      console.error("Error adding car:", error.response?.data);
+      console.error("Error uploading image:", error);
+      alert("Error uploading image. Please try again.");
+    } finally {
+      setUploading(false); // סימן שההעלאה הסתיימה
     }
   };
 
+  // פונקציה לשליחת הנתונים
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // בדיקה אם כל השדות מלאים
+    if (!formData.typeCar || !formData.model || !formData.color || !formData.carNumber || !formData.kilometer || !formData.location) {
+      alert("All fields are required!");
+      return;
+    }
+
+    try {
+      await axios.post("http://localhost:3000/cars", formData);
+      navigate("/cars"); // ניווט לדף רכבים אחרי ההוספה
+    } catch (error) {
+      console.error("Error adding car:", error.response?.data);
+      alert("Error adding car: " + error.response?.data?.message);
+    }
+  };
+
+  // מעבר בין שלבים בטופס
   const nextStep = () => setCurrentStep(prev => prev + 1);
   const prevStep = () => setCurrentStep(prev => prev - 1);
 
   return (
     <div className={style.addCarContainer}>
       <div className={style.progressBar}>
-        <div 
-          className={style.progress} 
+        <div
+          className={style.progress}
           style={{ width: `${(currentStep / 3) * 100}%` }}
         ></div>
         <div className={style.steps}>
           {[1, 2, 3].map(step => (
-            <div 
-              key={step} 
+            <div
+              key={step}
               className={`${style.step} ${currentStep >= step ? style.active : ''}`}
             >
               {step}
@@ -64,16 +112,15 @@ const AddCar = () => {
       </div>
 
       <form onSubmit={handleSubmit} className={style.addCarForm}>
+        {/* שלב 1 - פרטי רכב בסיסיים */}
         {currentStep === 1 && (
           <div className={style.formStep}>
             <h2>Basic Information</h2>
             <div className={style.inputGroup}>
               <input
-                type="text"
+                type="file"
                 name="picture"
-                value={formData.picture}
-                onChange={handleChange}
-                placeholder="Car Image URL"
+                onChange={handleImageUpload}
                 className={style.formInput}
               />
               {formData.picture && (
@@ -116,6 +163,7 @@ const AddCar = () => {
           </div>
         )}
 
+        {/* שלב 2 - פרטי הרכב */}
         {currentStep === 2 && (
           <div className={style.formStep}>
             <h2>Car Details</h2>
@@ -129,7 +177,7 @@ const AddCar = () => {
                 className={style.formInput}
               />
               {formData.color && (
-                <div 
+                <div
                   className={style.colorPreview}
                   style={{ backgroundColor: formData.color }}
                 ></div>
@@ -169,6 +217,7 @@ const AddCar = () => {
           </div>
         )}
 
+        {/* שלב 3 - מידע נוסף */}
         {currentStep === 3 && (
           <div className={style.formStep}>
             <h2>Additional Information</h2>
@@ -213,6 +262,7 @@ const AddCar = () => {
                 />
               )}
             </div>
+
             <div className={style.inputGroup}>
               <input
                 type="text"

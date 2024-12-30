@@ -11,6 +11,7 @@ import Header from "./components/header/Header";
 import Login from "./components/login/Login";
 import AddCar from "./components/cars/AddCar";
 import Map from "./components/map/Map";
+import RentCars from "./Pages/rentCars/RentCars";
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
       <Header/>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/rentcars" element={<RentCars/>} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/cars" element={<Cars />} />

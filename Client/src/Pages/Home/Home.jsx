@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import style from '../Home/home.module.css';
-
+import { useNavigate } from "react-router-dom";
 const Home = () => {
+
+  const navigate = useNavigate();
 
   const images = ["/car1.jpg", "/car2.jpg", "/car3.jpg"];
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -31,7 +33,8 @@ const Home = () => {
             <source src="video1.mp4" type="video/mp4" />
           </video>
           <div className={style.overlay}>
-            <h1 className={style.title}>The garage</h1>
+            <h1 className={style.title}>WheelWay</h1>
+            <button onClick={() => navigate('/signup')}>get started and signup</button>
           </div>
           <div className={style.slider}>
             <img className={style.img} src={images[currentIndex]} alt={`Slide ${currentIndex + 1}`} />
@@ -40,6 +43,7 @@ const Home = () => {
                 <button className={style.arrow} onClick={() => moveSlide("next")}>&#8594;</button>
               </nav>
           </div>
+          
         </main>
       </div>
     </>

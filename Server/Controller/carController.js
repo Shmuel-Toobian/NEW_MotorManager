@@ -17,7 +17,6 @@ const verifyToken = (req) => {
     }
     const token = req.cookies.token;
     const tokenData = token.split(" ")[1];
-    
     const decoded = jwt.verify(tokenData, process.env.SECRET_KEY);
     return decoded.id;
   } catch (error) {

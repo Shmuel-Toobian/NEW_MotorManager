@@ -1,32 +1,35 @@
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
 const carSchema = require("../Models/carsSchema");
+const cloudinary = require("cloudinary").v2;  // הוספת cloudinary
 
+// הגדרת Cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
+// פונקציה לאימות הטוקן
 const verifyToken = (req) => {
   try {
-    
     if (!req.cookies || !req.cookies.token) {
       throw new Error('No token found');
     }
     const token = req.cookies.token;
-    const tokenData = token.split(" ")[1]
+    const tokenData = token.split(" ")[1];
     
     const decoded = jwt.verify(tokenData, process.env.SECRET_KEY);
     return decoded.id;
-    
   } catch (error) {
     console.error(error);
-    
   }
-
-}
+};
 
 exports.addCar = async (req, res) => {
   try {
-
-    const userId = verifyToken(req)
-    if(!userId){
-      return res.status(401).json({message: 'Unauthorized'})
+    const userId = verifyToken(req);
+    if (!userId) {
+      return res.status(401).json({ message: 'Unauthorized' });
     }
 
     const {
@@ -56,13 +59,21 @@ exports.addCar = async (req, res) => {
 
     // בדיקת אם רכב כבר קיים
     const findCar = await carSchema.findOne({ carNumber: carNumber });
-
     if (findCar) {
       return res.status(409).json({ message: "Car already exists" });
     }
 
-    // יצירת רכב חדש ושמירה
-    const newCar = new carSchema({ ...req.body , user: userId});
+    // העלאת התמונה ל-Cloudinary
+    const uploadedImage = await cloudinary.uploader.upload(picture, {
+      folder: 'cars',
+    });
+
+    // יצירת רכב חדש ושמירה עם URL של התמונה
+    const newCar = new carSchema({
+      ...req.body,
+      picture: uploadedImage.secure_url,  // עדכון התמונה
+      user: userId,
+    });
     await newCar.save();
 
     res.status(201).json({ message: "Car added successfully." });
@@ -72,16 +83,13 @@ exports.addCar = async (req, res) => {
   }
 };
 
-
-
 exports.getCars = async (req, res) => {
   try {
-
-    const userId = verifyToken(req); // קבלת מזהה המשתמש מה-token
+    const userId = verifyToken(req);
     console.log('User ID:', userId);
 
     if (!userId) {
-      return res.status(401).json({ message: "Unauthorized" }); // אם אין token או הוא לא תקין
+      return res.status(401).json({ message: "Unauthorized" });
     }
 
     const cars = await carSchema.find({ user: userId }).populate({
@@ -96,12 +104,10 @@ exports.getCars = async (req, res) => {
   }
 };
 
-
 exports.updateCar = async (req, res) => {
   try {
     const carNumber = req.params.carNumber;
 
-    // עדכון רכב לפי מספר רכב
     const updatedCar = await carSchema.findOneAndUpdate(
       { carNumber: carNumber },
       req.body,
@@ -123,7 +129,6 @@ exports.deleteCar = async (req, res) => {
   try {
     const carNumber = req.params.carNumber;
 
-    // מחיקת רכב לפי מספר רכב
     const deletedCar = await carSchema.findOneAndDelete({ carNumber });
 
     if (!deletedCar) {

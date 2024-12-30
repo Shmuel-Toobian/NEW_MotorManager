@@ -20,7 +20,7 @@ const Car = ({
   console.log("Car props:", { location, dateTest, dateMOT });
   axios.defaults.withCredentials = true;
 
-  const navigete = useNavigate()
+  const navigate = useNavigate();
 
   const [isExpanded, setIsExpanded] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -32,7 +32,7 @@ const Car = ({
     kilometer: "",
     test: null,
     MOT: null,
-    location: ""
+    location: "",
   });
 
   // פונקציה לשינוי הערכים
@@ -58,51 +58,39 @@ const Car = ({
     };
 
     try {
-      // קידוד מספר הרכב ב-URL
       const encodedCarNumber = encodeURIComponent(carNumber);
-      console.log("Updating car number:", encodedCarNumber); // לבדיקה
+      console.log("Updating car number:", encodedCarNumber);
 
       const response = await axios.put(
         `http://localhost:3000/cars/${encodedCarNumber}`,
         finalData
       );
-      
-      console.log("Update response:", response.data); // לבדיקה
+
+      console.log("Update response:", response.data);
       getCars(); // עדכון הרשימה
       setIsEditing(false);
     } catch (error) {
-      console.error(
-        "Error updating car:",
-        error.response?.data || error.message
-      );
-      // הוספת הודעת שגיאה למשתמש
+      console.error("Error updating car:", error.response?.data || error.message);
       alert("שגיאה בעדכון הרכב. אנא בדוק את הנתונים ונסה שוב.");
     }
   };
 
-
+  // ניווט למפה
   const goMap = (e) => {
     e.stopPropagation();
-    navigete("/map", { 
-      state: { 
-        location: location 
-      }
+    navigate("/map", {
+      state: { location },
     });
-  }
-  
+  };
 
   // פונקציה למחיקת רכב
-
   const handleDelete = async () => {
     try {
       console.log("Attempting to delete car with number:", carNumber);
       await axios.delete(`http://localhost:3000/cars/${carNumber}`);
       getCars();
     } catch (error) {
-      console.error(
-        "Error deleting car:",
-        error.response?.data || error.message
-      );
+      console.error("Error deleting car:", error.response?.data || error.message);
     }
   };
 
@@ -148,18 +136,24 @@ const Car = ({
             >
               {isEditing ? "Cancel Edit" : "Edit Car"}
             </button>
-
-                <button onClick={(e) => goMap(e)} className={style.addButton}>
-                  <i className="bi bi-geo-alt-fill"></i>
-                </button>
-
+            <button onClick={(e) => goMap(e)} className={style.addButton}>
+              <i className="bi bi-geo-alt-fill"></i>
+            </button>
             {isEditing && (
               <form className={style.form} onClick={(e) => e.stopPropagation()}>
                 <input
+                  type="file"
                   name="picture"
-                  value={updatedData.picture}
-                  onChange={handleChange}
-                  placeholder="Picture URL"
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                      setUpdatedData((prev) => ({
+                        ...prev,
+                        picture: URL.createObjectURL(file),
+                      }));
+                    }
+                  }}
+                  className={style.formInput}
                 />
                 <input
                   name="typeCar"
@@ -189,9 +183,7 @@ const Car = ({
                   <input
                     type="checkbox"
                     name="test"
-                    checked={
-                      updatedData.test === null ? test : updatedData.test
-                    }
+                    checked={updatedData.test === null ? test : updatedData.test}
                     onChange={handleChange}
                   />
                   Test Passed
@@ -205,14 +197,12 @@ const Car = ({
                   />
                   MOT Passed
                 </label>
-
                 <input
                   name="location"
                   value={updatedData.location}
                   onChange={handleChange}
-                  placeholder="location"
+                  placeholder="Location"
                 />
-
                 <button type="button" onClick={handleUpdate}>
                   Save
                 </button>

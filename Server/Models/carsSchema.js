@@ -1,63 +1,69 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
 const carSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Types.ObjectId,
+    ref: "userSchemas",
+    required: [true, "User ID is required!"],
+  },
 
+  image: {
+    type: String,
+    required: [true, "Image is requierd!"],
+  },
+  typeCar: {
+    type: String,
+    required: [true, "TypeCar is requierd!"],
+  },
+  company:{
+    type: String,
+    required: [true, "company is requierd!"],
+  },
+  model: {
+    type: String,
+    required: [true, "Model is requierd!"],
+  },
 
-    user: {
-  type: mongoose.Types.ObjectId,
-  ref: 'userSchemas',
-  required: [true, 'User ID is required!']
-},
+  color: {
+    type: String,
+    required: [true, "Color is requierd!"],
+  },
 
-    picture:{
-        type: String,
-        required: [true, 'Image is requierd!']
-    },
-    typeCar:{
-        type: String,
-        required: [true, 'TypeCar is requierd!']
-    },
-    model:{
-        type: String,
-        required: [true, 'Model is requierd!']
-    },
+  year:{
 
-    color:{
-        type: String,
-        required: [true, 'Color is requierd!']
-    },
-
-    carNumber:{
-        type: String,
-        required: [true, 'carNumber is requierd!'],
-        unique: true
-    },
-    kilometer:{
-        type:Number,
-        required: [true, 'kilometer is requierd!'],
-    },
-    test:{
-        type:Boolean,
-    },
-    dateTest:{
-        type:Date,
-        required: [true, 'dateTest is requierd!'],
-
-    },
-    MOT:{
-        type:Boolean,
-    },
-    dateMOT:{
-        type:Date,
-        required: [true, 'dateMOT is requierd!']
-
-    },
-    location:{
-        type: String,
-
-    }
-
-
+    type: Number,
+    required: [true, "year is requierd!"],
+  },
+  price:{
+    type: Number,
+    required: [true, "price is requierd!"],
+  },
+  carNumber: {
+    type: String,
+    required: [true, "carNumber is requierd!"],
+    unique: true,
+  },
+  kilometer: {
+    type: Number,
+    required: [true, "kilometer is requierd!"],
+  },
+  test: {
+    type: Boolean,
+  },
+  dateTest: {
+    type: Date,
+    required: [true, "dateTest is requierd!"],
+  },
+  MOT: {
+    type: Boolean,
+  },
+  dateMOT: {
+    type: Date,
+    required: [true, "dateMOT is requierd!"],
+  },
+  location: {
+    type: String,
+  },
 });
 
-module.exports = mongoose.model('carSchemas', carSchema)
+module.exports = mongoose.model("carSchemas", carSchema);

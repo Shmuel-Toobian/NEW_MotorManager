@@ -4,9 +4,12 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Car = ({
-  picture,
+  image,
   typeCar,
   model,
+  company,
+  year,
+  price,
   color,
   carNumber,
   kilometer,
@@ -17,7 +20,6 @@ const Car = ({
   dateMOT,
   getCars,
 }) => {
-  console.log("Car props:", { location, dateTest, dateMOT });
   axios.defaults.withCredentials = true;
 
   const navigate = useNavigate();
@@ -25,9 +27,12 @@ const Car = ({
   const [isExpanded, setIsExpanded] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [updatedData, setUpdatedData] = useState({
-    picture: "",
+    image: "",
     typeCar: "",
     model: "",
+    company: "",
+    price: "",
+    year: "",
     color: "",
     kilometer: "",
     test: null,
@@ -47,9 +52,12 @@ const Car = ({
   // פונקציה לעדכון רכב
   const handleUpdate = async () => {
     const finalData = {
-      picture: updatedData.picture || picture,
+      image: updatedData.image || image,
       typeCar: updatedData.typeCar || typeCar,
       model: updatedData.model || model,
+      company: updatedData.company || company,
+      price: updatedData.price || price,
+      year: updatedData.year || year,
       color: updatedData.color || color,
       kilometer: updatedData.kilometer || kilometer,
       test: updatedData.test === null ? test : updatedData.test,
@@ -62,7 +70,7 @@ const Car = ({
       console.log("Updating car number:", encodedCarNumber);
 
       const response = await axios.put(
-        `http://localhost:3000/cars/${encodedCarNumber}`,
+       ` http://localhost:3000/cars/${encodedCarNumber}`,
         finalData
       );
 
@@ -100,7 +108,7 @@ const Car = ({
       onClick={() => setIsExpanded(!isExpanded)}
     >
       <img
-        src={picture}
+        src={image}
         alt={`${typeCar} ${model}`}
         className={style.carImage}
       />
@@ -112,6 +120,7 @@ const Car = ({
         {isExpanded && (
           <>
             <p>Color: {color}</p>
+            <p>Price: {price}</p>
             <p>Kilometers: {kilometer}</p>
             <p>Technical Inspection: {test ? "Passed" : "Not Passed"}</p>
             <p>MOT: {MOT ? "Passed" : "Not Passed"}</p>
@@ -143,13 +152,13 @@ const Car = ({
               <form className={style.form} onClick={(e) => e.stopPropagation()}>
                 <input
                   type="file"
-                  name="picture"
+                  name="image"
                   onChange={(e) => {
                     const file = e.target.files[0];
                     if (file) {
                       setUpdatedData((prev) => ({
                         ...prev,
-                        picture: URL.createObjectURL(file),
+                        image: URL.createObjectURL(file),
                       }));
                     }
                   }}
@@ -167,11 +176,23 @@ const Car = ({
                   onChange={handleChange}
                   placeholder="Model"
                 />
+                  <input
+                  name="company"
+                  value={updatedData.company}
+                  onChange={handleChange}
+                  placeholder="Company"
+                />
                 <input
                   name="color"
                   value={updatedData.color}
                   onChange={handleChange}
                   placeholder="Color"
+                />
+                 <input
+                  name="price"
+                  value={updatedData.price}
+                  onChange={handleChange}
+                  placeholder="Price"
                 />
                 <input
                   name="kilometer"

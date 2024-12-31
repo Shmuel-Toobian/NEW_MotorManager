@@ -1,6 +1,6 @@
 // Cars.jsx
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom"; // עבור הניווט
+import { Link } from "react-router-dom"; 
 import axios from "axios";
 import Car from "./Car";
 import style from "./cars.module.css";
@@ -43,9 +43,12 @@ const Cars = () => {
         {cars.map((car, index) => (
           <Car
             key={index}
-            picture={car.picture}
+            image={car.image}
             typeCar={car.typeCar}
             model={car.model}
+            company={car.company}
+            price={car.price}
+            year={car.year}
             color={car.color}
             carNumber={car.carNumber}
             kilometer={car.kilometer}

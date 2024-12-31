@@ -31,8 +31,9 @@ exports.addCar = async (req, res) => {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 
+    
     const {
-      picture,
+      image,
       typeCar,
       model,
       color,
@@ -44,7 +45,7 @@ exports.addCar = async (req, res) => {
 
     // בדיקת שדות ריקים
     if (
-      !picture ||
+      !image ||
       !typeCar ||
       !model ||
       !color ||
@@ -63,14 +64,14 @@ exports.addCar = async (req, res) => {
     }
 
     // העלאת התמונה ל-Cloudinary
-    const uploadedImage = await cloudinary.uploader.upload(picture, {
+    const uploadedImage = await cloudinary.uploader.upload(image, {
       folder: 'cars',
     });
 
     // יצירת רכב חדש ושמירה עם URL של התמונה
     const newCar = new carSchema({
       ...req.body,
-      picture: uploadedImage.secure_url,  // עדכון התמונה
+      image: uploadedImage.secure_url,  // עדכון התמונה
       user: userId,
     });
     await newCar.save();

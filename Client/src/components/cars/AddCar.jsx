@@ -9,7 +9,10 @@ const AddCar = () => {
 
   // הגדרת state למילוי הטופס
   const [formData, setFormData] = useState({
-    picture: "",
+    image: "",
+    company: "",
+    year: "",
+    price: "",
     typeCar: "",
     model: "",
     color: "",
@@ -19,7 +22,7 @@ const AddCar = () => {
     dateTest: "",
     MOT: false,
     dateMOT: "",
-    location: ""
+    location: "",
   });
 
   // ניווט לדף אחר אחרי הוספת רכב
@@ -31,9 +34,9 @@ const AddCar = () => {
   // פונקציה לעדכון ערכים בטופס
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
@@ -60,7 +63,7 @@ const AddCar = () => {
       console.log(data.secure_url);
 
       // עדכון ה-URL של התמונה ב-formData
-      setFormData(prev => ({ ...prev, picture: data.secure_url }));
+      setFormData((prev) => ({ ...prev, image: data.secure_url }));
     } catch (error) {
       console.error("Error uploading image:", error);
       alert("Error uploading image. Please try again.");
@@ -72,9 +75,20 @@ const AddCar = () => {
   // פונקציה לשליחת הנתונים
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(formData);
 
     // בדיקה אם כל השדות מלאים
-    if (!formData.typeCar || !formData.model || !formData.color || !formData.carNumber || !formData.kilometer || !formData.location) {
+    if (
+      !formData.typeCar ||
+      !formData.model ||
+      !formData.color ||
+      !formData.carNumber ||
+      !formData.kilometer ||
+      !formData.company ||
+      !formData.year ||
+      !formData.price ||
+      !formData.location
+    ) {
       alert("All fields are required!");
       return;
     }
@@ -89,8 +103,8 @@ const AddCar = () => {
   };
 
   // מעבר בין שלבים בטופס
-  const nextStep = () => setCurrentStep(prev => prev + 1);
-  const prevStep = () => setCurrentStep(prev => prev - 1);
+  const nextStep = () => setCurrentStep((prev) => prev + 1);
+  const prevStep = () => setCurrentStep((prev) => prev - 1);
 
   return (
     <div className={style.addCarContainer}>
@@ -100,10 +114,12 @@ const AddCar = () => {
           style={{ width: `${(currentStep / 3) * 100}%` }}
         ></div>
         <div className={style.steps}>
-          {[1, 2, 3].map(step => (
+          {[1, 2, 3].map((step) => (
             <div
               key={step}
-              className={`${style.step} ${currentStep >= step ? style.active : ''}`}
+              className={`${style.step} ${
+                currentStep >= step ? style.active : ""
+              }`}
             >
               {step}
             </div>
@@ -119,13 +135,13 @@ const AddCar = () => {
             <div className={style.inputGroup}>
               <input
                 type="file"
-                name="picture"
+                name="image"
                 onChange={handleImageUpload}
                 className={style.formInput}
               />
-              {formData.picture && (
+              {formData.image && (
                 <div className={style.imagePreview}>
-                  <img src={formData.picture} alt="Car preview" />
+                  <img src={formData.image} alt="Car preview" />
                 </div>
               )}
             </div>
@@ -153,6 +169,17 @@ const AddCar = () => {
                 value={formData.model}
                 onChange={handleChange}
                 placeholder="Car Model"
+                className={style.formInput}
+              />
+            </div>
+
+            <div className={style.inputGroup}>
+              <input
+                type="text"
+                name="company"
+                value={formData.company}
+                onChange={handleChange}
+                placeholder="Car Company"
                 className={style.formInput}
               />
             </div>
@@ -198,6 +225,16 @@ const AddCar = () => {
             <div className={style.inputGroup}>
               <input
                 type="number"
+                name="year"
+                value={formData.year}
+                onChange={handleChange}
+                placeholder="year"
+                className={style.formInput}
+              />
+            </div>
+            <div className={style.inputGroup}>
+              <input
+                type="number"
                 name="kilometer"
                 value={formData.kilometer}
                 onChange={handleChange}
@@ -207,10 +244,18 @@ const AddCar = () => {
             </div>
 
             <div className={style.buttonGroup}>
-              <button type="button" onClick={prevStep} className={style.prevBtn}>
+              <button
+                type="button"
+                onClick={prevStep}
+                className={style.prevBtn}
+              >
                 <i className="bi bi-arrow-left"></i> Back
               </button>
-              <button type="button" onClick={nextStep} className={style.nextBtn}>
+              <button
+                type="button"
+                onClick={nextStep}
+                className={style.nextBtn}
+              >
                 Next <i className="bi bi-arrow-right"></i>
               </button>
             </div>
@@ -265,6 +310,17 @@ const AddCar = () => {
 
             <div className={style.inputGroup}>
               <input
+                type="number"
+                name="price"
+                value={formData.price}
+                onChange={handleChange}
+                placeholder="Price for day"
+                className={style.formInput}
+              />
+            </div>
+
+            <div className={style.inputGroup}>
+              <input
                 type="text"
                 name="location"
                 value={formData.location}
@@ -275,7 +331,11 @@ const AddCar = () => {
             </div>
 
             <div className={style.buttonGroup}>
-              <button type="button" onClick={prevStep} className={style.prevBtn}>
+              <button
+                type="button"
+                onClick={prevStep}
+                className={style.prevBtn}
+              >
                 <i className="bi bi-arrow-left"></i> Back
               </button>
               <button type="submit" className={style.submitBtn}>

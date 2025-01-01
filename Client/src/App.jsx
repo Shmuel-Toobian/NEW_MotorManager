@@ -2,7 +2,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./store/useContext";
-
+import { ThemeProvider } from './context/ThemeContext';
 import Footer from "./components/footer/Footer";
 import Home from "./Pages/Home/Home";
 import SignUp from "./components/signUp/SignUp"
@@ -16,22 +16,23 @@ import RentCars from "./Pages/rentCars/RentCars";
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
-      <Header/>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/rentcars" element={<RentCars/>} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/cars" element={<Cars />} />
-          <Route path="/addcar" element={<AddCar />} />
-          <Route path="/map" element={<Map />} />
-        </Routes>
-        <Footer/>
-      </Router>
-    </AuthProvider>
-
+    <ThemeProvider>
+      <AuthProvider>
+        <Router>
+          <Header/>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/rentcars" element={<RentCars/>} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/cars" element={<Cars />} />
+            <Route path="/addcar" element={<AddCar />} />
+            <Route path="/map" element={<Map />} />
+          </Routes>
+          <Footer/>
+        </Router>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 

@@ -83,6 +83,7 @@ exports.addCar = async (req, res) => {
   }
 };
 
+
 exports.getCars = async (req, res) => {
   try {
     const userId = verifyToken(req);
@@ -92,10 +93,7 @@ exports.getCars = async (req, res) => {
       return res.status(401).json({ message: "Unauthorized" });
     }
 
-    const cars = await carSchema.find({ user: userId }).populate({
-      path: 'user',
-      select: '-password',
-    });
+    const cars = await carSchema.find()
 
     res.status(200).json(cars);
   } catch (error) {
@@ -103,6 +101,26 @@ exports.getCars = async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
+// exports.getCars = async (req, res) => {
+//   try {
+//     const userId = verifyToken(req);
+//     console.log('User ID:', userId);
+
+//     if (!userId) {
+//       return res.status(401).json({ message: "Unauthorized" });
+//     }
+
+//     const cars = await carSchema.find({ user: userId }).populate({
+//       path: 'user',
+//       select: '-password',
+//     });
+
+//     res.status(200).json(cars);
+//   } catch (error) {
+//     console.error('Error in getCars:', error);
+//     res.status(500).json({ message: "Server error", error: error.message });
+//   }
+// };
 
 exports.updateCar = async (req, res) => {
   try {

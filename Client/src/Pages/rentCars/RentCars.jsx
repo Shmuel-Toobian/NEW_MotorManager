@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from './rentCars.module.css';
+import axios from 'axios';
 
 const RentCars = () => {
   const [cars, setCars] = useState([]);
@@ -19,19 +20,20 @@ const RentCars = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const carsPerPage = 9;
   const [rentedCarIndex, setRentedCarIndex] = useState(null);
-  const [rentedCarInfo, setRentedCarInfo] = useState(null);
+  const [rentedCarsInfo, setRentedCarsInfo] = useState([]);
 
   useEffect(() => {
     fetchCars();
   }, []);
 
+  axios.defaults.withCredentials = true
+
   const fetchCars = async () => {
     try {
-      const response = await fetch('/Car.json');
-      const data = await response.json();
-      console.log('Car data from JSON:', data);
+      const response = await axios.get("http://localhost:3000/cars");
+      console.log('Car data from JSON:', response.data);
       
-      const carsWithImages = data.map(car => ({
+      const carsWithImages = response.data.map(car => ({
         ...car,
         category: car.category || '',
         price: car.price || 0,
@@ -172,11 +174,11 @@ const RentCars = () => {
 
   const confirmBooking = () => {
     const carIndex = cars.findIndex(car => car.model === selectedCar.model);
-    setRentedCarInfo({
+    setRentedCarsInfo(prev => [...prev, {
       index: carIndex,
       startDate: filters.startDate,
       endDate: filters.endDate
-    });
+    }]);
     alert('ההזמנה בוצעה בהצלחה!');
     setShowBookingModal(false);
   };
@@ -198,7 +200,14 @@ const RentCars = () => {
   const getCurrentCars = () => {
     const indexOfLastCar = currentPage * carsPerPage;
     const indexOfFirstCar = indexOfLastCar - carsPerPage;
-    return filteredCars.slice(indexOfFirstCar, indexOfLastCar);
+    
+    // Filter out all rented cars before slicing for pagination
+    const availableCars = filteredCars.filter((car, index) => {
+      return !(filters.startDate && filters.endDate && 
+        isCarRentedForDates(index, filters.startDate, filters.endDate));
+    });
+    
+    return availableCars.slice(indexOfFirstCar, indexOfLastCar);
   };
 
   const handlePageChange = (pageNumber) => {
@@ -220,22 +229,24 @@ const RentCars = () => {
   };
 
   const isCarRentedForDates = (index, startDate, endDate) => {
-    if (!rentedCarInfo || rentedCarInfo.index !== index) return false;
-    
-    return isDateRangeOverlapping(
-      startDate,
-      endDate,
-      rentedCarInfo.startDate,
-      rentedCarInfo.endDate
-    );
+    return rentedCarsInfo.some(rental => {
+      if (rental.index !== index) return false;
+      
+      return isDateRangeOverlapping(
+        startDate,
+        endDate,
+        rental.startDate,
+        rental.endDate
+      );
+    });
   };
 
   const isCarCurrentlyRented = (index) => {
-    if (!rentedCarInfo || rentedCarInfo.index !== index) return false;
+    if (!rentedCarsInfo || rentedCarsInfo.index !== index) return false;
     
     const today = new Date();
-    const rentStart = new Date(rentedCarInfo.startDate);
-    const rentEnd = new Date(rentedCarInfo.endDate);
+    const rentStart = new Date(rentedCarsInfo.startDate);
+    const rentEnd = new Date(rentedCarsInfo.endDate);
     
     return today >= rentStart && today <= rentEnd;
   };
@@ -355,46 +366,30 @@ const RentCars = () => {
       </div>
 
       <div className={styles.carsGrid}>
-        {getCurrentCars().map((car, index) => {
-          const isRented = filters.startDate && filters.endDate ? 
-            isCarRentedForDates(index, filters.startDate, filters.endDate) : 
-            false;
-          
-          return (
-            <div 
-              key={index} 
-              className={`${styles.carCard} ${isRented ? styles.booked : ''}`}
+        {getCurrentCars().map((car, index) => (
+          <div key={index} className={styles.carCard}>
+            <img src={car.img_url} alt={car.model} className={styles.carImage} />
+            <h3>{car.company} {car.model}</h3>
+            <p>שנה: {car.year}</p>
+            <p>צבע: {car.color}</p>
+            <p>מחיר ליום: ₪{(car.price / 100).toLocaleString()}</p>
+            {calculateTotalDays() > 0 && (
+              <p className={styles.totalPrice}>
+                סה"כ ל-{calculateTotalDays()} ימים: ₪{calculateTotalPrice(car.price).toLocaleString()}
+              </p>
+            )}
+            <button 
+              className={styles.rentButton}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleBooking(car);
+              }}
             >
-              <img src={car.img_url} alt={car.model} className={styles.carImage} />
-              <h3>{car.company} {car.model}</h3>
-              <p>שנה: {car.year}</p>
-              <p>צבע: {car.color}</p>
-              <p>מחיר ליום: ₪{(car.price / 100).toLocaleString()}</p>
-              {calculateTotalDays() > 0 && (
-                <p className={styles.totalPrice}>
-                  סה"כ ל-{calculateTotalDays()} ימים: ₪{calculateTotalPrice(car.price).toLocaleString()}
-                </p>
-              )}
-              {!isRented ? (
-                <button 
-                  className={styles.rentButton}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleBooking(car);
-                  }}
-                >
-                  הזמן עכשיו
-                </button>
-              ) : (
-                <p className={styles.rentedDates}>
-                  מושכר מ-{new Date(rentedCarInfo.startDate).toLocaleDateString('he-IL')} 
-                  עד-{new Date(rentedCarInfo.endDate).toLocaleDateString('he-IL')}
-                </p>
-              )}
-              <p className={styles.companyName}>חברה: {car.company}</p>
-            </div>
-          );
-        })}
+              הזמן עכשיו
+            </button>
+            <p className={styles.companyName}>חברה: {car.company}</p>
+          </div>
+        ))}
       </div>
 
       <div className={styles.pagination}>

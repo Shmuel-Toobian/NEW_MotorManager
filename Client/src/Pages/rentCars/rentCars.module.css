@@ -290,3 +290,245 @@
     color: #666;
     font-size: 0.9rem;
   }
+  
+  .rentalContainer {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    direction: rtl;
+  }
+  
+  .sideCard {
+    position: sticky;
+    top: 20px;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    height: fit-content;
+  }
+  
+  .selectedCarSummary {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .carDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .carDetails img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  
+  .priceDetails {
+    margin-top: 20px;
+  }
+  
+  .priceDetails p {
+    display: flex;
+    justify-content: space-between;
+    margin: 8px 0;
+    color: #666;
+  }
+  
+  .totalPrice {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 2px solid #f0f0f0;
+  }
+  
+  .actionButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .updateButton, .backButton {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .updateButton {
+    background: #007bff;
+    color: white;
+    border: none;
+  }
+  
+  .backButton {
+    background: white;
+    color: #007bff;
+    border: 2px solid #007bff;
+  }
+  
+  .updateButton:hover {
+    background: #0056b3;
+  }
+  
+  .backButton:hover {
+    background: #f0f8ff;
+  }
+  
+  .mainContent {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  @media (max-width: 1024px) {
+    .rentalContainer {
+      grid-template-columns: 1fr;
+    }
+    
+    .sideCard {
+      position: relative;
+      top: 0;
+    }
+  }
+  
+  .formGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    margin-bottom: 40px;
+    padding: 30px;
+    background: #f8f9fa;
+    border-radius: 12px;
+  }
+  
+  .formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .formGroup label {
+    font-weight: 600;
+    color: #333;
+    font-size: 1.1rem;
+  }
+  
+  .formGroup input {
+    padding: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1.1rem;
+  }
+  
+  .formGroup input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+  }
+  
+  .addonsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 30px;
+  }
+  
+  .addonCard {
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    transition: all 0.3s;
+  }
+  
+  .addonCard.selected {
+    border-color: #007bff;
+    background: #f8f9fa;
+  }
+  
+  .addonImage {
+    width: 200px;
+    height: 150px;
+    object-fit: contain;
+    margin: 0 auto 15px;
+    display: block;
+  }
+  
+  .addonPricing {
+    margin: 10px 0;
+  }
+  
+  .dailyPrice {
+    color: #666;
+    font-size: 0.85rem;
+  }
+  
+  .totalDaysPrice {
+    color: #007bff;
+    font-weight: bold;
+    margin-top: 5px;
+    font-size: 0.95rem;
+  }
+  
+  .addButton {
+    width: 100%;
+    padding: 8px;
+    border-radius: 20px;
+    border: 2px solid #007bff;
+    background: white;
+    color: #007bff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+  }
+  
+  .addButton:hover {
+    background: #f0f8ff;
+  }
+  
+  .addButton.selected {
+    background: #007bff;
+    color: white;
+  }
+  
+  @media (max-width: 768px) {
+    .formGrid {
+      grid-template-columns: 1fr;
+      padding: 20px;
+    }
+    
+    .addonsGrid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .addonsGrid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .formSection h2 {
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    color: #333;
+  }
+  
+  .addonsSection h2 {
+    font-size: 1.5rem;
+  }

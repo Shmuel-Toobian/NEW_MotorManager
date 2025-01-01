@@ -21,6 +21,43 @@ const RentCars = () => {
   const carsPerPage = 9;
   const [rentedCarIndex, setRentedCarIndex] = useState(null);
   const [rentedCarsInfo, setRentedCarsInfo] = useState([]);
+  const [isRentingDetails, setIsRentingDetails] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    marketingConsent: false,
+    termsConsent: false
+  });
+  const [selectedAddons, setSelectedAddons] = useState({});
+
+  const addons = [
+    {
+      id: 'additional_driver',
+      title: 'נהג נוסף',
+      image: 'https://rent.eldan.co.il/media/1239/additional-driver_AdditionIconReservationProcess.jpg',
+      pricePerDay: 40
+    },
+    {
+      id: 'baby_seat',
+      title: 'כסא תינוק',
+      image: 'https://rent.eldan.co.il/media/1237/baby-seat-small_AdditionIconReservationProcess.jpg',
+      pricePerDay: 30
+    },
+    {
+      id: 'insurance_waiver',
+      title: 'ביטול השתתפות',
+      image: 'https://rent.eldan.co.il/media/1241/excess-waiver_AdditionIconReservationProcess.jpg',
+      pricePerDay: 50
+    },
+    {
+      id: 'young_driver',
+      title: 'נהג צעיר 18-21',
+      image: 'https://rent.eldan.co.il/media/1239/additional-driver_AdditionIconReservationProcess.jpg',
+      pricePerDay: 60
+    }
+  ];
 
   useEffect(() => {
     fetchCars();
@@ -169,7 +206,7 @@ const RentCars = () => {
     }
     
     setSelectedCar(car);
-    setShowBookingModal(true);
+    setIsRentingDetails(true);
   };
 
   const confirmBooking = () => {
@@ -251,200 +288,351 @@ const RentCars = () => {
     return today >= rentStart && today <= rentEnd;
   };
 
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value
+    }));
+  };
+
+  const toggleAddon = (addonId) => {
+    setSelectedAddons(prev => ({
+      ...prev,
+      [addonId]: !prev[addonId]
+    }));
+  };
+
+  const calculateAddonsTotal = () => {
+    return addons.reduce((total, addon) => {
+      return total + (selectedAddons[addon.id] ? addon.pricePerDay * calculateTotalDays() : 0);
+    }, 0);
+  };
+
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>השכרת רכבים</h1>
-      
-      <div className={styles.filters}>
-        <div className={styles.dateFilters}>
-          <div className={styles.dateInput}>
-            <label>מתאריך:</label>
-            <input 
-              type="date" 
-              name="startDate"
-              value={filters.startDate}
-              onChange={handleFilterChange}
-              className={styles.input}
-              min={new Date().toISOString().split('T')[0]}
-            />
+      {!isRentingDetails ? (
+        <>
+          <h1 className={styles.title}>השכרת רכבים</h1>
+          
+          <div className={styles.filters}>
+            <div className={styles.dateFilters}>
+              <div className={styles.dateInput}>
+                <label>מתאריך:</label>
+                <input 
+                  type="date" 
+                  name="startDate"
+                  value={filters.startDate}
+                  onChange={handleFilterChange}
+                  className={styles.input}
+                  min={new Date().toISOString().split('T')[0]}
+                />
+              </div>
+              <div className={styles.dateInput}>
+                <label>עד תאריך:</label>
+                <input 
+                  type="date" 
+                  name="endDate"
+                  value={filters.endDate}
+                  onChange={handleFilterChange}
+                  className={styles.input}
+                  min={filters.startDate || new Date().toISOString().split('T')[0]}
+                />
+              </div>
+            </div>
+
+            <div className={styles.filterSection}>
+              <h3>סינון לפי מאפיינים</h3>
+              <div className={styles.selectFilters}>
+                <div className={styles.selectWrapper}>
+                  <label>חברה:</label>
+                  <select 
+                    name="company" 
+                    value={filters.company} 
+                    onChange={handleFilterChange}
+                    className={styles.select}
+                  >
+                    <option value="">כל החברות</option>
+                    <option value="Toyota">Toyota</option>
+                    <option value="Honda">Honda</option>
+                    <option value="Ford">Ford</option>
+                    <option value="Chevrolet">Chevrolet</option>
+                    <option value="BMW">BMW</option>
+                    <option value="Audi">Audi</option>
+                    <option value="Mercedes-Benz">Mercedes-Benz</option>
+                    <option value="Hyundai">Hyundai</option>
+                    <option value="Kia">Kia</option>
+                    <option value="Nissan">Nissan</option>
+                    <option value="Volkswagen">Volkswagen</option>
+                    <option value="Subaru">Subaru</option>
+                    <option value="Mazda">Mazda</option>
+                    <option value="Buick">Buick</option>
+                    <option value="Chrysler">Chrysler</option>
+                    <option value="GMC">GMC</option>
+                    <option value="Jeep">Jeep</option>
+                    <option value="Land Rover">Land Rover</option>
+                    <option value="Ferrari">Ferrari</option>
+                    <option value="Tesla">Tesla</option>
+                  </select>
+                </div>
+
+                <div className={styles.selectWrapper}>
+                  <label>שנה:</label>
+                  <select 
+                    name="year" 
+                    value={filters.year} 
+                    onChange={handleFilterChange}
+                    className={styles.select}
+                  >
+                    <option value="">כל השנים</option>
+                    <option value="2023-2024">2023-2024</option>
+                    <option value="2021-2022">2021-2022</option>
+                    <option value="2000-2020">2000-2020</option>
+                    <option value="1900-1999">רכב קלאסי (לפני שנת 2000)</option>
+                  </select>
+                </div>
+
+                <div className={styles.selectWrapper}>
+                  <label>צבע:</label>
+                  <select 
+                    name="color" 
+                    value={filters.color} 
+                    onChange={handleFilterChange}
+                    className={styles.select}
+                  >
+                    <option value="">כל הצבעים</option>
+                    {[...new Set(cars.map(car => car.color))].sort().map(color => (
+                      <option key={color} value={color}>{color}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className={styles.selectWrapper}>
+                  <label>טווח מחירים:</label>
+                  <select 
+                    name="size" 
+                    value={filters.size} 
+                    onChange={handleFilterChange}
+                    className={styles.select}
+                  >
+                    <option value="">כל המחירים</option>
+                    <option value="small">עד 1,000 ₪ ליום</option>
+                    <option value="medium">1,000 - 5,000 ₪ ליום</option>
+                    <option value="large">מעל 5,000 ₪ ליום</option>
+                  </select>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className={styles.dateInput}>
-            <label>עד תאריך:</label>
-            <input 
-              type="date" 
-              name="endDate"
-              value={filters.endDate}
-              onChange={handleFilterChange}
-              className={styles.input}
-              min={filters.startDate || new Date().toISOString().split('T')[0]}
-            />
+
+          <div className={styles.carsGrid}>
+            {getCurrentCars().map((car, index) => (
+              <div key={index} className={styles.carCard}>
+                <img src={car.img_url} alt={car.model} className={styles.carImage} />
+                <h3>{car.company} {car.model}</h3>
+                <p>שנה: {car.year}</p>
+                <p>צבע: {car.color}</p>
+                <p>מחיר ליום: ₪{(car.price / 100).toLocaleString()}</p>
+                {calculateTotalDays() > 0 && (
+                  <p className={styles.totalPrice}>
+                    סה"כ ל-{calculateTotalDays()} ימים: ₪{calculateTotalPrice(car.price).toLocaleString()}
+                  </p>
+                )}
+                <button 
+                  className={styles.rentButton}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleBooking(car);
+                  }}
+                >
+                  הזמן עכשיו
+                </button>
+                <p className={styles.companyName}>חברה: {car.company}</p>
+              </div>
+            ))}
           </div>
-        </div>
 
-        <div className={styles.filterSection}>
-          <h3>סינון לפי מאפיינים</h3>
-          <div className={styles.selectFilters}>
-            <div className={styles.selectWrapper}>
-              <label>חברה:</label>
-              <select 
-                name="company" 
-                value={filters.company} 
-                onChange={handleFilterChange}
-                className={styles.select}
-              >
-                <option value="">כל החברות</option>
-                <option value="Toyota">Toyota</option>
-                <option value="Honda">Honda</option>
-                <option value="Ford">Ford</option>
-                <option value="Chevrolet">Chevrolet</option>
-                <option value="BMW">BMW</option>
-                <option value="Audi">Audi</option>
-                <option value="Mercedes-Benz">Mercedes-Benz</option>
-                <option value="Hyundai">Hyundai</option>
-                <option value="Kia">Kia</option>
-                <option value="Nissan">Nissan</option>
-                <option value="Volkswagen">Volkswagen</option>
-                <option value="Subaru">Subaru</option>
-                <option value="Mazda">Mazda</option>
-                <option value="Buick">Buick</option>
-                <option value="Chrysler">Chrysler</option>
-                <option value="GMC">GMC</option>
-                <option value="Jeep">Jeep</option>
-                <option value="Land Rover">Land Rover</option>
-                <option value="Ferrari">Ferrari</option>
-                <option value="Tesla">Tesla</option>
-              </select>
-            </div>
-
-            <div className={styles.selectWrapper}>
-              <label>שנה:</label>
-              <select 
-                name="year" 
-                value={filters.year} 
-                onChange={handleFilterChange}
-                className={styles.select}
-              >
-                <option value="">כל השנים</option>
-                <option value="2023-2024">2023-2024</option>
-                <option value="2021-2022">2021-2022</option>
-                <option value="2000-2020">2000-2020</option>
-                <option value="1900-1999">רכב קלאסי (לפני שנת 2000)</option>
-              </select>
-            </div>
-
-            <div className={styles.selectWrapper}>
-              <label>צבע:</label>
-              <select 
-                name="color" 
-                value={filters.color} 
-                onChange={handleFilterChange}
-                className={styles.select}
-              >
-                <option value="">כל הצבעים</option>
-                {[...new Set(cars.map(car => car.color))].sort().map(color => (
-                  <option key={color} value={color}>{color}</option>
-                ))}
-              </select>
-            </div>
-
-            <div className={styles.selectWrapper}>
-              <label>טווח מחירים:</label>
-              <select 
-                name="size" 
-                value={filters.size} 
-                onChange={handleFilterChange}
-                className={styles.select}
-              >
-                <option value="">כל המחירים</option>
-                <option value="small">עד 1,000 ₪ ליום</option>
-                <option value="medium">1,000 - 5,000 ₪ ליום</option>
-                <option value="large">מעל 5,000 ₪ ליום</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className={styles.carsGrid}>
-        {getCurrentCars().map((car, index) => (
-          <div key={index} className={styles.carCard}>
-            <img src={car.img_url} alt={car.model} className={styles.carImage} />
-            <h3>{car.company} {car.model}</h3>
-            <p>שנה: {car.year}</p>
-            <p>צבע: {car.color}</p>
-            <p>מחיר ליום: ₪{(car.price / 100).toLocaleString()}</p>
-            {calculateTotalDays() > 0 && (
-              <p className={styles.totalPrice}>
-                סה"כ ל-{calculateTotalDays()} ימים: ₪{calculateTotalPrice(car.price).toLocaleString()}
-              </p>
-            )}
+          <div className={styles.pagination}>
             <button 
-              className={styles.rentButton}
-              onClick={(e) => {
-                e.stopPropagation();
-                handleBooking(car);
-              }}
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className={styles.pageButton}
             >
-              הזמן עכשיו
+              הבא
             </button>
-            <p className={styles.companyName}>חברה: {car.company}</p>
+            
+            {[...Array(totalPages)].reverse().map((_, index) => {
+              const pageNumber = totalPages - index;
+              return (
+                <button
+                  key={pageNumber}
+                  onClick={() => handlePageChange(pageNumber)}
+                  className={`${styles.pageButton} ${currentPage === pageNumber ? styles.activePage : ''}`}
+                >
+                  {pageNumber}
+                </button>
+              );
+            })}
+            
+            <button 
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className={styles.pageButton}
+            >
+              הקודם
+            </button>
           </div>
-        ))}
-      </div>
 
-      <div className={styles.pagination}>
-        <button 
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
-          className={styles.pageButton}
-        >
-          הבא
-        </button>
-        
-        {[...Array(totalPages)].reverse().map((_, index) => {
-          const pageNumber = totalPages - index;
-          return (
-            <button
-              key={pageNumber}
-              onClick={() => handlePageChange(pageNumber)}
-              className={`${styles.pageButton} ${currentPage === pageNumber ? styles.activePage : ''}`}
-            >
-              {pageNumber}
-            </button>
-          );
-        })}
-        
-        <button 
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-          className={styles.pageButton}
-        >
-          הקודם
-        </button>
-      </div>
+          {showBookingModal && selectedCar && (
+            <div className={styles.modal}>
+              <div className={styles.modalContent}>
+                <h2>אישור הזמנה</h2>
+                <p>רכב: {selectedCar.company} {selectedCar.model}</p>
+                <p>תאריך התחלה: {filters.startDate}</p>
+                <p>תאריך סיום: {filters.endDate}</p>
+                <p>מספר ימים: {calculateTotalDays()}</p>
+                <p>סה"כ לתשלום: ₪{calculateTotalPrice(selectedCar.price).toLocaleString()}</p>
+                <div className={styles.modalButtons}>
+                  <button 
+                    className={styles.confirmButton}
+                    onClick={confirmBooking}
+                  >
+                    אשר הזמנה
+                  </button>
+                  <button 
+                    className={styles.cancelButton}
+                    onClick={() => setShowBookingModal(false)}
+                  >
+                    ביטול
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </>
+      ) : (
+        <div className={styles.rentalContainer}>
+          <div className={styles.sideCard}>
+            <div className={styles.selectedCarSummary}>
+              <h2>פרטי ההזמנה</h2>
+              <div className={styles.carDetails}>
+                <img src={selectedCar.img_url} alt={selectedCar.model} />
+                <h3>{selectedCar.company} {selectedCar.model}</h3>
+                <p>שנה: {selectedCar.year}</p>
+              </div>
+              
+              <div className={styles.priceDetails}>
+                <p>
+                  <span>תקופת השכירה:</span>
+                  <span>{calculateTotalDays()} ימים</span>
+                </p>
+                <p>
+                  <span>מחיר ליום:</span>
+                  <span>₪{(selectedCar.price / 100).toLocaleString()}</span>
+                </p>
+                <p>
+                  <span>תוספות:</span>
+                  <span>₪{calculateAddonsTotal().toLocaleString()}</span>
+                </p>
+                <div className={styles.totalPrice}>
+                  <span>סה"כ לתשלום:</span>
+                  <span>₪{(calculateTotalPrice(selectedCar.price) + calculateAddonsTotal()).toLocaleString()}</span>
+                </div>
+              </div>
 
-      {showBookingModal && selectedCar && (
-        <div className={styles.modal}>
-          <div className={styles.modalContent}>
-            <h2>אישור הזמנה</h2>
-            <p>רכב: {selectedCar.company} {selectedCar.model}</p>
-            <p>תאריך התחלה: {filters.startDate}</p>
-            <p>תאריך סיום: {filters.endDate}</p>
-            <p>מספר ימים: {calculateTotalDays()}</p>
-            <p>סה"כ לתשלום: ₪{calculateTotalPrice(selectedCar.price).toLocaleString()}</p>
-            <div className={styles.modalButtons}>
-              <button 
-                className={styles.confirmButton}
-                onClick={confirmBooking}
-              >
-                אשר הזמנה
-              </button>
-              <button 
-                className={styles.cancelButton}
-                onClick={() => setShowBookingModal(false)}
-              >
-                ביטול
-              </button>
+              <div className={styles.actionButtons}>
+                <button className={styles.updateButton}>
+                  עדכן הזמנה
+                </button>
+                <button 
+                  className={styles.backButton}
+                  onClick={() => setIsRentingDetails(false)}
+                >
+                  חזרה לחיפוש רכבים
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.mainContent}>
+            <div className={styles.formSection}>
+              <h2>פרטי השוכר</h2>
+              <div className={styles.formGrid}>
+                <div className={styles.formGroup}>
+                  <label>שם פרטי</label>
+                  <input
+                    type="text"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
+                    placeholder="הכנס שם פרטי"
+                    required
+                  />
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label>שם משפחה</label>
+                  <input
+                    type="text"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
+                    placeholder="הכנס שם משפחה"
+                    required
+                  />
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label>אימייל</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    placeholder="example@email.com"
+                    required
+                  />
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label>טלפון</label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    placeholder="050-0000000"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.addonsSection}>
+              <h2>תוספות להשכרה</h2>
+              <div className={styles.addonsGrid}>
+                {addons.map(addon => (
+                  <div 
+                    key={addon.id} 
+                    className={`${styles.addonCard} ${selectedAddons[addon.id] ? styles.selected : ''}`}
+                  >
+                    <img src={addon.image} alt={addon.title} className={styles.addonImage} />
+                    <h3>{addon.title}</h3>
+                    <div className={styles.addonPricing}>
+                      <p className={styles.dailyPrice}>₪{addon.pricePerDay} ליום</p>
+                      <p className={styles.totalDaysPrice}>
+                        סה"כ ל-{calculateTotalDays()} ימים: ₪{addon.pricePerDay * calculateTotalDays()}
+                      </p>
+                    </div>
+                    <button 
+                      className={`${styles.addButton} ${selectedAddons[addon.id] ? styles.selected : ''}`}
+                      onClick={() => toggleAddon(addon.id)}
+                    >
+                      {selectedAddons[addon.id] ? 'הסר תוספת' : 'הוסף תוספת'}
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

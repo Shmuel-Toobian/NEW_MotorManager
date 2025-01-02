@@ -422,7 +422,71 @@ const RentCars = () => {
       formData.email &&
       formData.phone &&
       formData.address
+
     );
+  };
+
+  const handlePayment = async () => {
+    try {
+      if (!validateForm()) {
+        return;
+      }
+
+      if (!selectedCar) {
+        alert('אנא בחר רכב תחילה');
+        return;
+      }
+
+      // חישוב הסכום הסופי
+      const finalPrice = calculateTotalPrice(selectedCar.price) + calculateAddonsTotal();
+
+      const userData = {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        address: formData.address,
+        password: "Temp123!",
+        
+        // פרטי הרכב
+        carNumber: selectedCar._id,
+        rentalPeriod: {
+          startDate: filters.startDate,
+          endDate: filters.endDate,
+          totalDays: calculateTotalDays()
+        },
+        
+        totalPrice: finalPrice,
+        
+        // פרטי משלוח מפורטים
+        deliveryDetails: {
+          address: formData.address,
+          phone: formData.phone
+        },
+        
+        // שומרים גם בשורש לתאימות
+        address: formData.address,
+        phone: formData.phone
+      };
+
+      console.log('Sending to server:', userData);
+
+      const response = await axios.post('http://localhost:3000/user/signup', userData);
+      
+      if (response.data.userId) {
+        localStorage.setItem('userId', response.data.userId);
+        navigate('/payment', { 
+          state: { 
+            amount: finalPrice,
+            orderId: response.data.userId,
+            orderDetails: userData
+          } 
+        });
+      }
+
+    } catch (error) {
+      console.error('Payment Error:', error);
+      alert('שגיאה בתהליך ההזמנה: ' + (error.response?.data?.message || error.message));
+    }
   };
 
   return (
@@ -664,17 +728,7 @@ const RentCars = () => {
               <div className={styles.actionButtons}>
                 <button 
                   className={styles.updateButton} 
-                  onClick={() => {
-                    // First validate and show errors
-                    if (validateForm()) {
-                      navigate('/payment', {
-                        state: { 
-                          totalPrice: calculateTotalPrice(selectedCar.price) + calculateAddonsTotal(),
-                          formData: formData
-                        }
-                      });
-                    }
-                  }}
+                  onClick={handlePayment}
                 >
                   לתשלום
                 </button>

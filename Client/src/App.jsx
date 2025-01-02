@@ -1,7 +1,7 @@
 // App.jsx
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./store/useContext";
+import { AuthProvider } from "./store/authProvider";
 import { ThemeProvider } from './context/ThemeContext';
 import Footer from "./components/footer/Footer";
 import Home from "./Pages/Home/Home";

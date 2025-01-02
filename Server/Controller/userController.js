@@ -40,10 +40,7 @@ exports.signUp = async (req, res) => {
       password,
       phone,
       address,
-      carNumber,
-      rentalPeriod,
-      totalPrice,
-      date 
+      rentalDetails  // שינוי כאן - מקבלים את כל פרטי ההשכרה כאובייקט אחד
     } = req.body;
 
     // בדיקת שדות חובה
@@ -72,12 +69,13 @@ exports.signUp = async (req, res) => {
       password: hashedPassword,
       phone,
       address,
-      rentals: carNumber ? [{
-        carNumber,
-        rentalPeriod,
-        totalPrice,
-        date
-      }] : []
+      rentalDetails: rentalDetails ? {
+        carNumber: rentalDetails.carNumber,
+        totalDays: rentalDetails.totalDays,
+        totalPrice: rentalDetails.totalPrice,
+        startDate: rentalDetails.startDate,
+        endDate: rentalDetails.endDate
+      } : null
     });
 
     await newUser.save();
@@ -85,12 +83,7 @@ exports.signUp = async (req, res) => {
     res.status(201).json({
       message: "User created successfully.",
       userId: newUser._id,
-      rentalDetails: carNumber ? {
-        carNumber,
-        rentalPeriod,
-        totalPrice,
-        date
-      } : null
+      rentalDetails: newUser.rentalDetails
     });
 
   } catch (error) {

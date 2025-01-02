@@ -445,30 +445,20 @@ const RentCars = () => {
         lastName: formData.lastName,
         email: formData.email,
         address: formData.address,
+        phone: Number(formData.phone), // המרה למספר
         password: "Temp123!",
         
-        // פרטי הרכב
-        carNumber: selectedCar._id,
-        rentalPeriod: {
+        // פרטי ההשכרה
+        rentalDetails: {
+          carNumber: selectedCar._id,
+          totalDays: calculateTotalDays(),
+          totalPrice: finalPrice,
           startDate: filters.startDate,
-          endDate: filters.endDate,
-          totalDays: calculateTotalDays()
-        },
-        
-        totalPrice: finalPrice,
-        
-        // פרטי משלוח מפורטים
-        deliveryDetails: {
-          address: formData.address,
-          phone: formData.phone
-        },
-        
-        // שומרים גם בשורש לתאימות
-        address: formData.address,
-        phone: formData.phone
+          endDate: filters.endDate
+        }
       };
 
-      console.log('Sending to server:', userData);
+      console.log('User Data being sent:', JSON.stringify(userData, null, 2));
 
       const response = await axios.post('http://localhost:3000/user/signup', userData);
       

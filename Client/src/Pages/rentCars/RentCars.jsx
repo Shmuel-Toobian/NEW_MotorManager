@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
 import styles from './rentCars.module.css';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const RentCars = () => {
+
+  const navigate = useNavigate();
   const [cars, setCars] = useState([]);
   const [filters, setFilters] = useState({
     type: '',
@@ -313,12 +316,12 @@ const RentCars = () => {
     <div className={styles.container}>
       {!isRentingDetails ? (
         <>
-          <h1 className={styles.title}>השכרת רכבים</h1>
+          <h1 className={styles.title}>Rent Cars</h1>
           
           <div className={styles.filters}>
             <div className={styles.dateFilters}>
               <div className={styles.dateInput}>
-                <label>מתאריך:</label>
+                <label>From Date:</label>
                 <input 
                   type="date" 
                   name="startDate"
@@ -329,7 +332,7 @@ const RentCars = () => {
                 />
               </div>
               <div className={styles.dateInput}>
-                <label>עד תאריך:</label>
+                <label>To Date:</label>
                 <input 
                   type="date" 
                   name="endDate"
@@ -342,17 +345,17 @@ const RentCars = () => {
             </div>
 
             <div className={styles.filterSection}>
-              <h3>סינון לפי מאפיינים</h3>
+              <h3>Filter by attributes</h3>
               <div className={styles.selectFilters}>
                 <div className={styles.selectWrapper}>
-                  <label>חברה:</label>
+                  <label>Company:</label>
                   <select 
                     name="company" 
                     value={filters.company} 
                     onChange={handleFilterChange}
                     className={styles.select}
                   >
-                    <option value="">כל החברות</option>
+                    <option value="">All Companies</option>
                     <option value="Toyota">Toyota</option>
                     <option value="Honda">Honda</option>
                     <option value="Ford">Ford</option>
@@ -377,14 +380,14 @@ const RentCars = () => {
                 </div>
 
                 <div className={styles.selectWrapper}>
-                  <label>שנה:</label>
+                  <label>Year:</label>
                   <select 
                     name="year" 
                     value={filters.year} 
                     onChange={handleFilterChange}
                     className={styles.select}
                   >
-                    <option value="">כל השנים</option>
+                    <option value="">All Years</option>
                     <option value="2023-2024">2023-2024</option>
                     <option value="2021-2022">2021-2022</option>
                     <option value="2000-2020">2000-2020</option>
@@ -393,14 +396,14 @@ const RentCars = () => {
                 </div>
 
                 <div className={styles.selectWrapper}>
-                  <label>צבע:</label>
+                  <label>Color:</label>
                   <select 
                     name="color" 
                     value={filters.color} 
                     onChange={handleFilterChange}
                     className={styles.select}
                   >
-                    <option value="">כל הצבעים</option>
+                    <option value="">All Colors</option>
                     {[...new Set(cars.map(car => car.color))].sort().map(color => (
                       <option key={color} value={color}>{color}</option>
                     ))}
@@ -408,17 +411,17 @@ const RentCars = () => {
                 </div>
 
                 <div className={styles.selectWrapper}>
-                  <label>טווח מחירים:</label>
+                  <label>Price Range:</label>
                   <select 
                     name="size" 
                     value={filters.size} 
                     onChange={handleFilterChange}
                     className={styles.select}
                   >
-                    <option value="">כל המחירים</option>
-                    <option value="small">עד 1,000 ₪ ליום</option>
-                    <option value="medium">1,000 - 5,000 ₪ ליום</option>
-                    <option value="large">מעל 5,000 ₪ ליום</option>
+                    <option value="">All Prices</option>
+                    <option value="small">Up to 1,000 ₪ per day</option>
+                    <option value="medium">1,000 - 5,000 ₪ per day</option>
+                    <option value="large">Over 5,000 ₪ per day</option>
                   </select>
                 </div>
               </div>
@@ -430,12 +433,12 @@ const RentCars = () => {
               <div key={index} className={styles.carCard}>
                 <img src={car.img_url} alt={car.model} className={styles.carImage} />
                 <h3>{car.company} {car.model}</h3>
-                <p>שנה: {car.year}</p>
-                <p>צבע: {car.color}</p>
-                <p>מחיר ליום: ₪{(car.price / 100).toLocaleString()}</p>
+                <p>Year: {car.year}</p>
+                <p>Color: {car.color}</p>
+                <p>Price per day: ₪{(car.price / 100).toLocaleString()}</p>
                 {calculateTotalDays() > 0 && (
                   <p className={styles.totalPrice}>
-                    סה"כ ל-{calculateTotalDays()} ימים: ₪{calculateTotalPrice(car.price).toLocaleString()}
+                    Total for {calculateTotalDays()} days: ₪{calculateTotalPrice(car.price).toLocaleString()}
                   </p>
                 )}
                 <button 
@@ -445,9 +448,9 @@ const RentCars = () => {
                     handleBooking(car);
                   }}
                 >
-                  הזמן עכשיו
+                  Book Now
                 </button>
-                <p className={styles.companyName}>חברה: {car.company}</p>
+                <p className={styles.companyName}>Company: {car.company}</p>
               </div>
             ))}
           </div>
@@ -486,24 +489,24 @@ const RentCars = () => {
           {showBookingModal && selectedCar && (
             <div className={styles.modal}>
               <div className={styles.modalContent}>
-                <h2>אישור הזמנה</h2>
-                <p>רכב: {selectedCar.company} {selectedCar.model}</p>
-                <p>תאריך התחלה: {filters.startDate}</p>
-                <p>תאריך סיום: {filters.endDate}</p>
-                <p>מספר ימים: {calculateTotalDays()}</p>
-                <p>סה"כ לתשלום: ₪{calculateTotalPrice(selectedCar.price).toLocaleString()}</p>
+                <h2>Confirm Booking</h2>
+                <p>Car: {selectedCar.company} {selectedCar.model}</p>
+                <p>Start Date: {filters.startDate}</p>
+                <p>End Date: {filters.endDate}</p>
+                <p>Number of days: {calculateTotalDays()}</p>
+                <p>Total to pay: ₪{calculateTotalPrice(selectedCar.price).toLocaleString()}</p>
                 <div className={styles.modalButtons}>
                   <button 
                     className={styles.confirmButton}
                     onClick={confirmBooking}
                   >
-                    אשר הזמנה
+                    Confirm Booking
                   </button>
                   <button 
                     className={styles.cancelButton}
                     onClick={() => setShowBookingModal(false)}
                   >
-                    ביטול
+                    Cancel
                   </button>
                 </div>
               </div>
@@ -514,20 +517,20 @@ const RentCars = () => {
         <div className={styles.rentalContainer}>
           <div className={styles.sideCard}>
             <div className={styles.selectedCarSummary}>
-              <h2>פרטי ההזמנה</h2>
+              <h2>Booking Details</h2>
               <div className={styles.carDetails}>
                 <img src={selectedCar.img_url} alt={selectedCar.model} />
                 <h3>{selectedCar.company} {selectedCar.model}</h3>
-                <p>שנה: {selectedCar.year}</p>
+                <p>Year: {selectedCar.year}</p>
               </div>
               
               <div className={styles.priceDetails}>
                 <p>
-                  <span>תקופת השכירה:</span>
-                  <span>{calculateTotalDays()} ימים</span>
+                  <span>Rental Period:</span>
+                  <span>{calculateTotalDays()} days</span>
                 </p>
                 <p>
-                  <span>מחיר ליום:</span>
+                  <span>Price per day:</span>
                   <span>₪{(selectedCar.price / 100).toLocaleString()}</span>
                 </p>
                 <p>
@@ -541,14 +544,21 @@ const RentCars = () => {
               </div>
 
               <div className={styles.actionButtons}>
-                <button className={styles.updateButton}>
-                  עדכן הזמנה
+                <button 
+                  className={styles.updateButton} 
+                  onClick={() => navigate('/payment', {
+                    state: { 
+                      totalPrice: calculateTotalPrice(selectedCar.price) + calculateAddonsTotal()
+                    }
+                  })}
+                >
+                  לתשלום
                 </button>
                 <button 
                   className={styles.backButton}
                   onClick={() => setIsRentingDetails(false)}
                 >
-                  חזרה לחיפוש רכבים
+                  Back to Search
                 </button>
               </div>
             </div>
@@ -556,34 +566,34 @@ const RentCars = () => {
 
           <div className={styles.mainContent}>
             <div className={styles.formSection}>
-              <h2>פרטי השוכר</h2>
+              <h2>Renter Details</h2>
               <div className={styles.formGrid}>
                 <div className={styles.formGroup}>
-                  <label>שם פרטי</label>
+                  <label>First Name</label>
                   <input
                     type="text"
                     name="firstName"
                     value={formData.firstName}
                     onChange={handleInputChange}
-                    placeholder="הכנס שם פרטי"
+                    placeholder="Enter First Name"
                     required
                   />
                 </div>
 
                 <div className={styles.formGroup}>
-                  <label>שם משפחה</label>
+                  <label>Last Name</label>
                   <input
                     type="text"
                     name="lastName"
                     value={formData.lastName}
                     onChange={handleInputChange}
-                    placeholder="הכנס שם משפחה"
+                    placeholder="Enter Last Name"
                     required
                   />
                 </div>
 
                 <div className={styles.formGroup}>
-                  <label>אימייל</label>
+                  <label>Email</label>
                   <input
                     type="email"
                     name="email"
@@ -595,7 +605,7 @@ const RentCars = () => {
                 </div>
 
                 <div className={styles.formGroup}>
-                  <label>טלפון</label>
+                  <label>Phone</label>
                   <input
                     type="tel"
                     name="phone"
@@ -609,7 +619,7 @@ const RentCars = () => {
             </div>
 
             <div className={styles.addonsSection}>
-              <h2>תוספות להשכרה</h2>
+              <h2>Addons</h2>
               <div className={styles.addonsGrid}>
                 {addons.map(addon => (
                   <div 
@@ -621,7 +631,7 @@ const RentCars = () => {
                     <div className={styles.addonPricing}>
                       <p className={styles.dailyPrice}>₪{addon.pricePerDay} ליום</p>
                       <p className={styles.totalDaysPrice}>
-                        סה"כ ל-{calculateTotalDays()} ימים: ₪{addon.pricePerDay * calculateTotalDays()}
+                        Total for {calculateTotalDays()} days: ₪{addon.pricePerDay * calculateTotalDays()}
                       </p>
                     </div>
                     <button 

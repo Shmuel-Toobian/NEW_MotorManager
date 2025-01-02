@@ -5,10 +5,21 @@
   }
   
   .title {
-    font-size: 3rem;
-    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 5rem;
+    font-weight: 800;
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, #2193b0, #6dd5ed);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+
+  .title:hover {
+    transform: scale(1.05);
   }
 
   .p {
@@ -107,8 +118,10 @@
     left: 0;
     right: 0;
     display: flex;
-    justify-content: space-between;
-    padding: 0 20px;
+    justify-content: flex-end;
+    padding: 1.5rem 2rem;
+    background: linear-gradient(to right, #add8e6, #87ceeb);
+    width: 100%;
   }
   
   .arrow {
@@ -319,5 +332,75 @@
     padding: 0.75rem;
     border: 1px solid #ddd;
     border-radius: 4px;
+  }
+  
+  .nav a {
+    margin-left: 2rem;
+    font-size: 1.1rem;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 2rem;
+    font-family: 'Poppins', sans-serif;
+    margin-top: 50px;
+  }
+
+  .leftContent {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+    flex: 1;
+    align-items: center;
+  }
+
+  .subtitle {
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: #666;
+    letter-spacing: 1px;
+    opacity: 0.9;
+    max-width: 600px;
+    line-height: 1.4;
+    margin-bottom: 1rem;
+    animation: fadeIn 1s ease-out;
+  }
+
+  .searchContainer {
+    width: 300px;
+    margin-right: 100px;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .carImage {
+    width: 600px;
+    height: auto;
+    margin-top: 3rem;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.2));
+    animation: floatAnimation 6s ease-in-out infinite;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 0.9;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes floatAnimation {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
   }
   

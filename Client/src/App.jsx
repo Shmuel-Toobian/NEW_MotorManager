@@ -14,6 +14,7 @@ import Map from "./components/map/Map";
 import RentCars from "./Pages/rentCars/RentCars";
 import Payment from "./Pages/payment/Payment";
 import { AuthProvider } from "./store/authProvider";
+import { About } from "./Pages/About/About";
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/rentcars" element={<RentCars/>} />
+            <Route path="/about" element={<About/>} />
             <Route path="/payment" element={<Payment/>} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />

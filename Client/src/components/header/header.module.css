@@ -1,7 +1,7 @@
 .header {
   width: 100%;
   padding: 20px;
-  background: linear-gradient(135deg, #2b5876, #4e4376);
+  background: linear-gradient(135deg, #2b5876, #b5b0cb);
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
@@ -84,4 +84,31 @@
 
 .navOut:hover::after {
   width: 100%;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  background: linear-gradient(to left, #ffffff, #e6f3ff);
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+}
+
+.logo {
+  height: 80px;
+  width: auto;
+  object-fit: contain;
+}
+
+.navLinks {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav a {
+  margin-left: 2rem;
+  font-size: 1.1rem;
 }

@@ -30,11 +30,13 @@ const RentCars = () => {
     lastName: '',
     email: '',
     phone: '',
+    address: '',
     marketingConsent: false,
     termsConsent: false
   });
   const [selectedAddons, setSelectedAddons] = useState({});
   const [searchParams] = useSearchParams();
+  const [formErrors, setFormErrors] = useState({});
 
   const addons = [
     {
@@ -358,9 +360,16 @@ const RentCars = () => {
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
-      ...prev,
+    const newFormData = {
+      ...formData,
       [name]: type === 'checkbox' ? checked : value
+    };
+    setFormData(newFormData);
+
+    // Clear error when user starts typing
+    setFormErrors(prev => ({
+      ...prev,
+      [name]: ''
     }));
   };
 
@@ -375,6 +384,45 @@ const RentCars = () => {
     return addons.reduce((total, addon) => {
       return total + (selectedAddons[addon.id] ? addon.pricePerDay * calculateTotalDays() : 0);
     }, 0);
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    let isValid = true;
+
+    if (!formData.firstName.trim()) {
+      newErrors.firstName = 'נא למלא שם פרטי';
+      isValid = false;
+    }
+    if (!formData.lastName.trim()) {
+      newErrors.lastName = 'נא למלא שם משפחה';
+      isValid = false;
+    }
+    if (!formData.email.trim()) {
+      newErrors.email = 'נא למלא כתובת אימייל';
+      isValid = false;
+    }
+    if (!formData.phone.trim()) {
+      newErrors.phone = 'נא למלא מספר טלפון';
+      isValid = false;
+    }
+    if (!formData.address.trim()) {
+      newErrors.address = 'נא למלא כתובת';
+      isValid = false;
+    }
+
+    setFormErrors(newErrors);
+    return isValid;
+  };
+
+  const isFormComplete = () => {
+    return Boolean(
+      formData.firstName &&
+      formData.lastName &&
+      formData.email &&
+      formData.phone &&
+      formData.address
+    );
   };
 
   return (
@@ -616,11 +664,17 @@ const RentCars = () => {
               <div className={styles.actionButtons}>
                 <button 
                   className={styles.updateButton} 
-                  onClick={() => navigate('/payment', {
-                    state: { 
-                      totalPrice: calculateTotalPrice(selectedCar.price) + calculateAddonsTotal()
+                  onClick={() => {
+                    // First validate and show errors
+                    if (validateForm()) {
+                      navigate('/payment', {
+                        state: { 
+                          totalPrice: calculateTotalPrice(selectedCar.price) + calculateAddonsTotal(),
+                          formData: formData
+                        }
+                      });
                     }
-                  })}
+                  }}
                 >
                   לתשלום
                 </button>
@@ -646,8 +700,11 @@ const RentCars = () => {
                     value={formData.firstName}
                     onChange={handleInputChange}
                     placeholder="Enter First Name"
-                    required
+                    className={`${formErrors.firstName ? styles.inputError : ''}`}
                   />
+                  {formErrors.firstName && (
+                    <span className={styles.errorMessage}>{formErrors.firstName}</span>
+                  )}
                 </div>
 
                 <div className={styles.formGroup}>
@@ -658,8 +715,11 @@ const RentCars = () => {
                     value={formData.lastName}
                     onChange={handleInputChange}
                     placeholder="Enter Last Name"
-                    required
+                    className={`${formErrors.lastName ? styles.inputError : ''}`}
                   />
+                  {formErrors.lastName && (
+                    <span className={styles.errorMessage}>{formErrors.lastName}</span>
+                  )}
                 </div>
 
                 <div className={styles.formGroup}>
@@ -670,8 +730,11 @@ const RentCars = () => {
                     value={formData.email}
                     onChange={handleInputChange}
                     placeholder="example@email.com"
-                    required
+                    className={`${formErrors.email ? styles.inputError : ''}`}
                   />
+                  {formErrors.email && (
+                    <span className={styles.errorMessage}>{formErrors.email}</span>
+                  )}
                 </div>
 
                 <div className={styles.formGroup}>
@@ -682,8 +745,26 @@ const RentCars = () => {
                     value={formData.phone}
                     onChange={handleInputChange}
                     placeholder="050-0000000"
-                    required
+                    className={`${formErrors.phone ? styles.inputError : ''}`}
                   />
+                  {formErrors.phone && (
+                    <span className={styles.errorMessage}>{formErrors.phone}</span>
+                  )}
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label>Address</label>
+                  <input
+                    type="text"
+                    name="address"
+                    value={formData.address}
+                    onChange={handleInputChange}
+                    placeholder="Enter your full address"
+                    className={`${formErrors.address ? styles.inputError : ''}`}
+                  />
+                  {formErrors.address && (
+                    <span className={styles.errorMessage}>{formErrors.address}</span>
+                  )}
                 </div>
               </div>
             </div>

@@ -11,6 +11,7 @@ import Map from "./components/map/Map";
 import RentCars from "./Pages/rentCars/RentCars";
 import Payment from "./Pages/payment/Payment";
 import { useAuth } from "./store/authProvider";
+import { NotFound } from "./Pages/notFound/notFound";
 
 function AppRoutes() {
   const { user } = useAuth();
@@ -27,6 +28,7 @@ function AppRoutes() {
         {user?.role === "admin" && <Route path="/cars" element={<Cars />} />}
         {user?.role === "admin" && <Route path="/addcar" element={<AddCar />} />}
         {user?.role === "admin" && <Route path="/map" element={<Map />} />}
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </Router>

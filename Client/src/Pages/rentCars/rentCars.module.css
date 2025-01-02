@@ -427,10 +427,10 @@
   }
   
   .formGroup input {
-    padding: 15px;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    font-size: 1.1rem;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
   }
   
   .formGroup input:focus {
@@ -531,4 +531,28 @@
   
   .addonsSection h2 {
     font-size: 1.5rem;
+  }
+  
+  .inputError {
+    border: 2px solid #ff4444 !important;
+    background-color: #fff8f8 !important;
+  }
+  
+  .errorMessage {
+    color: #ff4444;
+    font-size: 0.8rem;
+    margin-top: 4px;
+    display: block;
+  }
+  
+  .formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 16px;
+  }
+  
+  .updateButton:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
   }

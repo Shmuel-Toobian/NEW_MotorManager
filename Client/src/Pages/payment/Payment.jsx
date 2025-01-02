@@ -39,6 +39,7 @@ const Payment = () => {
             <div className={styles.paymentContainer}>
             <div ref={paypal}></div>
             </div>
+            
         </>
     )
 }

@@ -20,12 +20,15 @@ const Header = ({outUser, setCars}) => {
   return (
     <header className={style.header}>
       <div className={style.navs}>
-        <nav className={style.navItem} onClick={() => navigate("/login")}>
-          Login
-        </nav>
-        <nav className={style.navItem} onClick={() => navigate("/signup")}>
-          Signup
-        </nav>
+        <img src="/logo.png" alt="WheelWay Logo" className={style.logo} />
+        <div className={style.navLinks}>
+          <nav className={style.navItem} onClick={() => navigate("/about")}>
+            About
+          </nav>
+          <nav className={style.navItem} onClick={() => navigate("/signup")}>
+            Signup
+          </nav>
+        </div>
       </div>
 
       <div>

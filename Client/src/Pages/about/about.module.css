@@ -1,0 +1,165 @@
+.aboutContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  min-height: 100vh;
+  margin-top: 100px;
+}
+
+.title {
+  text-align: center;
+  color: #1a237e;
+  margin-bottom: 3rem;
+  font-size: 3rem;
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(to right, #1a237e, #3949ab);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.intro {
+  font-size: 1.3rem;
+  line-height: 1.8;
+  text-align: center;
+  color: #424242;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2.5rem;
+  margin: 2rem 0;
+}
+
+.featureCard {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  transition: all 0.4s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.featureCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(to right, #1a237e, #3949ab);
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+}
+
+.featureCard:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.featureCard:hover::before {
+  transform: scaleX(1);
+}
+
+.featureCard h3 {
+  color: #1a237e;
+  margin-bottom: 1.2rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.featureCard p {
+  color: #616161;
+  line-height: 1.6;
+  font-size: 1.1rem;
+}
+
+.contactSection {
+  background: white;
+  padding: 3rem;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.contactSection::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, rgba(26, 35, 126, 0.05), rgba(57, 73, 171, 0.05));
+  z-index: 0;
+}
+
+.contactSection > * {
+  position: relative;
+  z-index: 1;
+}
+
+.contactSection h2 {
+  color: #1a237e;
+  margin-bottom: 2rem;
+  font-size: 2.2rem;
+  font-weight: 600;
+}
+
+.contactInfo {
+  margin: 1.5rem 0;
+}
+
+.contactSection p {
+  color: #424242;
+  margin: 0.8rem 0;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
+}
+
+.contactSection p:hover {
+  color: #1a237e;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 2.5rem;
+  }
+  
+  .intro {
+    font-size: 1.2rem;
+    padding: 1.5rem;
+  }
+  
+  .featureCard h3 {
+    font-size: 1.4rem;
+  }
+  
+  .contactSection {
+    padding: 2rem;
+  }
+}

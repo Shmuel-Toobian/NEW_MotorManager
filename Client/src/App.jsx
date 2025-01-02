@@ -2,8 +2,11 @@
 import React from "react";
 import { ThemeProvider } from './context/ThemeContext';
 
+
+
 import { AuthProvider, useAuth } from "./store/authProvider";
 import AppRoutes from "./AppRoutes";
+
 
 
 function App() {
@@ -12,7 +15,9 @@ function App() {
   return (
     <ThemeProvider>
       <AuthProvider>
+
       <AppRoutes/>
+
       </AuthProvider>
     </ThemeProvider>
   );

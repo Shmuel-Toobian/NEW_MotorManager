@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import styles from './rentCars.module.css';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const RentCars = () => {
 
@@ -34,6 +34,7 @@ const RentCars = () => {
     termsConsent: false
   });
   const [selectedAddons, setSelectedAddons] = useState({});
+  const [searchParams] = useSearchParams();
 
   const addons = [
     {
@@ -63,34 +64,95 @@ const RentCars = () => {
   ];
 
   useEffect(() => {
-    fetchCars();
-  }, []);
+    const loadCarsAndApplyFilters = async () => {
+      try {
+        console.log('Starting to fetch cars...');
+        const response = await axios.get("http://localhost:3000/cars");
+        console.log('Car data received:', response.data);
+        
+        const carsWithImages = response.data.map(car => ({
+          ...car,
+          category: car.category || '',
+          price: car.price || 0,
+          color: car.color || '',
+          img_url: car.image || 'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg'
+        }));
+        
+        setCars(carsWithImages);
+        
+        const params = Object.fromEntries(searchParams.entries());
+        console.log('URL params:', params);
+        
+        if (Object.keys(params).length > 0) {
+          setFilters(prev => ({
+            ...prev,
+            company: params.company || '',
+            type: params.type || '',
+            size: params.size || '',
+            year: params.year || '',
+            color: params.color || '',
+            location: params.location || ''
+          }));
+          
+          let filtered = [...carsWithImages];
+          
+          if (params.company) {
+            filtered = filtered.filter(car => 
+              car.company.toLowerCase() === params.company.toLowerCase()
+            );
+          }
+          if (params.type) {
+            filtered = filtered.filter(car => 
+              car.category.toLowerCase() === params.type.toLowerCase()
+            );
+          }
+          if (params.size) {
+            switch(params.size) {
+              case 'small':
+                filtered = filtered.filter(car => car.price < 100000);
+                break;
+              case 'medium':
+                filtered = filtered.filter(car => car.price >= 100000 && car.price < 500000);
+                break;
+              case 'large':
+                filtered = filtered.filter(car => car.price >= 500000);
+                break;
+            }
+          }
+          if (params.year) {
+            const [startYear, endYear] = params.year.split('-').map(Number);
+            filtered = filtered.filter(car => {
+              const carYear = Number(car.year);
+              return carYear >= startYear && carYear <= endYear;
+            });
+          }
+          if (params.color) {
+            filtered = filtered.filter(car => {
+              const carColor = car.color.toLowerCase().trim();
+              const searchColor = params.color.toLowerCase().trim();
+              return carColor === searchColor;
+            });
+          }
+          if (params.location) {
+            filtered = filtered.filter(car => 
+              car.location && car.location.toLowerCase().includes(params.location.toLowerCase())
+            );
+          }
+
+          console.log('Filtered results:', filtered);
+          setFilteredCars(filtered);
+        } else {
+          setFilteredCars(carsWithImages);
+        }
+      } catch (error) {
+        console.error('Error in loadCarsAndApplyFilters:', error);
+      }
+    };
+
+    loadCarsAndApplyFilters();
+  }, [searchParams]);
 
   axios.defaults.withCredentials = true
-
-  const fetchCars = async () => {
-    try {
-      const response = await axios.get("http://localhost:3000/cars");
-      console.log('Car data from JSON:', response.data);
-      
-      const carsWithImages = response.data.map(car => ({
-        ...car,
-        category: car.category || '',
-        price: car.price || 0,
-        color: car.color || '',
-        img_url: car.image || 'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg'
-      }));
-      
-      console.log('Processed cars:', carsWithImages);
-      
-      setCars(carsWithImages);
-      setFilteredCars(carsWithImages);
-    } catch (error) {
-      console.error('Error fetching cars:', error);
-      setCars([]);
-      setFilteredCars([]);
-    }
-  };
 
   const validateDates = (startDate, endDate) => {
     if (!startDate || !endDate) {
@@ -152,9 +214,17 @@ const RentCars = () => {
   };
 
   const filterCars = (currentFilters) => {
-    let filtered = [...cars];
-    console.log('Before filtering:', filtered);
+    console.log('Filtering cars with filters:', currentFilters);
+    console.log('Available cars:', cars);
     
+    let filtered = [...cars];
+    
+    if (currentFilters.company) {
+      console.log('Filtering by company:', currentFilters.company);
+      filtered = filtered.filter(car => 
+        car.company.toLowerCase() === currentFilters.company.toLowerCase()
+      );
+    }
     if (currentFilters.type) {
       filtered = filtered.filter(car => car.category.toLowerCase() === currentFilters.type.toLowerCase());
     }
@@ -171,11 +241,6 @@ const RentCars = () => {
           break;
       }
     }
-    if (currentFilters.company) {
-      filtered = filtered.filter(car => 
-        car.company.toLowerCase().includes(currentFilters.company.toLowerCase())
-      );
-    }
     if (currentFilters.year) {
       const [startYear, endYear] = currentFilters.year.split('-').map(Number);
       filtered = filtered.filter(car => {
@@ -189,7 +254,7 @@ const RentCars = () => {
       );
     }
 
-    console.log('After filtering:', filtered);
+    console.log('Filtered results:', filtered);
     setFilteredCars(filtered);
   };
 
@@ -404,9 +469,14 @@ const RentCars = () => {
                     className={styles.select}
                   >
                     <option value="">All Colors</option>
-                    {[...new Set(cars.map(car => car.color))].sort().map(color => (
-                      <option key={color} value={color}>{color}</option>
-                    ))}
+                    <option value="black">Black</option>
+                    <option value="white">White</option>
+                    <option value="red">Red</option>
+                    <option value="blue">Blue</option>
+                    <option value="green">Green</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="orange">Orange</option>
+                    <option value="purple">Purple</option>
                   </select>
                 </div>
 

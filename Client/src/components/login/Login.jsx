@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { AuthProvider } from "../../store/authProvider";
+import { useAuth } from "../../store/authProvider";
 import style from "./login.module.css";  // ייבוא ה-CSS מודול
 
 const Login = () => {

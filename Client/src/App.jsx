@@ -12,6 +12,8 @@ import Login from "./components/login/Login";
 import AddCar from "./components/cars/AddCar";
 import Map from "./components/map/Map";
 import RentCars from "./Pages/rentCars/RentCars";
+import Payment from "./Pages/payment/Payment";
+import { AuthProvider } from "./store/authProvider";
 
 
 function App() {
@@ -23,6 +25,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/rentcars" element={<RentCars/>} />
+            <Route path="/payment" element={<Payment/>} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/cars" element={<Cars />} />

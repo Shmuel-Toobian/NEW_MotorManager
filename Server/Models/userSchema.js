@@ -7,10 +7,15 @@ const userSchema = new mongoose.Schema({
         enum: ['user', 'admin'],
         default: "user",
    },
-    name:{
+    firstName:{
         type: String,
         required: [true, 'Name is requierd!']
     },
+    lastName:{
+        type: String,
+        required: [true, 'Name is requierd!']
+    },
+
 
     email:{
         type: String,
@@ -22,11 +27,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Password is requierd!']
     },
-    // phone:{
-    //     type: Number,
-    //     required: [true, 'Phone is requierd!']
-    // },
-    addres: {
+    phone:{
+        type: Number,
+        required: [true, 'Phone is requierd!']
+    },
+    address: {
         type: String,
       },
 

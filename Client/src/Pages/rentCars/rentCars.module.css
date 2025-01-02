@@ -299,6 +299,7 @@
     margin: 0 auto;
     padding: 20px;
     direction: rtl;
+    margin-top: 100px;
   }
   
   .sideCard {
@@ -555,4 +556,30 @@
   .updateButton:disabled {
     background-color: #cccccc;
     cursor: not-allowed;
+  }
+  
+  .paymentSection {
+    margin: 20px 0;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+  }
+  
+  .paypalContainer {
+    min-height: 150px;
+    margin: 20px 0;
+  }
+  
+  .paymentButton {
+    padding: 10px 20px;
+    background-color: #0070ba;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .paymentButton:hover {
+    background-color: #005ea6;
   }

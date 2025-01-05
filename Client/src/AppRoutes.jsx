@@ -12,6 +12,7 @@ import RentCars from "./Pages/rentCars/RentCars";
 import Payment from "./Pages/payment/Payment";
 import { useAuth } from "./store/authProvider";
 import { NotFound } from "./Pages/notFound/notFound";
+import { AdminPanel } from "./Pages/admin/adminPanel";
 
 function AppRoutes() {
   const { user } = useAuth();
@@ -25,6 +26,8 @@ function AppRoutes() {
         <Route path="/payment" element={<Payment />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+
+        {user?.role === "admin" && <Route path="/admin" element={<AdminPanel/>} />}
         {user?.role === "admin" && <Route path="/cars" element={<Cars />} />}
         {user?.role === "admin" && <Route path="/addcar" element={<AddCar />} />}
         {user?.role === "admin" && <Route path="/map" element={<Map />} />}

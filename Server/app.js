@@ -17,6 +17,7 @@ const corsOptions = {
 app.use(cookieParser());  // וודא שאתה מחבר את cookie-parser לפני שהשרת מתחיל לקבל בקשות
 
 app.use(cors(corsOptions));
+
 app.use(indexRoutes)
 
 const port = process.env.PORT || 3000;
@@ -41,7 +42,8 @@ conect_db();
 //       res.status(500).json({ error: error.message });
 //     }
 //   });
-  
+
+
 
 
 app.listen(port, () => {

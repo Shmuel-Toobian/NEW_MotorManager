@@ -2,11 +2,13 @@ import React, { useEffect, useRef } from 'react'
 import styles from './payment.module.css';
 import { useLocation } from 'react-router-dom';
 
+
 const Payment = () => {
 
   const paypal = useRef();
   const location = useLocation();
   const finalPrice = location.state?.totalPrice || 100; // fallback to 100 if no price passed
+  console.log("Final Price:", finalPrice);
 
     useEffect(() => {
         window.paypal.Buttons({
@@ -39,7 +41,6 @@ const Payment = () => {
             <div className={styles.paymentContainer}>
             <div ref={paypal}></div>
             </div>
-            
         </>
     )
 }

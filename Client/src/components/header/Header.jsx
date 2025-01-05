@@ -25,8 +25,8 @@ const Header = ({outUser, setCars}) => {
           <nav className={style.navItem} onClick={() => navigate("/about")}>
             About
           </nav>
-          <nav className={style.navItem} onClick={() => navigate("/signup")}>
-            Signup
+          <nav className={style.navItem} onClick={() => navigate("/renters")}>
+            Renters
           </nav>
         </div>
       </div>

@@ -31,6 +31,18 @@ exports.getUser = async (req, res) => {
   }
 };
 
+exports.getAllUsers = async (req, res) => {
+  try {
+   
+    const users = await userSchema.find()
+    res.status(200).json({ users });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to retrieve user", error: error.message });
+  }
+};
+
+
 exports.signUp = async (req, res) => {
   try {
     const { 

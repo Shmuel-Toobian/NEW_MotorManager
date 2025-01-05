@@ -34,23 +34,23 @@ const userSchema = new mongoose.Schema({
     rentalDetails: {
         carNumber: {
             type: String,
-            required: true
+            // required: true
         },
         totalDays: {
             type: Number,
-            required: true
+            // required: true
         },
         totalPrice: {
             type: Number,
-            required: true
+            // required: true
         },
         startDate: {
             type: String,  // שיניתי ל-String כי זה מגיע כ-ISO string
-            required: true
+            // required: true
         },
         endDate: {
             type: String,  // שיניתי ל-String כי זה מגיע כ-ISO string
-            required: true
+            // required: true
         }
     },
     date: {

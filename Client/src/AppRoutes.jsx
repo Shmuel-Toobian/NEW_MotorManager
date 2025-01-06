@@ -16,8 +16,6 @@ import { NotFound } from "./Pages/notFound/notFound";
 import { AdminPanel } from "./Pages/admin/adminPanel";
 import Renters from "./Pages/admin/renters/Renters";
 import Profile from "./Pages/profile/Profile";
-
-import Renters from "./components/renters/Renters";
 import CarWash from "./Pages/employees/CarWash";
 
 

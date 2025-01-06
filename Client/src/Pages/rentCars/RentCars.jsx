@@ -439,7 +439,8 @@ const RentCars = () => {
 
       // חישוב הסכום הסופי
       const finalPrice = calculateTotalPrice(selectedCar.price) + calculateAddonsTotal();
-
+      // מספר הרכב מהרכב שנבחר
+      const carNumber = selectedCar.carNumber;
       const userData = {
         firstName: formData.firstName,
         lastName: formData.lastName,
@@ -450,7 +451,7 @@ const RentCars = () => {
         
         // פרטי ההשכרה
         rentalDetails: {
-          carNumber: selectedCar._id,
+          carNumber: carNumber,
           totalDays: calculateTotalDays(),
           totalPrice: finalPrice,
           startDate: filters.startDate,
@@ -608,6 +609,8 @@ const RentCars = () => {
                 <p>Year: {car.year}</p>
                 <p>Color: {car.color}</p>
                 <p>Price per day: ₪{(car.price / 100).toLocaleString()}</p>
+
+                <p className={styles.carNumber}>מספר רכב: {car.carNumber}</p>
                 {calculateTotalDays() > 0 && (
                   <p className={styles.totalPrice}>
                     Total for {calculateTotalDays()} days: ₪{calculateTotalPrice(car.price).toLocaleString()}

@@ -17,6 +17,7 @@ import { NotFound } from "./Pages/notFound/notFound";
 import { AdminPanel } from "./Pages/admin/adminPanel";
 
 import Renters from "./components/renters/Renters";
+import CarWash from "./Pages/employees/CarWash";
 
 
 function AppRoutes() {
@@ -26,6 +27,7 @@ function AppRoutes() {
     <Router>
       <Header />
       <Routes>
+        <Route path="/about" element={<About />} />
         <Route path="/" element={<Home />} />
         <Route path="/rentcars" element={<RentCars />} />
         <Route path="/payment" element={<Payment />} />
@@ -36,8 +38,11 @@ function AppRoutes() {
         {user?.role === "admin" && <Route path="/cars" element={<Cars />} />}
         {user?.role === "admin" && <Route path="/addcar" element={<AddCar />} />}
         {user?.role === "admin" && <Route path="/map" element={<Map />} />}
-        { <Route path="/renters" element={<Renters />} />}
-        { <Route path="/about" element={<About />} />}
+        {user?.role === "admin" &&  <Route path="/renters" element={<Renters />} />}
+
+        
+        {user?.role === "admin" &&  <Route path="/wash" element={<CarWash />} />}
+
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

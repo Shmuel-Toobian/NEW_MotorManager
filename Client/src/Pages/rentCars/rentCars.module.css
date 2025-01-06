@@ -583,3 +583,12 @@
   .paymentButton:hover {
     background-color: #005ea6;
   }
+  
+  .carNumber {
+    font-weight: bold;
+    color: #333;
+    margin: 8px 0;
+    padding: 4px 8px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+  }

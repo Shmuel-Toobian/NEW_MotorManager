@@ -64,6 +64,11 @@ const carSchema = new mongoose.Schema({
   location: {
     type: String,
   },
+  isWashed:{
+    type:Boolean,
+    default: true,
+
+  },
 });
 
 module.exports = mongoose.model("carSchemas", carSchema);

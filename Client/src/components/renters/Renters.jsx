@@ -13,7 +13,8 @@ const Renters = () => {
       try {
         const response = await axios.get('http://localhost:3000/user/renters');
         if (response.data.users && Array.isArray(response.data.users)) {
-          setRenters(response.data.users);
+          const filteredRenters = response.data.users.filter(user => user.role !== 'admin');
+          setRenters(filteredRenters);
         } else {
           throw new Error('המידע שהתקבל אינו בפורמט הנכון');
         }
@@ -91,7 +92,11 @@ const Renters = () => {
                     <h4>פרטי השכרה:</h4>
                     <div className={styles.infoItem}>
                       <span className={styles.icon}>🚗</span>
-                      מספר רכב: {user.rentalDetails.carNumber}
+                      דגם: {user.rentalDetails.model}
+                    </div>
+                    <div className={styles.infoItem}>
+                      <span className={styles.icon}>🔢</span>
+                      מספר רכב: {user.selectedCar?.carNumber}
                     </div>
                     <div className={styles.infoItem}>
                       <span className={styles.icon}>📅</span>
@@ -102,7 +107,7 @@ const Renters = () => {
                       תאריך סיום: {new Date(user.rentalDetails.endDate).toLocaleDateString()}
                     </div>
                     <div className={styles.infoItem}>
-                      <span className={styles.icon}>⏱</span>
+                      <span className={styles.icon}>⏱️</span>
                       מספר ימים: {user.rentalDetails.totalDays}
                     </div>
                     <div className={styles.infoItem}>

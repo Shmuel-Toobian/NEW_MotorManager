@@ -24,12 +24,40 @@ const verifyToken = (req) => {
   }
 };
 
+
+exports.getPendingWashRentals = async (req, res) => {
+  try {
+    const rentals = await Rental.find({ isWashed: false });
+    res.status(200).json({ rentals });
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to fetch rentals', error: error.message });
+  }
+};
+
+exports.updateCarWashStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const rental = await Rental.findByIdAndUpdate(
+      id,
+      { 
+        isWashed: true,
+        washedAt: new Date()
+      },
+      { new: true }
+    );
+    res.status(200).json({ rental });
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to update rental', error: error.message });
+  }
+};
+
 exports.addCar = async (req, res) => {
   try {
     const userId = verifyToken(req);
     if (!userId) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
+    
 
     
     const {
@@ -86,12 +114,12 @@ exports.addCar = async (req, res) => {
 
 exports.getCars = async (req, res) => {
   try {
-    const userId = verifyToken(req);
-    console.log('User ID:', userId);
+    // const userId = verifyToken(req);
+    // console.log('User ID:', userId);
 
-    if (!userId) {
-      return res.status(401).json({ message: "Unauthorized" });
-    }
+    // if (!userId) {
+    //   return res.status(401).json({ message: "Unauthorized" });
+    // }
 
     const cars = await carSchema.find()
 

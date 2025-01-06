@@ -1,0 +1,179 @@
+.profileContainer {
+    max-width: 800px;
+    margin: 3rem auto;
+    padding: 3rem;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    margin-top: 100px;
+    width: 700px;
+  }
+  
+  .profileHeader {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid #f0f0f0;
+  }
+  
+  .profileCircle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 2.5rem;
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+    border: 4px solid white;
+  }
+  
+  .profileDetails {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .detailItem {
+    display: flex;
+    padding: 1.2rem;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    border: 1px solid #eee;
+  }
+  
+  .detailItem:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    background-color: white;
+    border-color: #3498db;
+  }
+  
+  .label {
+    font-weight: 600;
+    min-width: 120px;
+    color: #2c3e50;
+  }
+  
+  h1 {
+    margin: 0;
+    color: #2c3e50;
+    font-size: 2.2rem;
+    font-weight: 600;
+  }
+  
+  @media (max-width: 768px) {
+    .profileContainer {
+      margin: 1rem;
+      padding: 1.5rem;
+    }
+
+    .profileHeader {
+      flex-direction: column;
+      text-align: center;
+      gap: 1rem;
+    }
+
+    .detailItem {
+      padding: 1rem;
+    }
+  }
+
+  .passwordSection {
+    width: 100%;
+  }
+
+  .passwordForm {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .passwordInputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .passwordInputGroup label {
+    font-weight: 500;
+  }
+
+  .inputWithToggle {
+    display: flex;
+    gap: 8px;
+  }
+
+  .passwordInput {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+
+  .buttonGroup {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .toggleButton,
+  .editButton,
+  .saveButton,
+  .cancelButton {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+  }
+
+  .toggleButton {
+    background-color: #e0e0e0;
+    min-width: 60px;
+  }
+
+  .editButton {
+    background-color: #2196f3;
+    color: white;
+  }
+
+  .saveButton {
+    background-color: #4caf50;
+    color: white;
+    flex: 1;
+  }
+
+  .saveButton:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+  .cancelButton {
+    background-color: #f44336;
+    color: white;
+    flex: 1;
+  }
+
+  .error {
+    color: #f44336;
+    font-size: 14px;
+    margin-top: 8px;
+  }
+
+  .toggleButton:hover,
+  .editButton:hover,
+  .saveButton:hover:not(:disabled),
+  .cancelButton:hover {
+    filter: brightness(0.9);
+  }

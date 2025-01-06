@@ -194,44 +194,6 @@ function Home() {
           </div>
         </div>
       </section>
-
-      <section className={styles.showcase}>
-        <h2>Featured Vehicles</h2>
-        <div className={styles.carousel}>
-          <div 
-            className={styles.carouselTrack} 
-            style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-          >
-            {images.map((image, index) => (
-              <div key={index} className={styles.carouselSlide}>
-                <img
-                  src={image}
-                  alt={`Slide ${index + 1}`}
-                  className={styles.carouselImage}
-                />
-              </div>
-            ))}
-          </div>
-          <button 
-            className={`${styles.carouselButton} ${styles.carouselButtonLeft}`} 
-            onClick={prevSlide}
-          >
-            &#8592;
-          </button>
-          <button 
-            className={`${styles.carouselButton} ${styles.carouselButtonRight}`} 
-            onClick={nextSlide}
-          >
-            &#8594;
-          </button>
-        </div>
-      </section>
-
-      <section className={styles.cta}>
-        <h2>Ready to Hit the Road?</h2>
-        <p>Find your perfect rental car today</p>
-        <button onClick={() => navigate('/rentcars')}>See our cars</button>
-      </section>
     </div>
   );
 }

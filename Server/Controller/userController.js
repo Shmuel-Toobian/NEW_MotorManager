@@ -161,3 +161,21 @@ exports.deleteCookie = async(req, res)=>{
   }
 
 }
+
+exports.updatePassword = async (req, res) => {
+  try {
+    const { userId, newPassword, currentPassword } = req.body;
+    const findUser = await userSchema.findById(userId);
+    const chekPassword = await bcrypt.compare(currentPassword, findUser.password);
+    if(!chekPassword){
+      return res.status(404).json({ message: "Password invalid" });
+    }
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    await userSchema.findByIdAndUpdate(userId, { password: hashedPassword });
+    res.status(200).json({ message: "Password updated successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json(error.message);
+  }
+};
+

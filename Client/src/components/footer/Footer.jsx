@@ -4,13 +4,27 @@ import style from './footer.module.css';
 const Footer = () => {
   return (
     <footer className={style.footer}>
-      <h1 className={style.title}>Garage</h1>
-      <div className={style.icons}>
-        <i className={`${style.icon} ${style.whatsapp} bi bi-whatsapp`}></i>
-        <i className={`${style.icon} ${style.youtube} bi bi-youtube`}></i>
-        <i className={`${style.icon} ${style.facebook} bi bi-facebook`}></i>
-        <i className={`${style.icon} ${style.instagram} bi bi-instagram`}></i>
-        <i className={`${style.icon} ${style.twitter} bi bi-twitter-x`}></i>
+      <div className={style.footerContent}>
+        <div className={style.companyInfo}>
+          <h1 className={style.title}>Whellway</h1>
+          <p className={style.rights}>© All rights reserved - Eliran and Shmuel</p>
+        </div>
+
+        <div className={style.contactInfo}>
+          <div className={style.contactItem}>
+            <i className="bi bi-telephone"></i>
+            <span>051-277-8815</span>
+          </div>
+          <div className={style.contactItem}>
+            <i className="bi bi-envelope"></i>
+            <span>wheelway@email.com</span>
+          </div>
+          <div className={style.hours}>
+            <p>Hours:</p>
+            <p>Monday-Friday: 08:00-19:00</p>
+            <p>Saturday: 08:00-13:00</p>
+          </div>
+        </div>
       </div>
     </footer>
   );

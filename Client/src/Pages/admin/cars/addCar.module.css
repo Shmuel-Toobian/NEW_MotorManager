@@ -18,7 +18,7 @@
 .progress {
   position: absolute;
   height: 100%;
-  background: #2196f3;
+  background: linear-gradient(to right, #2c5364, #52a1d4);
   transition: width 0.3s ease;
   border-radius: 4px;
 }
@@ -47,8 +47,8 @@
 }
 
 .step.active {
-  border-color: #2196f3;
-  background: #2196f3;
+  border-color: #52a1d4;
+  background: linear-gradient(135deg, #2c5364, #52a1d4);
   color: white;
 }
 
@@ -71,8 +71,8 @@
 }
 
 .formInput:focus {
-  border-color: #1976d2;
-  box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+  border-color: #52a1d4;
+  box-shadow: 0 0 0 3px rgba(82, 161, 212, 0.1);
   background-color: #ffffff;
 }
 
@@ -112,34 +112,38 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .nextBtn {
-  background: #1976d2;
+  background: linear-gradient(135deg, #2c5364, #3f7a9c, #52a1d4);
   color: white;
   margin-left: auto;
+  box-shadow: 0 4px 15px rgba(82, 161, 212, 0.2);
 }
 
 .prevBtn {
-  background: #e0e0e0;
-  color: #757575;
+  background: rgba(44, 83, 100, 0.1);
+  color: #2c5364;
 }
 
 .submitBtn {
-  background: #2e7d32;
+  background: linear-gradient(135deg, #2c5364, #3f7a9c, #52a1d4);
   color: white;
   margin-left: auto;
+  box-shadow: 0 4px 15px rgba(82, 161, 212, 0.2);
 }
 
 .nextBtn:hover, 
 .submitBtn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 20px rgba(82, 161, 212, 0.3);
+  background: linear-gradient(135deg, #365878, #52a1d4, #64b5f6);
 }
 
 .prevBtn:hover {
-  background: #d5d5d5;
+  background: rgba(44, 83, 100, 0.15);
+  transform: translateY(-2px);
 }
 
 .imagePreview {

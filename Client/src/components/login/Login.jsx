@@ -42,14 +42,17 @@ const Login = () => {
         required
         className={style.loginInput}
       />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        required
-        className={style.loginInput}
-      />
+      <div>
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          className={style.loginInput}
+        />
+        <small className={style.passwordHint}>Default password: 1234</small>
+      </div>
       <button type="submit" className={style.loginButton}>
         Login
       </button>

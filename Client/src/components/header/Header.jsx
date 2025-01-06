@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import style from "./header.module.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../store/authProvider";
 
-const Header = ({outUser, setCars}) => {
+const Header = () => {
+  const { user } = useAuth();
+  console.log("Current user:", user);
 
+  const navigate = useNavigate();
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const deleteCookie = async () => {
     try {
@@ -16,30 +21,51 @@ const Header = ({outUser, setCars}) => {
     }
   }
   
-  const navigate = useNavigate();
   return (
     <header className={style.header}>
       <div className={style.navs}>
-        <img src="/logo.png" alt="WheelWay Logo" className={style.logo} />
+        <img src="/logo.png" alt="WheelWay Logo" className={style.logo} onClick={() => navigate("/")}/>
         <div className={style.navLinks}>
-          <nav className={style.navItem} onClick={() => navigate("/about")}>
-            About
+          <nav className={style.nav} onClick={() => navigate("/about")}>
+            About us
           </nav>
-          <nav className={style.navItem} onClick={() => navigate("/renters")}>
-            Renters
+          <nav className={style.nav} onClick={() => navigate("/rentcars")}>
+            Our cars
+          </nav>
+          {user?.role === "admin" && <nav className={style.nav} onClick={() => navigate("/admin")}>Admin</nav>}
+          <nav className={style.nav} onClick={() => navigate("/login")}>
+            Login
           </nav>
         </div>
       </div>
 
-      <div>
-        {outUser && (
-          <nav className={style.navOut} onClick={() => { 
-            deleteCookie(); 
-            navigate("/"); 
-            // setCars([])
-        }}>
-            Signout
-          </nav>
+      <div className={style.profileSection}>
+        {user && (
+          <div className={style.profileContainer}>
+            <img
+              src={`https://avatar.iran.liara.run/username?username=${user.firstName} ${user.lastName}`}
+              alt="Profile"
+              className={style.profileImage}
+              onClick={() => setShowDropdown(!showDropdown)}
+            />
+            {showDropdown && (
+              <div className={style.dropdown}>
+                <div className={style.dropdownItem} onClick={() => {
+                  navigate("/profile");
+                  setShowDropdown(false);
+                }}>
+                  Profile
+                </div>
+                <div className={style.dropdownItem} onClick={() => {
+                  deleteCookie();
+                  setShowDropdown(false);
+                }}>
+                  Logout
+                </div>
+                
+              </div>
+            )}
+          </div>
         )}
       </div>
     </header>

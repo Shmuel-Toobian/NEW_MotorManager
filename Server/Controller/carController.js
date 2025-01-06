@@ -121,6 +121,7 @@ exports.getCars = async (req, res) => {
     //   return res.status(401).json({ message: "Unauthorized" });
     // }
 
+   
     const cars = await carSchema.find()
 
     res.status(200).json(cars);

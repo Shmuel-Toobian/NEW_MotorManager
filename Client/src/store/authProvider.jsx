@@ -35,8 +35,21 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const updatePassword = async (userId, currentPassword, newPassword) => {
+    try {
+      const response = await axios.post('http://localhost:3000/user/updatePassword', {
+        userId,
+        currentPassword,
+        newPassword
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, setUser, isLoading, logout }}>
+    <AuthContext.Provider value={{ user, setUser, isLoading, logout, updatePassword }}>
       {children}
     </AuthContext.Provider>
   );

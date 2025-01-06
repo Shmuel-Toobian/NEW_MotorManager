@@ -591,4 +591,63 @@
     padding: 4px 8px;
     background-color: #f5f5f5;
     border-radius: 4px;
+
+
+}
+  .formSection {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+  }
+  
+  .formSection h2 {
+    color: #333;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    text-align: center;
+  }
+  
+  .formGrid {
+    display: grid;
+    gap: 1.5rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .formGroup label {
+    font-weight: 600;
+    color: #555;
+    font-size: 0.9rem;
+  }
+  
+  .formGroup input {
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+  }
+  
+  .formGroup input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+  }
+  
+  .inputError {
+    border-color: #dc3545 !important;
+  }
+  
+  .errorMessage {
+    color: #dc3545;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
   }

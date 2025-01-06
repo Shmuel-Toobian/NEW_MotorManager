@@ -164,9 +164,9 @@ const Cars = () => {
         </div>
       </div>
 
-      <Link to="/addcar">
-        <button className={style.addButton}>Add a Car</button>
-      </Link>
+      
+        <button onClick={() => navigate('/addcar')} className={style.addButton}>Add a Car</button>
+      
       <div className={style.carsList}>
         {filteredCars.map((car, index) => (
           <Car

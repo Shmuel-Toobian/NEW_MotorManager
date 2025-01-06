@@ -111,7 +111,17 @@ exports.addCar = async (req, res) => {
   }
 };
 
-
+exports.washedCar = async (req, res) => {
+  try {
+    const car = await carSchema.findOne({ carNumber: req.params.carNumber });
+    if (!car) {
+      return res.status(404).json({ message: 'Car not found' });
+    }
+    res.json({ isWashed: car.isWashed });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
 exports.getCars = async (req, res) => {
   try {
     // const userId = verifyToken(req);

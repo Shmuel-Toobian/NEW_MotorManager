@@ -478,6 +478,17 @@ const RentCars = () => {
       console.error('Payment Error:', error);
       alert('שגיאה בתהליך ההזמנה: ' + (error.response?.data?.message || error.message));
     }
+
+ 
+  };
+
+  const changeCarWashStatus = async (carNumber) => {
+    try {
+      const response = await axios.put(`http://localhost:3000/cars/${carNumber}`, { isWashed: false });
+      console.log('Car wash status updated:', response.data);
+    } catch (error) {
+      console.error('Error updating car wash status:', error);
+    }
   };
 
   return (
@@ -721,7 +732,10 @@ const RentCars = () => {
               <div className={styles.actionButtons}>
                 <button 
                   className={styles.updateButton} 
-                  onClick={handlePayment}
+                  onClick={() => {
+                    changeCarWashStatus(selectedCar.carNumber);
+                    handlePayment();
+                  }}
                 >
                   לתשלום
                 </button>

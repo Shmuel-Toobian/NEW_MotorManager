@@ -1,5 +1,5 @@
 const express = require("express");
-const { addCar, getCars, updateCar, deleteCar, getPendingWashRentals, updateCarWashStatus } = require("../Controller/carController");
+const { addCar, getCars, updateCar, deleteCar, getPendingWashRentals, updateCarWashStatus, washedCar } = require("../Controller/carController");
 const { adminAuthenticationMiddleware } = require("../middlewares/authMiddleware");
 const router = express.Router();
 
@@ -16,6 +16,10 @@ router.delete('/:carNumber' , deleteCar)
 
 router.get('/wash',  getPendingWashRentals)
 router.put('/wash/:carNumber',updateCarWashStatus )
+
+
+router.get('/status/:carNumber',washedCar )
+
 
 
 

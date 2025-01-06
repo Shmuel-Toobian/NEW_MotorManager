@@ -10,4 +10,8 @@ router.get("/renters",getAllUsers);
 router.post('/logout', deleteCookie)
 router.post('/updatePassword', updatePassword)
 
+
+
+
+
 module.exports = router;

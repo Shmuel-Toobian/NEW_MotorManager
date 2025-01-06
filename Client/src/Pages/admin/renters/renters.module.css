@@ -179,3 +179,24 @@
 .activePage:hover {
   background-color: #0056b3;
 }
+
+.washStatus {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  text-align: center;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.washed {
+  background-color: #e6ffe6;
+  color: #008000;
+  border: 1px solid #00b300;
+}
+
+.notWashed {
+  background-color: #fff0f0;
+  color: #cc0000;
+  border: 1px solid #ff3333;
+}

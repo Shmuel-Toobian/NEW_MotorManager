@@ -54,17 +54,19 @@ h1 {
   display: block;
   margin: 0 auto 2rem;
   padding: 12px 24px;
-  background-color: #28a745;
+  background: #3498db;
   color: white;
   border: none;
-  border-radius: 25px;
+  border-radius: 8px;
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  text-decoration: none;
 }
 
 .addButton:hover {
-  background-color: #218838;
+  background: #315872;
+  text-decoration: none;
 }
 
 .carsList {

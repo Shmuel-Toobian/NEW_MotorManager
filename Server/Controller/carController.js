@@ -86,13 +86,7 @@ exports.addCar = async (req, res) => {
 
 exports.getCars = async (req, res) => {
   try {
-    const userId = verifyToken(req);
-    console.log('User ID:', userId);
-
-    if (!userId) {
-      return res.status(401).json({ message: "Unauthorized" });
-    }
-
+   
     const cars = await carSchema.find()
 
     res.status(200).json(cars);

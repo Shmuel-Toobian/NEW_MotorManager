@@ -7,6 +7,8 @@ const Renters = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [expandedCard, setExpandedCard] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const rentersPerPage = 9;
 
   useEffect(() => {
     const fetchRenters = async () => {
@@ -15,7 +17,7 @@ const Renters = () => {
         if (response.data.users && Array.isArray(response.data.users)) {
           setRenters(response.data.users);
         } else {
-          throw new Error('המידע שהתקבל אינו בפורמט הנכון');
+          throw new Error('The information received is not in the correct format');
         }
       } catch (err) {
         console.error('Error fetching users:', err);
@@ -32,15 +34,27 @@ const Renters = () => {
     setExpandedCard(expandedCard === userId ? null : userId);
   };
 
-  if (loading) return <div className={styles.container}>טוען...</div>;
-  if (error) return <div className={styles.container}>שגיאה: {error}</div>;
-  if (!renters.length) return <div className={styles.container}>אין משתמשים להצגה</div>;
+  const getCurrentRenters = () => {
+    const indexOfLastRenter = currentPage * rentersPerPage;
+    const indexOfFirstRenter = indexOfLastRenter - rentersPerPage;
+    return renters.slice(indexOfFirstRenter, indexOfLastRenter);
+  };
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const totalPages = Math.ceil(renters.length / rentersPerPage);
+
+  if (loading) return <div className={styles.container}>Loading...</div>;
+  if (error) return <div className={styles.container}>Error: {error}</div>;
+  if (!renters.length) return <div className={styles.container}>No orders to display</div>;
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>רשימת משתמשים</h1>
+      <h1 className={styles.title}>Orders</h1>
       <div className={styles.cardsGrid}>
-        {renters.map((user) => (
+        {getCurrentRenters().map((user) => (
           <div 
             key={user._id} 
             className={styles.card}
@@ -126,6 +140,37 @@ const Renters = () => {
             </button>
           </div>
         ))}
+      </div>
+
+      <div className={styles.pagination}>
+        <button 
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className={styles.pageButton}
+        >
+          הבא
+        </button>
+        
+        {[...Array(totalPages)].reverse().map((_, index) => {
+          const pageNumber = totalPages - index;
+          return (
+            <button
+              key={pageNumber}
+              onClick={() => handlePageChange(pageNumber)}
+              className={`${styles.pageButton} ${currentPage === pageNumber ? styles.activePage : ''}`}
+            >
+              {pageNumber}
+            </button>
+          );
+        })}
+        
+        <button 
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className={styles.pageButton}
+        >
+          הקודם
+        </button>
       </div>
     </div>
   );

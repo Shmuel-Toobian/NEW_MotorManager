@@ -23,12 +23,12 @@ export const AdminPanel = () => {
             </div>
             
             <div className={styles.section}>
-                <h2 className={styles.sectionTitle}>Users Management</h2>
+                <h2 className={styles.sectionTitle}>Renters Management</h2>
                 <button 
                     className={styles.button}
                     onClick={() => navigate('/renters')}
                 >
-                    Users
+                    Renter
                 </button>
             </div>
         </div>

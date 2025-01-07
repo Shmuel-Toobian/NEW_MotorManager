@@ -447,7 +447,7 @@ const RentCars = () => {
         email: formData.email,
         address: formData.address,
         phone: Number(formData.phone), // המרה למספר
-        password: "Temp123!",
+        password: "1234",
         
         // פרטי ההשכרה
         rentalDetails: {

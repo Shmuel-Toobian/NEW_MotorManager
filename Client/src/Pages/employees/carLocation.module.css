@@ -144,31 +144,16 @@
 
 .pageButton {
   padding: 0.5rem 1rem;
-  border: 1px solid #dee2e6;
+  border: 1px solid #ccc;
   background: white;
   cursor: pointer;
   border-radius: 4px;
-  transition: all 0.2s;
-}
-
-.pageButton:hover:not(:disabled) {
-  background: #e9ecef;
-}
-
-.pageButton:disabled {
-  background: #f8f9fa;
-  cursor: not-allowed;
-  opacity: 0.6;
 }
 
 .activePage {
   background: #007bff;
   color: white;
   border-color: #007bff;
-}
-
-.activePage:hover {
-  background: #0056b3;
 }
 
 /* Loading and Error States */

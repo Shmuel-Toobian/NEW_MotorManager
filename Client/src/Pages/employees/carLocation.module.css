@@ -1,0 +1,184 @@
+.container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  direction: rtl;
+}
+
+.title {
+  text-align: center;
+  color: #333;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  transition: transform 0.2s ease;
+  position: relative;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.cardHeader {
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+.userName {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 1.25rem;
+}
+
+.basicInfo {
+  margin-bottom: 1rem;
+}
+
+.infoItem {
+  display: flex;
+  align-items: center;
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.icon {
+  margin-left: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.expandedInfo {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.expandButton {
+  width: 100%;
+  padding: 0.5rem;
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.2s;
+}
+
+.expandButton:hover {
+  background: #e9ecef;
+}
+
+.locationEdit {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.locationEdit input {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  flex: 1;
+}
+
+.locationEdit button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.locationEdit button:first-of-type {
+  background: #28a745;
+  color: white;
+}
+
+.locationEdit button:last-of-type {
+  background: #dc3545;
+  color: white;
+}
+
+.locationEdit button:hover {
+  opacity: 0.9;
+}
+
+.editButton {
+  margin-right: 1rem;
+  padding: 0.3rem 0.8rem;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.editButton:hover {
+  background: #0056b3;
+}
+
+/* Pagination Styles */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.pageButton {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  background: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.activePage {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+/* Loading and Error States */
+.container > div:only-child {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .cardsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .locationEdit {
+    flex-direction: column;
+  }
+
+  .locationEdit button {
+    width: 100%;
+  }
+} 

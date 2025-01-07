@@ -27,7 +27,7 @@ const verifyToken = (req) => {
 
 exports.getPendingWashRentals = async (req, res) => {
   try {
-    const rentals = await Rental.find({ isWashed: false });
+    const rentals = await carSchema.find({ isWashed: false });
     res.status(200).json({ rentals });
   } catch (error) {
     res.status(500).json({ message: 'Failed to fetch rentals', error: error.message });
@@ -37,7 +37,7 @@ exports.getPendingWashRentals = async (req, res) => {
 exports.updateCarWashStatus = async (req, res) => {
   try {
     const { id } = req.params;
-    const rental = await Rental.findByIdAndUpdate(
+    const rental = await carSchema.findByIdAndUpdate(
       id,
       { 
         isWashed: true,

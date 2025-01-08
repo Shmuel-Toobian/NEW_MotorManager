@@ -1,11 +1,12 @@
 // Cars.jsx
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom"; 
+import { Link, useNavigate } from "react-router-dom"; 
 import axios from "axios";
 import Car from "./Car";
 import style from "./cars.module.css";
 
 const Cars = () => {
+  const navigate = useNavigate()
   axios.defaults.withCredentials = true
 
   const [cars, setCars] = useState([]);
@@ -17,6 +18,8 @@ const Cars = () => {
     price: "",
     color: '',
   });
+  const [currentPage, setCurrentPage] = useState(1);
+  const carsPerPage = 9;
 
   const getCars = async () => {
     try {
@@ -81,6 +84,18 @@ const Cars = () => {
       (!filters.color || car.color.toLowerCase() === selectedColor)
     );
   });
+
+  const getCurrentCars = () => {
+    const indexOfLastCar = currentPage * carsPerPage;
+    const indexOfFirstCar = indexOfLastCar - carsPerPage;
+    return filteredCars.slice(indexOfFirstCar, indexOfLastCar);
+  };
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const totalPages = Math.ceil(filteredCars.length / carsPerPage);
 
   return (
     <div className={style.container}>
@@ -168,7 +183,7 @@ const Cars = () => {
         <button onClick={() => navigate('/addcar')} className={style.addButton}>Add a Car</button>
       
       <div className={style.carsList}>
-        {filteredCars.map((car, index) => (
+        {getCurrentCars().map((car, index) => (
           <Car
             key={index}
             image={car.image}
@@ -188,6 +203,37 @@ const Cars = () => {
             getCars={getCars}
           />
         ))}
+      </div>
+
+      <div className={style.pagination}>
+        <button 
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className={style.pageButton}
+        >
+          הבא
+        </button>
+        
+        {[...Array(totalPages)].reverse().map((_, index) => {
+          const pageNumber = totalPages - index;
+          return (
+            <button
+              key={pageNumber}
+              onClick={() => handlePageChange(pageNumber)}
+              className={`${style.pageButton} ${currentPage === pageNumber ? style.activePage : ''}`}
+            >
+              {pageNumber}
+            </button>
+          );
+        })}
+        
+        <button 
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className={style.pageButton}
+        >
+          קודם
+        </button>
       </div>
     </div>
   );

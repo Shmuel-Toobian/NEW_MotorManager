@@ -79,6 +79,10 @@ const carSchema = new mongoose.Schema({
     default: true,
 
   },
+  isReturn:{
+    type:Boolean,
+    default: true,
+  },
 });
 
-module.exports = mongoose.model("carSchemas", carSchema);
+module.exports = mongoose.model("carSchemas", carSchema);

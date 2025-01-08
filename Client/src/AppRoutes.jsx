@@ -18,6 +18,7 @@ import Renters from "./Pages/admin/renters/Renters";
 import Profile from "./Pages/profile/Profile";
 import CarWash from "./Pages/employees/CarWash";
 import CarLocation from "./Pages/employees/carLocation";
+import ReturnCar from "./components/returnCar/ReturnCar";
 
 
 function AppRoutes() {
@@ -34,6 +35,7 @@ function AppRoutes() {
         <Route path="/payment" element={<Payment />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/returncar" element={<ReturnCar />} />
 
 
         {/* Admin */}

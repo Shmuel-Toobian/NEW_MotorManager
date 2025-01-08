@@ -1,11 +1,12 @@
 // Cars.jsx
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom"; 
 import axios from "axios";
 import Car from "./Car";
 import style from "./cars.module.css";
 
 const Cars = () => {
+  const navigate = useNavigate();
   axios.defaults.withCredentials = true
 
   const [cars, setCars] = useState([]);

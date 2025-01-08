@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import styles from './rentCars.module.css';
 import axios from 'axios';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import Payment from '../payment/Payment';
 
 const RentCars = () => {
 
@@ -428,29 +429,13 @@ const RentCars = () => {
 
   const handlePayment = async () => {
     try {
-      if (!validateForm()) {
-        return;
-      }
-
-      if (!selectedCar) {
-        alert('אנא בחר רכב תחילה');
-        return;
-      }
-
-      // חישוב הסכום הסופי
-      const finalPrice = calculateTotalPrice(selectedCar.price) + calculateAddonsTotal();
-      
-      // מספר הרכב מהרכב שנבחר
-      const carNumber = selectedCar.carNumber;
       const userData = {
         firstName: formData.firstName,
         lastName: formData.lastName,
         email: formData.email,
         address: formData.address,
-        phone: Number(formData.phone), // המרה למספר
+        phone: Number(formData.phone),
         password: "1234",
-        
-        // פרטי ההשכרה
         rentalDetails: {
           carNumber: carNumber,
           totalDays: calculateTotalDays(),
@@ -459,29 +444,17 @@ const RentCars = () => {
           endDate: filters.endDate
         }
       };
-
-      console.log('User Data being sent:', JSON.stringify(userData, null, 2));
-
       const response = await axios.post('http://localhost:3000/user/signup', userData);
-      
-      if (response.data.userId) {
+      if (response.data.userId) 
+        {
         localStorage.setItem('userId', response.data.userId);
-        navigate('/payment', { 
-          state: { 
-            amount: finalPrice,
-            orderId: response.data.userId,
-            orderDetails: userData
-          } 
-        });
       }
-
     } catch (error) {
       console.error('Payment Error:', error);
       alert('שגיאה בתהליך ההזמנה: ' + (error.response?.data?.message || error.message));
     }
-
- 
   };
+
 
   const changeCarWashStatus = async (carNumber) => {
     try {
@@ -734,8 +707,8 @@ const RentCars = () => {
                 <button 
                   className={styles.updateButton} 
                   onClick={() => {
-                    changeCarWashStatus(selectedCar.carNumber);
-                    handlePayment();
+                    navigate('/payment');
+                    <Payment handlePayment={handlePayment} />
                   }}
                 >
                   לתשלום

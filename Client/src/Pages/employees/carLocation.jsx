@@ -1,204 +1,241 @@
+// import { useState, useEffect } from 'react';
+// import axios from 'axios';
+// import styles from './carLocation.module.css';
+
+// const CarLocation = () => {
+//   const [users, setUsers] = useState([]);
+//   const [cars, setCars] = useState([]);
+//   const [error, setError] = useState(null);
+//   const [loading, setLoading] = useState(true);
+//   const [expandedCard, setExpandedCard] = useState(null);
+
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       try {
+//         const rentersResponse = await axios.get('http://localhost:3000/user/renters');
+//         const carsResponse = await axios.get('http://localhost:3000/cars');
+
+//         if (rentersResponse.data.users && Array.isArray(rentersResponse.data.users)) {
+//           const filteredUsers = rentersResponse.data.users.filter((user) => user.role !== 'admin');
+//           setUsers(filteredUsers);
+//         } else {
+//           throw new Error('המידע על השוכרים אינו בפורמט הנכון');
+//         }
+
+//         setCars(carsResponse.data);
+//       } catch (err) {
+//         console.error('שגיאה בטעינת נתונים:', err);
+//         setError('שגיאה בטעינת הנתונים');
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+
+//     fetchData();
+//   }, []);
+
+//   const toggleCard = (userId) => {
+//     setExpandedCard(expandedCard === userId ? null : userId);
+//   };
+
+//   if (loading) return <div className={styles.container}>טוען...</div>;
+//   if (error) return <div className={styles.container}>שגיאה: {error}</div>;
+//   if (!users.length) return <div className={styles.container}>אין שוכרים להצגה</div>;
+
+//   return (
+//     <div className={styles.container}>
+//       <h1 className={styles.title}>מיקומי רכבים</h1>
+//       <div className={styles.cardsGrid}>
+//         {users.map((user) => {
+//           const car = cars.find((c) => c.carNumber === user.rentalDetails?.carNumber);
+//           return (
+//             <div key={user._id} className={styles.card}>
+//               <div className={styles.cardHeader}>
+//                 <h3 className={styles.userName}>{user.firstName} {user.lastName}</h3>
+//                 <p className={styles.carNumber}>מספר רכב: {user.rentalDetails?.carNumber || 'לא צוין'}</p>
+//               </div>
+//               <div className={styles.basicInfo}>
+//                 <div className={styles.infoItem}>
+//                   <span className={styles.icon}>📞</span>
+//                   טלפון: {user.phone || 'לא צוין'}
+//                 </div>
+//                 <div className={styles.infoItem}>
+//                   <span className={styles.icon}>📍</span>
+//                   כתובת: {user.address || 'לא צוין'}
+//                 </div>
+//                 <div className={styles.infoItem}>
+//                   <span className={styles.icon}>📅</span>
+//                   תאריך השכרה: {user.rentalDetails?.startDate ? new Date(user.rentalDetails.startDate).toLocaleDateString() : 'לא צוין'}
+//                 </div>
+//               </div>
+//               <button 
+//                 className={styles.expandButton} 
+//                 onClick={() => toggleCard(user._id)}
+//               >
+//                 {expandedCard === user._id ? 'הסתר פרטים' : 'הצג עוד'}
+//               </button>
+//               {expandedCard === user._id && car && (
+//                 <div className={styles.expandedInfo}>
+//                   <h4>פרטי רכב</h4>
+//                   <div className={styles.infoItem}>
+//                     <span className={styles.icon}>🚗</span>
+//                     מספר רכב: {car.carNumber}
+//                   </div>
+//                   <div className={styles.infoItem}>
+//                     <span className={styles.icon}>📍</span>
+//                     מיקום נוכחי: {car.location || 'לא צוין'}
+//                   </div>
+//                   <div className={styles.infoItem}>
+//                     <span className={styles.icon}>📅</span>
+//                     תאריך עדכון: {car.lastUpdated ? new Date(car.lastUpdated).toLocaleDateString() : 'לא צוין'}
+//                   </div>
+//                 </div>
+//               )}
+//             </div>
+//           );
+//         })}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default CarLocation;
+
+
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from './carLocation.module.css';
-import { useAuth } from '../../store/authProvider';
 
 const CarLocation = () => {
-  // ========== State Management ==========
-  const { user } = useAuth();
   const [users, setUsers] = useState([]);
+  const [cars, setCars] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [expandedCard, setExpandedCard] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [editingLocation, setEditingLocation] = useState(null);
-  const [newLocation, setNewLocation] = useState('');
-  const usersPerPage = 9;
+  const [editingCar, setEditingCar] = useState(null); // מזהה רכב לעריכה
+  const [newLocation, setNewLocation] = useState(''); // מיקום חדש
 
-  // ========== Data Fetching ==========
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/user/renters');
-        const response2 = await axios.get('http://localhost:3000/cars');
-        const cars = response2.data;
-        console.log(cars);
-        console.log(cars[0].location);
-        
+        const rentersResponse = await axios.get('http://localhost:3000/user/renters');
+        const carsResponse = await axios.get('http://localhost:3000/cars');
 
-        if (response.data.users && Array.isArray(response.data.users)) {
-          const filteredUsers = response.data.users.filter(user => user.role !== 'admin');
+        if (rentersResponse.data.users && Array.isArray(rentersResponse.data.users)) {
+          const filteredUsers = rentersResponse.data.users.filter((user) => user.role !== 'admin');
           setUsers(filteredUsers);
         } else {
-          throw new Error('המידע שהתקבל אינו בפורמט הנכון');
+          throw new Error('המידע על השוכרים אינו בפורמט הנכון');
         }
+
+        setCars(carsResponse.data);
       } catch (err) {
-        console.error('שגיאה בטעינת משתמשים:', err);
-        setError(err.message);
+        console.error('שגיאה בטעינת נתונים:', err);
+        setError('שגיאה בטעינת הנתונים');
       } finally {
         setLoading(false);
       }
     };
 
-    fetchUsers();
+    fetchData();
   }, []);
 
-
-
-  // ========== Handlers ==========
   const toggleCard = (userId) => {
     setExpandedCard(expandedCard === userId ? null : userId);
-  };
-
-  const getCurrentUsers = () => {
-    const indexOfLastUser = currentPage * usersPerPage;
-    const indexOfFirstUser = indexOfLastUser - usersPerPage;
-    return users.slice(indexOfFirstUser, indexOfLastUser);
-  };
-
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
   };
 
   const handleLocationUpdate = async (carNumber) => {
     try {
       const response = await axios.put(`http://localhost:3000/cars/${carNumber}`, {
-        location: newLocation
+        location: newLocation,
       });
-        setEditingLocation(null);
-        setNewLocation('');
-        console.log('המיקום עודכן בהצלחה');
+      setCars((prevCars) =>
+        prevCars.map((car) =>
+          car.carNumber === carNumber ? { ...car, location: newLocation } : car
+        )
+      );
+      setEditingCar(null); // סיום מצב עריכה
+      setNewLocation(''); // איפוס שדה המיקום
+      console.log('המיקום עודכן בהצלחה');
     } catch (err) {
       console.error('שגיאה בעדכון המיקום:', err);
       setError('שגיאה בעדכון המיקום');
     }
   };
 
-  const totalPages = Math.ceil(users.length / usersPerPage);
-
-  // ========== Render Conditions ==========
   if (loading) return <div className={styles.container}>טוען...</div>;
   if (error) return <div className={styles.container}>שגיאה: {error}</div>;
-  if (!users.length) return <div className={styles.container}>אין משתמשים להצגה</div>;
+  if (!users.length) return <div className={styles.container}>אין שוכרים להצגה</div>;
 
-  // ========== Render ==========
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>מיקומי רכבים</h1>
       <div className={styles.cardsGrid}>
-        {getCurrentUsers().map((user) => (
-          <div key={user._id} className={styles.card}>
-            <div className={styles.cardHeader}>
-              <h3 className={styles.userName}>{user.firstName} {user.lastName}</h3>
-            </div>``
 
-            <div className={styles.basicInfo}>
-              <div className={styles.infoItem}>
-                <span className={styles.icon}>📧</span>
-                {user.email}
-              </div> 
-              {user.rentalDetails && (
+        {users.map((user) => {
+          const car = cars.find((c) => c.carNumber === user.rentalDetails?.carNumber);
+          return (
+            <div key={user._id} className={styles.card}>
+              <div className={styles.cardHeader}>
+                <h3 className={styles.userName}>{user.firstName} {user.lastName}</h3>
+                <p className={styles.carNumber}>מספר רכב: {user.rentalDetails?.carNumber || 'לא צוין'}</p>
+              </div>
+              <div className={styles.basicInfo}>
+
                 <div className={styles.infoItem}>
-                  <span className={styles.icon}>🚗</span>
-                  {user.rentalDetails.model} - {user.rentalDetails.carNumber}
+                  <span className={styles.icon}>📞</span>
+                  טלפון: {user.phone || 'לא צוין'}
+                </div>
+                <div className={styles.infoItem}>
+                  <span className={styles.icon}>📍</span>
+                  כתובת: {user.address || 'לא צוין'}
+                </div>
+                <div className={styles.infoItem}>
+                  <span className={styles.icon}>📅</span>
+                  תאריך השכרה: {user.rentalDetails?.startDate ? new Date(user.rentalDetails.startDate).toLocaleDateString() : 'לא צוין'}
+                </div>
+              </div>
+              <button 
+                className={styles.expandButton} 
+                onClick={() => toggleCard(user._id)}
+              >
+                {expandedCard === user._id ? 'הסתר פרטים' : 'הצג עוד'}
+              </button>
+              {expandedCard === user._id && car && (
+                <div className={styles.expandedInfo}>
+                  <h4>פרטי רכב</h4>
+                  <div className={styles.infoItem}>
+                    <span className={styles.icon}>🚗</span>
+                    מספר רכב: {car.carNumber}
+                  </div>
+                  <div className={styles.infoItem}>
+                    <span className={styles.icon}>📍</span>
+                    מיקום נוכחי: {car.location || 'לא צוין'}
+                  </div>
+                  {editingCar === car.carNumber ? (
+                    <div className={styles.editLocation}>
+                      <input
+                        type="text"
+                        value={newLocation}
+                        onChange={(e) => setNewLocation(e.target.value)}
+                        placeholder="הזן מיקום חדש"
+                      />
+                      <button onClick={() => handleLocationUpdate(car.carNumber)}>שמור</button>
+                      <button onClick={() => setEditingCar(null)}>ביטול</button>
+                    </div>
+                  ) : (
+                    <button onClick={() => setEditingCar(car.carNumber)}>
+                      עדכן מיקום
+                    </button>
+                  )}
                 </div>
               )}
-
-              <div className={styles.infoItem}>
-                <span className={styles.icon}>📍</span>
-                {editingLocation === user._id ? (
-                  <div className={styles.locationEdit}>
-                    <input
-                      type="text"
-                      value={newLocation}
-                      onChange={(e) => setNewLocation(e.target.value)}
-                      placeholder="הכנס מיקום חדש"
-                    />
-                    <button onClick={() => handleLocationUpdate(user.rentalDetails.carNumber)}>שמור</button>
-                    <button onClick={() => setEditingLocation(null)}>ביטול</button>
-                  </div>
-                ) : (
-                  <>
-                    {user.carDetails?.location || 'לא צוין מיקום'}
-                    <button 
-                      className={styles.editButton}
-                      onClick={() => setEditingLocation(user._id)}
-                    >
-                      ערוך מיקום
-                    </button>
-                  </>
-                )}
-              </div>
             </div>
-
-            {expandedCard === user._id && (
-              <div className={styles.expandedInfo}>
-                {user.rentalDetails && (
-                  <div className={styles.rentalInfo}>
-                    <h4>פרטי השכרה:</h4>
-                    <div className={styles.infoItem}>
-                      <span className={styles.icon}>📅</span>
-                      תאריך התחלה: {new Date(user.rentalDetails.startDate).toLocaleDateString()}
-                    </div>
-                    <div className={styles.infoItem}>
-                      <span className={styles.icon}>📅</span>
-                      תאריך סיום: {new Date(user.rentalDetails.endDate).toLocaleDateString()}
-                    </div>
-                    <div className={styles.infoItem}>
-                      <span className={styles.icon}>⏱️</span>
-                      מספר ימים: {user.rentalDetails.totalDays}
-                    </div>
-                    <div className={styles.infoItem}>
-                      <span className={styles.icon}>📍</span>
-                     חדש מיקום: {user.address}
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-
-            <button 
-              className={styles.expandButton}
-              onClick={() => toggleCard(user._id)}
-            >
-              {expandedCard === user._id ? 'הצג פחות' : 'הצג עוד'}
-            </button>
-          </div>
-        ))}
-      </div>
-
-      <div className={styles.pagination}>
-        <button 
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
-          className={styles.pageButton}
-        >
-          הבא
-        </button>
-        
-        {[...Array(totalPages)].reverse().map((_, index) => {
-          const pageNumber = totalPages - index;
-          return (
-            <button
-              key={pageNumber}
-              onClick={() => handlePageChange(pageNumber)}
-              className={`${styles.pageButton} ${currentPage === pageNumber ? styles.activePage : ''}`}
-            >
-              {pageNumber}
-            </button>
           );
         })}
-        
-        <button 
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-          className={styles.pageButton}
-        >
-          הקודם
-        </button>
       </div>
     </div>
   );
 };
 
-export default CarLocation;
+export default CarLocation;

@@ -7,39 +7,37 @@ export const AdminPanel = () => {
     
     return (
         <div className={styles.adminContainer}>
-            <br />
-            <br />  
-            <br />
-            <h1 className={styles.title}>Admin Panel</h1>
-            
-            <div className={styles.section}>
-                <h2 className={styles.sectionTitle}>Cars Management</h2>
-                <button 
-                    className={styles.button}
-                    onClick={() => navigate('/cars')}
-                >
-                    Cars
-                </button>
+            <div className={styles.welcomeSection}>
+                <h1 className={styles.welcomeTitle}>WheelWay</h1>
+                <h2 className={styles.welcomeText}>Welcome to the Admin Panel</h2>
+                <img 
+                    src="/carm.png" 
+                    alt="Car" 
+                    className={styles.carImage}
+                />
             </div>
             
-            <div className={styles.section}>
-                <h2 className={styles.sectionTitle}>Renters Management</h2>
-                <button 
-                    className={styles.button}
-                    onClick={() => navigate('/renters')}
-                >
-                    Renter
-                </button>
-            </div>
+            <div className={styles.menuSection}>
+                <div className={styles.section}>
+                    <h2 className={styles.sectionTitle}>Cars Management</h2>
+                    <button className={styles.button} onClick={() => navigate('/cars')}>
+                        Cars
+                    </button>
+                </div>
+                
+                <div className={styles.section}>
+                    <h2 className={styles.sectionTitle}>Renters Management</h2>
+                    <button className={styles.button} onClick={() => navigate('/renters')}>
+                        Renter
+                    </button>
+                </div>
 
-            <div className={styles.section}>
-                <h2 className={styles.sectionTitle}>Car Wash Management</h2>
-                <button 
-                    className={styles.button}
-                    onClick={() => navigate('/carwash')}
-                >
-                    Car Wash
-                </button>
+                <div className={styles.section}>
+                    <h2 className={styles.sectionTitle}>Car Wash Management</h2>
+                    <button className={styles.button} onClick={() => navigate('/carwash')}>
+                        Car Wash
+                    </button>
+                </div>
             </div>
         </div>
     );

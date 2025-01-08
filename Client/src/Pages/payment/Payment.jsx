@@ -36,12 +36,12 @@ const Payment = () => {
         }).render(paypal.current);
     }, [finalPrice])
     return (
-        <>
-            <h1 className={styles.paymentTitle}>Payment</h1>
+        <div className={styles.wrapper}>
+            <h1 className={styles.paymentTitle}>Secure Payment</h1>
             <div className={styles.paymentContainer}>
-            <div ref={paypal}></div>
+                <div ref={paypal}></div>
             </div>
-        </>
+        </div>
     )
 }
 

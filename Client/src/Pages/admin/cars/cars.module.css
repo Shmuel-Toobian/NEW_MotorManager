@@ -71,89 +71,131 @@ h1 {
 
 .carsList {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 4rem;
-  margin-left: 70px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+  padding: 20px;
 }
 
-.car {
-  border: 1px solid #eee;
-  border-radius: 8px;
-  padding: 1rem;
-  text-align: center;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transition: transform 0.2s;
-  background: white;
+.carCard {
   position: relative;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 1px solid #eaeaea;
 }
 
-.car:hover {
+.carCard:hover {
   transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.carCard.expanded {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
 }
 
 .carImage {
   width: 100%;
-  border-radius: 4px;
-  margin-bottom: 1rem;
+  height: 200px;
+  object-fit: cover;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.carDetails {
+  padding: 20px;
 }
 
 .carTitle {
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
+  font-size: 1.4rem;
+  font-weight: 600;
   color: #333;
+  margin-bottom: 15px;
 }
 
-.carInfo p {
-  margin: 0.5rem 0;
+.carInfo {
+  display: grid;
+  gap: 10px;
+}
+
+.carDetail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.carDetail span:first-child {
+  color: #666;
+}
+
+.carDetail span:last-child {
+  font-weight: 500;
   color: #333;
 }
 
 .carActions {
-  margin-top: 1rem;
   display: flex;
-  gap: 1rem;
+  gap: 10px;
+  margin-top: 20px;
 }
 
 .actionButton {
-  background-color: #007bff;
-  color: white;
+  flex: 1;
+  padding: 12px;
   border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
+  border-radius: 8px;
+  font-weight: 500;
   cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.2s;
-  width: 100%;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
-.actionButton:hover {
-  background-color: #0056b3;
+.actionButton i {
+  font-size: 1.1rem;
+}
+
+.editButton {
+  background: #2196f3;
+  color: white;
+}
+
+.editButton:hover {
+  background: #1976d2;
+  transform: translateY(-2px);
 }
 
 .deleteButton {
-  background-color: #dc3545;
+  background: #ff5252;
+  color: white;
 }
 
 .deleteButton:hover {
-  background-color: #c82333;
-}
-
-.carDetail {
-  margin: 0.5rem 0;
-  color: #666;
-}
-
-.carDetail span {
-  font-weight: bold;
-  color: #333;
+  background: #ff1744;
+  transform: translateY(-2px);
 }
 
 .companyName {
-  margin-top: 15px;
-  padding-top: 10px;
-  border-top: 1px solid #eee;
   color: #666;
   font-size: 0.9rem;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+  text-align: right;
+}
+
+.expanded .carDetails {
+  padding: 25px;
+}
+
+.expanded .carInfo {
+  gap: 15px;
 }
 
 .filtersContainer {
@@ -204,4 +246,74 @@ h1 {
 
 .filterSelect option {
   padding: 8px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  direction: rtl;
+}
+
+.pageButton {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  background-color: white;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.pageButton:hover {
+  background-color: #f0f0f0;
+}
+
+.pageButton:disabled {
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+}
+
+.activePage {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.activePage:hover {
+  background-color: #0056b3;
+}
+
+@keyframes carMover {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .carsList {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+    padding: 10px;
+  }
+
+  .carCard {
+    border-radius: 12px;
+  }
+
+  .carDetails {
+    padding: 15px;
+  }
+
+  .carTitle {
+    font-size: 1.2rem;
+  }
 }

@@ -181,4 +181,62 @@
   .locationEdit button {
     width: 100%;
   }
+}
+
+.washButton {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 15px;
+  background-color: #2196f3;
+  color: white;
+  box-shadow: 0 2px 4px rgba(33, 150, 243, 0.2);
+}
+
+.washButton:hover:not(:disabled) {
+  background-color: #1976d2;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(33, 150, 243, 0.3);
+}
+
+.washButton:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.disabledButton {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #cccccc;
+  box-shadow: none;
+}
+
+.disabledButton:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* טולטיפ מותאם אישית */
+.washButton[title] {
+  position: relative;
+}
+
+.washButton[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  margin-bottom: 5px;
+  z-index: 1000;
 } 

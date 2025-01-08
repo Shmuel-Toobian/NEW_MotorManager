@@ -11,17 +11,30 @@ const Renters = () => {
   const rentersPerPage = 9;
 
   const [carWashStatus, setCarWashStatus] = useState(null);
+  const [carLocationStatus,  setCarLocationStatus] = useState(null);
 
 // פונקציה לבדיקת סטטוס השטיפה
 const checkCarWashStatus = async (carNumber) => {
   try {
     const response = await axios.get(`http://localhost:3000/cars/status/${carNumber}`);
     setCarWashStatus(response.data.isWashed);
+    
   } catch (error) {
     console.error('Error checking car wash status:', error);
     setCarWashStatus(null);
+
   }
 };
+const checkCarLocationStatus = async (carNumber) => {
+  try {
+    const response = await axios.get(`http://localhost:3000/cars/status/${carNumber}`);
+    setCarLocationStatus(response.data.isMoved);
+  } catch (error) {
+    console.error('Error checking car location status:', error);
+    setCarLocationStatus(null);
+  }
+};
+
 
   useEffect(() => {
     const fetchRenters = async () => {
@@ -29,7 +42,7 @@ const checkCarWashStatus = async (carNumber) => {
         const response = await axios.get("http://localhost:3000/user/renters");
         if (response.data.users && Array.isArray(response.data.users)) {
           const filteredRenters = response.data.users.filter(
-            (user) => user.role !== "admin"
+            (user) => user.role !== "admin" && user.role !== "carWasher" && user.role !== "carMover"
           );
           setRenters(filteredRenters);
         } else {
@@ -50,6 +63,7 @@ const checkCarWashStatus = async (carNumber) => {
 
   const toggleCard = (userId,carNumber) => {
     {checkCarWashStatus(carNumber)}
+    {checkCarLocationStatus(carNumber)}
 
     setExpandedCard(expandedCard === userId ? null : userId);
   };
@@ -94,8 +108,6 @@ const checkCarWashStatus = async (carNumber) => {
               </div>
             </div>
 
-            {console.log("Expanded card:", expandedCard)}
-            {console.log("Current user:", user)}
 
             {expandedCard === user._id && (
               <div className={styles.expandedInfo}>
@@ -169,6 +181,19 @@ const checkCarWashStatus = async (carNumber) => {
                         {carWashStatus
                           ? "הרכב נקי ✓"
                           : "הרכב מחכה לשטיפה ✗"}
+                      </div>
+
+                      <label>{user.rentalDetails.carNumber}:סטטוס מיקום</label>
+                      <div
+                        className={`${styles.washStatus} ${
+                          carLocationStatus
+                            ? styles.washed
+                            : styles.notWashed
+                        }`}
+                      >
+                        {carLocationStatus
+                          ? "הרכב נמצא במקום ✓"
+                          : "הרכב מחכה למיקום ✗"}
                       </div>
                     </div>
 

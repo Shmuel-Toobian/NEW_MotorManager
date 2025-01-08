@@ -42,9 +42,19 @@ const CarLocation = () => {
 
   const handleLocationUpdate = async (carNumber) => {
     try {
-      const response = await axios.put(`http://localhost:3000/cars/${carNumber}`, {
-        location: newLocation,
-      });
+     
+      const carResponse = await axios.get(`http://localhost:3000/cars/${carNumber}`);
+      const car = carResponse.data;
+
+      if (!car.isWashed) {
+        alert('לא ניתן לעדכן מיקום - הרכב עדיין לא שטוף!');
+        return;
+      }
+
+        const response = await axios.put(`http://localhost:3000/cars/${carNumber}`, {
+          location: newLocation,
+          isMoved: true
+        });
       setCars((prevCars) =>
         prevCars.map((car) =>
           car.carNumber === carNumber ? { ...car, location: newLocation } : car

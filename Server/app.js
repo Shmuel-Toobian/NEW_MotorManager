@@ -15,13 +15,13 @@ const corsOptions = {
     credentials: true,                // מאפשר שליחה וקבלה של Cookies
 };
 app.use(cookieParser());  // וודא שאתה מחבר את cookie-parser לפני שהשרת מתחיל לקבל בקשות
-
 app.use(cors(corsOptions));
-
 app.use(indexRoutes)
 
 const port = process.env.PORT || 3000;
 const url = process.env.URL;
+
+
 
 const conect_db = async () => {
     try {
@@ -33,18 +33,6 @@ const conect_db = async () => {
     }
 }
 conect_db();
-
-// app.get("/test-query", async (req, res) => {
-//     try {
-//       const cars = await carSchema.find({ user: "675ebdb1a5a28e0edde1ec6d" });
-//       res.status(200).json(cars);
-//     } catch (error) {
-//       res.status(500).json({ error: error.message });
-//     }
-//   });
-
-
-
 
 app.listen(port, () => {
     console.log(`runing on port http://localhost${port}`)

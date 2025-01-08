@@ -69,6 +69,16 @@ const carSchema = new mongoose.Schema({
     default: true,
 
   },
+  isMoved:{
+    type:Boolean,
+    default: true,
+
+  },
+  isReadyForRent:{
+    type:Boolean,
+    default: true,
+
+  },
 });
 
 module.exports = mongoose.model("carSchemas", carSchema);

@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 const Payment = ({ handlePayment }) => {
   const paypal = useRef();
   const location = useLocation();
-  const finalPrice = location.state?.totalPrice || 1; // fallback to 100 if no price passed
+  const finalPrice = location.state?.totalPrice || 1;
   console.log("Final Price:", finalPrice);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const Payment = ({ handlePayment }) => {
       onApprove: async (data, actions) => {
         const order = await actions.order.capture();
         console.log(order);
-        handlePayment(); // קריאה לפונקציה שהועברה בפרופס
+        handlePayment();
       },
       onError: (err) => {
         console.log(err);
@@ -36,27 +36,13 @@ const Payment = ({ handlePayment }) => {
   }, [finalPrice, handlePayment]);
 
   return (
-    <>
-      <h1 className={styles.paymentTitle}>Payment</h1>
+    <div className={styles.wrapper}>
+      <h1 className={styles.paymentTitle}>Secure Payment</h1>
       <div className={styles.paymentContainer}>
         <div ref={paypal}></div>
       </div>
-    </>
+    </div>
   );
 };
-            onError: (err) => {
-                console.log(err);
-            },
-        }).render(paypal.current);
-    }, [finalPrice])
-    return (
-        <div className={styles.wrapper}>
-            <h1 className={styles.paymentTitle}>Secure Payment</h1>
-            <div className={styles.paymentContainer}>
-                <div ref={paypal}></div>
-            </div>
-        </div>
-    )
-}
 
 export default Payment;

@@ -90,7 +90,7 @@ const CarLocation = () => {
           <div key={user._id} className={styles.card}>
             <div className={styles.cardHeader}>
               <h3 className={styles.userName}>{user.firstName} {user.lastName}</h3>
-            </div>
+            </div>``
 
             <div className={styles.basicInfo}>
               <div className={styles.infoItem}>

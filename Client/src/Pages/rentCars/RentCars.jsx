@@ -439,6 +439,7 @@ const RentCars = () => {
 
       // חישוב הסכום הסופי
       const finalPrice = calculateTotalPrice(selectedCar.price) + calculateAddonsTotal();
+      
       // מספר הרכב מהרכב שנבחר
       const carNumber = selectedCar.carNumber;
       const userData = {

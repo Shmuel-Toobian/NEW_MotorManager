@@ -27,29 +27,30 @@ function AppRoutes() {
     <Router>
       <Header />
       <Routes>
-        <Route path="/about" element={<About />} />
+        {/* User */}
         <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
         <Route path="/rentcars" element={<RentCars />} />
         <Route path="/payment" element={<Payment />} />
-        <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/carlocation" element={<CarLocation />} />
+        <Route path="/login" element={<Login />} />
 
+
+        {/* Admin */}
         {user?.role === "admin" && <Route path="/admin" element={<AdminPanel/>} />}
         {user?.role === "admin" && <Route path="/cars" element={<Cars />} />}
         {user?.role === "admin" && <Route path="/addcar" element={<AddCar />} />}
-        {user?.role === "admin" && <Route path="/map" element={<Map />} />}
-
         {user?.role === "admin" &&  <Route path="/renters" element={<Renters />} />}
 
-        
-        {user?.role === "admin" &&  <Route path="/wash" element={<CarWash />} />}
 
-        {user?.role === "admin" && <Route path="/renters" element={<Renters />} />}
+        {/* Admin, CarWasher, CarMover */}
+        {(user?.role === "admin" || user?.role === "carWasher" || user?.role === "carMover") &&  <Route path="/profile" element={<Profile />} />}
+        {(user?.role === "admin" || user?.role === "carWasher") &&  <Route path="/carwash" element={<CarWash />} />}
+        {(user?.role === "admin" || user?.role === "carMover") && <Route path="/carlocation" element={<CarLocation />} />}
+        {(user?.role === "admin" || user?.role === "carMover") && <Route path="/map" element={<Map />} />}
 
 
+        {/* Not Found */}
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

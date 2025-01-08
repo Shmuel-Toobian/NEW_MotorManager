@@ -171,6 +171,7 @@ const CarLocation = () => {
     <div className={styles.container}>
       <h1 className={styles.title}>מיקומי רכבים</h1>
       <div className={styles.cardsGrid}>
+
         {users.map((user) => {
           const car = cars.find((c) => c.carNumber === user.rentalDetails?.carNumber);
           return (
@@ -180,6 +181,7 @@ const CarLocation = () => {
                 <p className={styles.carNumber}>מספר רכב: {user.rentalDetails?.carNumber || 'לא צוין'}</p>
               </div>
               <div className={styles.basicInfo}>
+
                 <div className={styles.infoItem}>
                   <span className={styles.icon}>📞</span>
                   טלפון: {user.phone || 'לא צוין'}

@@ -23,7 +23,13 @@ const Login = () => {
         { withCredentials: true }
       );
       setUser(response.data.user);
-      navigate("/rentCars");
+      if(response.data.user.role === "user"){
+        navigate("/returncar");
+      }
+      else{
+        navigate("/");
+      }
+      
     } catch (err) {
       setError(err.response?.data?.message || "Login failed");
     }

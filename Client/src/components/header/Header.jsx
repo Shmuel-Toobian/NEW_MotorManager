@@ -32,6 +32,7 @@ const Header = () => {
           <nav className={style.nav} onClick={() => navigate("/rentcars")}>
             Our cars
           </nav>
+          {!user && <nav className={style.nav} onClick={() => navigate("/login")}>Login</nav>}
           {user?.role === "admin" && <nav className={style.nav} onClick={() => navigate("/admin")}>Admin</nav>}
           {user?.role === "carWasher" && <nav className={style.nav} onClick={() => navigate("/wash")}>Car Wash</nav>}
           {user?.role === "carMover" && <nav className={style.nav} onClick={() => navigate("/carlocation")}>Car Location</nav>}

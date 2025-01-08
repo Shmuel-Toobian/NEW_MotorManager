@@ -44,5 +44,19 @@ const Payment = ({ handlePayment }) => {
     </>
   );
 };
+            onError: (err) => {
+                console.log(err);
+            },
+        }).render(paypal.current);
+    }, [finalPrice])
+    return (
+        <div className={styles.wrapper}>
+            <h1 className={styles.paymentTitle}>Secure Payment</h1>
+            <div className={styles.paymentContainer}>
+                <div ref={paypal}></div>
+            </div>
+        </div>
+    )
+}
 
 export default Payment;

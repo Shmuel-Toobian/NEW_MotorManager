@@ -43,6 +43,22 @@ exports.getAllUsers = async (req, res) => {
 };
 
 
+exports.deleteUser = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const result = await userSchema.deleteOne({ _id: id }); // מחפש ומוחק לפי ה-ID
+    if (result.deletedCount > 0) {
+      res.status(200).json({ message: "User deleted successfully" });
+    } else {
+      res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Failed to delete user", details: error.message });
+  }
+};
+
+
 exports.signUp = async (req, res) => {
   try {
     const { 

@@ -14,6 +14,7 @@ const ReturnCar = () => {
     try {
       const response = await axios.put(`http://localhost:3000/cars/${user.rentalDetails.carNumber}`, {
         isReturn: false,
+        isReadyToReturn: true
       });
 
         alert('החזרת הרכב בוצעה בהצלחה');

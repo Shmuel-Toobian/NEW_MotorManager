@@ -41,7 +41,7 @@ const CarWash = () => {
     } catch (err) {
       console.error('Error fetching rentals:', err);
       console.log('Error details:', err.response?.data);
-      setError('שגיאה בטעינת הנתונים');
+      setError('Error loading data');
       setLoading(false);
     }
   };
@@ -58,47 +58,47 @@ const CarWash = () => {
       fetchRentals();
       
       // הודעת הצלחה למשתמש
-      alert('סטטוס השטיפה עודכן בהצלחה');
+      alert('Car wash status updated successfully');
     } catch (error) {
       console.error('Error updating car wash status:', error);
-      alert('שגיאה בעדכון סטטוס השטיפה');
+      alert('Error updating car wash status');
     }
   };
 
   if (loading) return <div className={styles.container}>טוען...</div>;
   if (error) return <div className={styles.container}>{error}</div>;
-  if (!rentals.length) return <div className={styles.container}>אין רכבים לשטיפה</div>;
+  if (!rentals.length) return <h1 className={styles.container}>No cars to wash</h1>;
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>רכבים לשטיפה</h1>
+      <h1 className={styles.title}>Cars to wash</h1>
       <div className={styles.cardsGrid}>
         {rentals.map((rental) => (
           rental.rentalDetails && (
             <div key={rental._id} className={styles.card}>
               <div className={styles.cardHeader}>
-                <h3>רכב מספר: {rental.rentalDetails.carNumber}</h3>
+                <h3>Car number: {rental.rentalDetails.carNumber}</h3>
                 <span className={styles.status}>
-                  {rental.isWashed ? '✅ נשטף' : '🚿 ממתין לשטיפה'}
+                  {rental.isWashed ? '✅ Washed' : '🚿 Waiting for wash'}
                 </span>
               </div>
               
               <div className={styles.cardContent}>
                 <div className={styles.infoItem}>
                   <span className={styles.icon}>📅</span>
-                  תאריך השכרה: {new Date(rental.rentalDetails.startDate).toLocaleDateString()}
+                  Rent date: {new Date(rental.rentalDetails.startDate).toLocaleDateString()}
                 </div>
                 <div className={styles.infoItem}>
                   <span className={styles.icon}>📅</span>
-                  תאריך החזרה: {new Date(rental.rentalDetails.endDate).toLocaleDateString()}
+                  Return date: {new Date(rental.rentalDetails.endDate).toLocaleDateString()}
                 </div>
                 <div className={styles.infoItem}>
                   <span className={styles.icon}>💰</span>
-                  מחיר: ₪{rental.rentalDetails.totalPrice}
+                  Price: ₪{rental.rentalDetails.totalPrice}
                 </div>
                 <div className={styles.infoItem}>
                   <span className={styles.icon}>⏱️</span>
-                  מספר ימים: {rental.rentalDetails.totalDays}
+                  Days: {rental.rentalDetails.totalDays}
                 </div>
               </div>
 
@@ -107,7 +107,7 @@ const CarWash = () => {
                   className={styles.washButton}
                   onClick={() => handleCarWashed(rental)}
                 >
-                  סמן כנשטף
+                  Mark as washed
                 </button>
               )}
             </div>

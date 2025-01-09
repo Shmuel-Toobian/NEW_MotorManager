@@ -11,8 +11,8 @@ export const AdminPanel = () => {
                 <h1 className={styles.welcomeTitle}>WheelWay</h1>
                 <h2 className={styles.welcomeText}>Welcome to the Admin Panel</h2>
                 <img 
-                    src="/carm.png" 
-                    alt="Car" 
+                    src="/logo.png" 
+                    alt="logo" 
                     className={styles.carImage}
                 />
             </div>
@@ -36,6 +36,12 @@ export const AdminPanel = () => {
                     <h2 className={styles.sectionTitle}>Car Wash Management</h2>
                     <button className={styles.button} onClick={() => navigate('/carwash')}>
                         Car Wash
+                    </button>
+                </div>
+                <div className={styles.section}>
+                    <h2 className={styles.sectionTitle}>Car Location Management</h2>
+                    <button className={styles.button} onClick={() => navigate('/carLocation')}>
+                        Car Location
                     </button>
                 </div>
             </div>

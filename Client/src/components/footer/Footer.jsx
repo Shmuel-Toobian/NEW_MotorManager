@@ -21,8 +21,8 @@ const Footer = () => {
           </div>
           <div className={style.hours}>
             <p>Hours:</p>
-            <p>Monday-Friday: 08:00-19:00</p>
-            <p>Saturday: 08:00-13:00</p>
+            <p>Hours: sunday - thursday 08:00 - 19:00</p>
+            <p>friday 08:00 - 13:00</p>
           </div>
         </div>
       </div>

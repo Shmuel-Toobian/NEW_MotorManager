@@ -42,7 +42,7 @@ const checkCarLocationStatus = async (carNumber) => {
         const response = await axios.get("http://localhost:3000/user/renters");
         if (response.data.users && Array.isArray(response.data.users)) {
           const filteredRenters = response.data.users.filter(
-            (user) => user.role !== "admin" && user.role !== "carWasher" && user.role !== "carMover"
+            (user) => user.role !== "admin" && user.role !== "carWasher" && user.role !== "carMover" && user.role !== "carFixer"
           );
           setRenters(filteredRenters);
         } else {

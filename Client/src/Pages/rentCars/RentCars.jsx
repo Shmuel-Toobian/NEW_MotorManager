@@ -428,6 +428,18 @@ const RentCars = () => {
   };
 
   const handlePayment = async () => {
+    if (!validateForm()) {
+      return;
+    }
+    if (!selectedCar) {
+      alert('אנא בחר רכב תחילה');
+      return;
+    }
+    // חישוב הסכום הסופי
+    const finalPrice = calculateTotalPrice(selectedCar.price) + calculateAddonsTotal();
+    
+    // מספר הרכב מהרכב שנבחר
+    const carNumber = selectedCar.carNumber;
     try {
       const userData = {
         firstName: formData.firstName,
@@ -448,6 +460,13 @@ const RentCars = () => {
       if (response.data.userId) 
         {
         localStorage.setItem('userId', response.data.userId);
+        navigate('/payment', { 
+          state: { 
+            amount: finalPrice,
+            orderId: response.data.userId,
+            orderDetails: userData
+          } 
+        });
       }
     } catch (error) {
       console.error('Payment Error:', error);
@@ -469,7 +488,7 @@ const RentCars = () => {
     <div className={styles.container}>
       {!isRentingDetails ? (
         <>
-          <h1 className={styles.title}>Rent Cars</h1>
+          <h1 className={styles.title}>Our Cars</h1>
           
           <div className={styles.filters}>
             <div className={styles.dateFilters}>
@@ -707,8 +726,8 @@ const RentCars = () => {
                 <button 
                   className={styles.updateButton} 
                   onClick={() => {
-                    navigate('/payment');
-                    <Payment handlePayment={handlePayment} />
+                    changeCarWashStatus(selectedCar.carNumber);
+                    handlePayment();
                   }}
                 >
                   לתשלום

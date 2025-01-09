@@ -21,13 +21,13 @@ const CarLocation = () => {
           const filteredUsers = rentersResponse.data.users.filter((user) => user.role !== 'admin');
           setUsers(filteredUsers);
         } else {
-          throw new Error('המידע על השוכרים אינו בפורמט הנכון');
+          throw new Error('The renters information is not in the correct format');
         }
 
         setCars(carsResponse.data);
       } catch (err) {
-        console.error('שגיאה בטעינת נתונים:', err);
-        setError('שגיאה בטעינת הנתונים');
+        console.error('Error loading data:', err);
+        setError('Error loading data');
       } finally {
         setLoading(false);
       }
@@ -47,7 +47,7 @@ const CarLocation = () => {
       const car = carResponse.data;
 
       if (!car.isWashed) {
-        alert('לא ניתן לעדכן מיקום - הרכב עדיין לא שטוף!');
+        alert('Cannot update location - the car is still not washed!');
         return;
       }
 
@@ -62,20 +62,20 @@ const CarLocation = () => {
       );
       setEditingCar(null); // סיום מצב עריכה
       setNewLocation(''); // איפוס שדה המיקום
-      console.log('המיקום עודכן בהצלחה');
+      console.log('Location updated successfully');
     } catch (err) {
-      console.error('שגיאה בעדכון המיקום:', err);
-      setError('שגיאה בעדכון המיקום');
+      console.error('Error updating location:', err);
+      setError('Error updating location');
     }
   };
 
-  if (loading) return <div className={styles.container}>טוען...</div>;
-  if (error) return <div className={styles.container}>שגיאה: {error}</div>;
-  if (!users.length) return <div className={styles.container}>אין שוכרים להצגה</div>;
+  if (loading) return <div className={styles.container}>Loading...</div>;
+  if (error) return <div className={styles.container}>Error: {error}</div>;
+  if (!users.length) return <div className={styles.container}>No renters to display</div>;
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>מיקומי רכבים</h1>
+      <h1 className={styles.title}>Car Locations</h1>
       <div className={styles.cardsGrid}>
         {users.map((user) => {
           const car = cars.find((c) => c.carNumber === user.rentalDetails?.carNumber);
@@ -83,38 +83,38 @@ const CarLocation = () => {
             <div key={user._id} className={styles.card}>
               <div className={styles.cardHeader}>
                 <h3 className={styles.userName}>{user.firstName} {user.lastName}</h3>
-                <p className={styles.carNumber}>מספר רכב: {user.rentalDetails?.carNumber || 'לא צוין'}</p>
+                <p className={styles.carNumber}>Car number: {user.rentalDetails?.carNumber || 'Not specified'}</p>
               </div>
               <div className={styles.basicInfo}>
                 <div className={styles.infoItem}>
                   <span className={styles.icon}>📞</span>
-                  טלפון: {user.phone || 'לא צוין'}
+                  Phone: {user.phone || 'Not specified'}
                 </div>
                 <div className={styles.infoItem}>
                   <span className={styles.icon}>📍</span>
-                  כתובת: {user.address || 'לא צוין'}
+                  Address: {user.address || 'Not specified'}
                 </div>
                 <div className={styles.infoItem}>
                   <span className={styles.icon}>📅</span>
-                  תאריך השכרה: {user.rentalDetails?.startDate ? new Date(user.rentalDetails.startDate).toLocaleDateString() : 'לא צוין'}
+                  Rent date: {user.rentalDetails?.startDate ? new Date(user.rentalDetails.startDate).toLocaleDateString() : 'Not specified'}
                 </div>
               </div>
               <button 
                 className={styles.expandButton} 
                 onClick={() => toggleCard(user._id)}
               >
-                {expandedCard === user._id ? 'הסתר פרטים' : 'הצג עוד'}
+                {expandedCard === user._id ? 'Hide details' : 'Show more'}
               </button>
               {expandedCard === user._id && car && (
                 <div className={styles.expandedInfo}>
-                  <h4>פרטי רכב</h4>
+                  <h4>Car details</h4>
                   <div className={styles.infoItem}>
                     <span className={styles.icon}>🚗</span>
-                    מספר רכב: {car.carNumber}
+                    Car number: {car.carNumber}
                   </div>
                   <div className={styles.infoItem}>
                     <span className={styles.icon}>📍</span>
-                    מיקום נוכחי: {car.location || 'לא צוין'}
+                    Current location: {car.location || 'Not specified'}
                   </div>
                   {editingCar === car.carNumber ? (
                     <div className={styles.editLocation}>
@@ -122,14 +122,14 @@ const CarLocation = () => {
                         type="text"
                         value={newLocation}
                         onChange={(e) => setNewLocation(e.target.value)}
-                        placeholder="הזן מיקום חדש"
+                        placeholder="Enter new location"
                       />
-                      <button onClick={() => handleLocationUpdate(car.carNumber)}>שמור</button>
-                      <button onClick={() => setEditingCar(null)}>ביטול</button>
+                      <button onClick={() => handleLocationUpdate(car.carNumber)}>Save</button>
+                      <button onClick={() => setEditingCar(null)}>Cancel</button>
                     </div>
                   ) : (
                     <button onClick={() => setEditingCar(car.carNumber)}>
-                      עדכן מיקום
+                      Update location
                     </button>
                   )}
                 </div>

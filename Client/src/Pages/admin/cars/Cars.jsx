@@ -101,7 +101,7 @@ const Cars = () => {
 
   return (
     <div className={style.container}>
-      <h1>Admin panel</h1>
+      <h1 className={style.title}>Cars</h1>
       {isError && <p className={style.error}>{errorMessage}</p>}
       
       <div className={style.filtersContainer}>

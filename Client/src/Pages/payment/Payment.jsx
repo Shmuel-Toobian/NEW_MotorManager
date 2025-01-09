@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import styles from './payment.module.css';
 import { useLocation } from 'react-router-dom';
 
-const Payment = ({ handlePayment }) => {
+const Payment = () => {
   const paypal = useRef();
   const location = useLocation();
   const finalPrice = location.state?.totalPrice || 1;
@@ -27,13 +27,12 @@ const Payment = ({ handlePayment }) => {
       onApprove: async (data, actions) => {
         const order = await actions.order.capture();
         console.log(order);
-        handlePayment();
       },
       onError: (err) => {
         console.log(err);
       },
     }).render(paypal.current);
-  }, [finalPrice, handlePayment]);
+  }, [finalPrice]);
 
   return (
     <div className={styles.wrapper}>

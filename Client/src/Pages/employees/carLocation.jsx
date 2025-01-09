@@ -10,7 +10,6 @@ const CarLocation = () => {
   const [expandedCard, setExpandedCard] = useState(null);
   const [editingCar, setEditingCar] = useState(null); // מזהה רכב לעריכה
   const [newLocation, setNewLocation] = useState(""); // מיקום חדש
-  const [fix, setFix] = useState(); // מיקום חדש
 
   const [notReturnedUsers, setNotReturnedUsers] = useState([]);
 
@@ -95,6 +94,7 @@ const CarLocation = () => {
       );
       setEditingCar(null); // סיום מצב עריכה
       setNewLocation(""); // איפוס שדה המיקום
+      await fetchData(); // טוען מחדש את הנתונים
       console.log("המיקום עודכן בהצלחה");
     } catch (err) {
       console.error("שגיאה בעדכון המיקום:", err);
@@ -133,6 +133,7 @@ const CarLocation = () => {
         }
       );
 
+      await fetchData(); // טוען מחדש את הנתונים
       console.log("car return successfully");
     } catch (err) {
       console.error("Error updating location:", err);

@@ -240,3 +240,43 @@
   margin-bottom: 5px;
   z-index: 1000;
 } 
+.card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+}
+
+.card.expanded {
+  transform: translateY(-20px); /* ציפה מעל התוכן */
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2); /* הצללה חזקה יותר */
+}
+
+.cardHeader {
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+.expandButton {
+  width: 100%;
+  padding: 0.5rem;
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.2s;
+}
+
+.expandButton:hover {
+  background: #e9ecef;
+}
+
+.expandedInfo {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}

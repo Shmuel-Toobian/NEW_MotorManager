@@ -33,8 +33,7 @@ exports.getUser = async (req, res) => {
 
 exports.getAllUsers = async (req, res) => {
   try {
-   
-    const users = await userSchema.find()
+    const users = await userSchema.find().sort({ startDate: -1 }); 
     res.status(200).json({ users });
   } catch (error) {
     console.error(error);

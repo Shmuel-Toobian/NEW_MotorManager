@@ -39,13 +39,13 @@ const CarLocation = () => {
 
 
         } else {
-          throw new Error('The renters information is not in the correct format');
+          throw new Error('המידע על השוכרים אינו בפורמט הנכון');
         }
 
         setCars(carsResponse.data);
       } catch (err) {
-        console.error('Error loading data:', err);
-        setError('Error loading data');
+        console.error('שגיאה בטעינת נתונים:', err);
+        setError('שגיאה בטעינת הנתונים');
       } finally {
         setLoading(false);
       }
@@ -60,14 +60,15 @@ const CarLocation = () => {
 
   const handleLocationUpdate = async (carNumber) => {
     try {
-     
+
       const carResponse = await axios.get(`http://localhost:3000/cars/${carNumber}`);
       const car = carResponse.data;
 
       if (!car.isWashed) {
-        alert('Cannot update location - the car is still not washed!');
+        alert('לא ניתן לעדכן מיקום - הרכב עדיין לא שטוף!');
         return;
       }
+
 
         const response = await axios.put(`http://localhost:3000/cars/${carNumber}`, {
           location: newLocation,
@@ -82,10 +83,10 @@ const CarLocation = () => {
       );
       setEditingCar(null); // סיום מצב עריכה
       setNewLocation(''); // איפוס שדה המיקום
-      console.log('Location updated successfully');
+      console.log('המיקום עודכן בהצלחה');
     } catch (err) {
-      console.error('Error updating location:', err);
-      setError('Error updating location');
+      console.error('שגיאה בעדכון המיקום:', err);
+      setError('שגיאה בעדכון המיקום');
     }
   };
   const handleCarReturnAndDelete = async (carNumber, userId) => {
@@ -141,9 +142,9 @@ const CarLocation = () => {
 
   
 
-  if (loading) return <div className={styles.container}>Loading...</div>;
-  if (error) return <div className={styles.container}>Error: {error}</div>;
-  if (!users.length) return <div className={styles.container}>No renters to display</div>;
+  if (loading) return <div className={styles.container}>טוען...</div>;
+  if (error) return <div className={styles.container}>שגיאה: {error}</div>;
+  if (!users.length) return <div className={styles.container}>אין שוכרים להצגה</div>;
 
   return (
     <div>
@@ -154,27 +155,27 @@ const CarLocation = () => {
           const car = cars.find((c) =>  c.carNumber === user.rentalDetails?.carNumber 
         );
           return (
-            <div key={user._id} className={styles.card}>
+            <div key={user._id} className={`${styles.card} ${expandedCard === user._id ? styles.expanded : ''}`}>
               <div className={styles.cardHeader}>
                 <h3 className={styles.userName}>{user.firstName} {user.lastName}</h3>
-                <p className={styles.carNumber}>Car number: {user.rentalDetails?.carNumber || 'Not specified'}</p>
+                <p className={styles.carNumber}>Car number: {user.rentalDetails?.carNumber || 'לא צוין'}</p>
               </div>
               <div className={styles.basicInfo}>
                 <div className={styles.infoItem}>
                   <span className={styles.icon}>📞</span>
-                  Phone: {user.phone || 'Not specified'}
+                  Phone: {user.phone || 'לא צוין'}
                 </div>
                 <div className={styles.infoItem}>
                   <span className={styles.icon}>📍</span>
-                  Address: {user.address || 'Not specified'}
+                  Address: {user.address || 'לא צוין'}
                 </div>
                 <div className={styles.infoItem}>
                   <span className={styles.icon}>📅</span>
                   Rent date: {user.rentalDetails?.startDate ? new Date(user.rentalDetails.startDate).toLocaleDateString() : 'Not specified'}
                 </div>
               </div>
-              <button 
-                className={styles.expandButton} 
+              <button
+                className={styles.expandButton}
                 onClick={() => toggleCard(user._id)}
               >
                 {expandedCard === user._id ? 'Hide details' : 'Show more'}
@@ -335,4 +336,4 @@ const CarLocation = () => {
   );
 };
 
-export default CarLocation;
+export default CarLocation;

@@ -9,7 +9,7 @@ export const About = () => {
       
       <div className={styles.content}>
         <p className={styles.intro}>
-          Welcome to CarRent! We've been providing quality car rental services for over 10 years.
+          Welcome to Wheelway! We've been providing quality car rental services for over 10 years.
           Our mission is to give you the best driving experience at competitive prices.
         </p>
 
@@ -33,10 +33,11 @@ export const About = () => {
         <div className={styles.contactSection}>
           <h2>Contact Us</h2>
           <div className={styles.contactInfo}>
-            <p>Phone: 054-1234567</p>
+            <p>Phone: 051-277-8815</p>
           </div>
-          <p>Address: 123 Herzl Street, Tel Aviv</p>
-          <p>Hours: Sun-Thu 09:00-19:00</p>
+          <p>Address: Jerusalem</p>
+          <p>Hours: sunday - thursday 08:00 - 19:00</p>
+          <p>friday 08:00 - 13:00</p>
         </div>
       </div>
     </div>

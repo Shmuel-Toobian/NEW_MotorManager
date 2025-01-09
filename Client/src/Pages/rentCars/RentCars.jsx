@@ -79,6 +79,7 @@ const RentCars = () => {
           price: car.price || 0,
           color: car.color || '',
           img_url: car.image || 'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg'
+          
         }));
         
         setCars(carsWithImages);
@@ -477,7 +478,7 @@ const RentCars = () => {
 
   const changeCarWashStatus = async (carNumber) => {
     try {
-      const response = await axios.put(`http://localhost:3000/cars/${carNumber}`, { isWashed: false });
+      const response = await axios.put(`http://localhost:3000/cars/${carNumber}`, { isWashed: false , isMoved: false, isReadyForRent: false});
       console.log('Car wash status updated:', response.data);
     } catch (error) {
       console.error('Error updating car wash status:', error);
@@ -607,6 +608,7 @@ const RentCars = () => {
 
           <div className={styles.carsGrid}>
             {getCurrentCars().map((car, index) => (
+              car.isReadyForRent === true &&
               <div key={index} className={styles.carCard}>
                 <img src={car.img_url} alt={car.model} className={styles.carImage} />
                 <h3>{car.company} {car.model}</h3>

@@ -608,7 +608,7 @@ const RentCars = () => {
 
           <div className={styles.carsGrid}>
             {getCurrentCars().map((car, index) => (
-              car.isReadyForRent === true &&
+              car.isReadyForRent === true &&  car.MOT === true &&  car.test === true &&
               <div key={index} className={styles.carCard}>
                 <img src={car.img_url} alt={car.model} className={styles.carImage} />
                 <h3>{car.company} {car.model}</h3>

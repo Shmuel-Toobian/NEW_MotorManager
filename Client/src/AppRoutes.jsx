@@ -17,8 +17,9 @@ import { AdminPanel } from "./Pages/admin/adminPanel";
 import Renters from "./Pages/admin/renters/Renters";
 import Profile from "./Pages/profile/Profile";
 import CarWash from "./Pages/employees/CarWash";
-import CarLocation from "./Pages/employees/carLocation";
+import CarLocation from "./Pages/employees/CarLocation";
 import ReturnCar from "./components/returnCar/ReturnCar";
+import FixCar from "./Pages/employees/FixCar";
 
 
 function AppRoutes() {
@@ -36,6 +37,7 @@ function AppRoutes() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/returncar" element={<ReturnCar />} />
+        <Route path="/fixcar" element={<FixCar />} />
 
 
         {/* Admin */}

@@ -152,11 +152,11 @@ const Cars = () => {
             className={style.filterSelect}
           >
             <option value="">All Prices</option>
-            <option value="1000">Up to 1,000 ₪ per day</option>
-            <option value="5000">Up to 5,000 ₪ per day</option>
-            <option value="10000">Up to 10,000 ₪ per day</option>
-            <option value="15000">Up to 15,000 ₪ per day</option>
-            <option value="20000">Up to 20,000 ₪ per day</option>
+            <option value="1000">Up to 1,000 $ per day</option>
+            <option value="5000">Up to 5,000 $ per day</option>
+            <option value="10000">Up to 10,000 $ per day</option>
+            <option value="15000">Up to 15,000 $ per day</option>
+            <option value="20000">Up to 20,000 $ per day</option>
           </select>
         </div>
 

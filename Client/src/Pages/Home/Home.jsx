@@ -144,9 +144,9 @@ function Home() {
                   onChange={(e) => setSearchParams(prev => ({...prev, priceRange: e.target.value}))}
                 >
                   <option value="">All Prices</option>
-                  <option value="small">Up to 1,000 ₪ per day</option>
-                  <option value="medium">1,000 - 5,000 ₪ per day</option>
-                  <option value="large">Over 5,000 ₪ per day</option>
+                  <option value="small">Up to 1,000 $ per day</option>
+                  <option value="medium">1,000 - 5,000 $ per day</option>
+                  <option value="large">Over 5,000 $ per day</option>
                 </select>
               </div>
 

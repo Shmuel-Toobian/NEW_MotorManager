@@ -94,7 +94,7 @@ const CarWash = () => {
                 </div>
                 <div className={styles.infoItem}>
                   <span className={styles.icon}>💰</span>
-                  Price: ₪{rental.rentalDetails.totalPrice}
+                  Price: ${rental.rentalDetails.totalPrice}
                 </div>
                 <div className={styles.infoItem}>
                   <span className={styles.icon}>⏱️</span>

@@ -597,9 +597,9 @@ const RentCars = () => {
                     className={styles.select}
                   >
                     <option value="">All Prices</option>
-                    <option value="small">Up to 1,000 ₪ per day</option>
-                    <option value="medium">1,000 - 5,000 ₪ per day</option>
-                    <option value="large">Over 5,000 ₪ per day</option>
+                    <option value="small">Up to 1,000 $ per day</option>
+                    <option value="medium">1,000 - 5,000 $ per day</option>
+                    <option value="large">Over 5,000 $ per day</option>
                   </select>
                 </div>
               </div>
@@ -614,12 +614,12 @@ const RentCars = () => {
                 <h3>{car.company} {car.model}</h3>
                 <p>Year: {car.year}</p>
                 <p>Color: {car.color}</p>
-                <p>Price per day: ₪{(car.price / 100).toLocaleString()}</p>
+                <p>Price per day: ${(car.price / 100).toLocaleString()}</p>
 
                 <p className={styles.carNumber}>Car number: {car.carNumber}</p>
                 {calculateTotalDays() > 0 && (
                   <p className={styles.totalPrice}>
-                    Total for {calculateTotalDays()} days: ₪{calculateTotalPrice(car.price).toLocaleString()}
+                    Total for {calculateTotalDays()} days: ${calculateTotalPrice(car.price).toLocaleString()}
                   </p>
                 )}
                 <button 
@@ -675,7 +675,7 @@ const RentCars = () => {
                 <p>Start Date: {filters.startDate}</p>
                 <p>End Date: {filters.endDate}</p>
                 <p>Number of days: {calculateTotalDays()}</p>
-                <p>Total to pay: ₪{calculateTotalPrice(selectedCar.price).toLocaleString()}</p>
+                <p>Total to pay: ${calculateTotalPrice(selectedCar.price).toLocaleString()}</p>
                 <div className={styles.modalButtons}>
                   <button 
                     className={styles.confirmButton}
@@ -712,15 +712,15 @@ const RentCars = () => {
                 </p>
                 <p>
                   <span>Price per day:</span>
-                  <span>₪{(selectedCar.price / 100).toLocaleString()}</span>
+                  <span>${(selectedCar.price / 100).toLocaleString()}</span>
                 </p>
                 <p>
                   <span>Extra</span>
-                  <span>₪{calculateAddonsTotal().toLocaleString()}</span>
+                  <span>${calculateAddonsTotal().toLocaleString()}</span>
                 </p>
                 <div className={styles.totalPrice}>
                   <span>Total price</span>
-                  <span>₪{(calculateTotalPrice(selectedCar.price) + calculateAddonsTotal()).toLocaleString()}</span>
+                  <span>${(calculateTotalPrice(selectedCar.price) + calculateAddonsTotal()).toLocaleString()}</span>
                 </div>
               </div>
 
@@ -836,9 +836,9 @@ const RentCars = () => {
                     <img src={addon.image} alt={addon.title} className={styles.addonImage} />
                     <h3>{addon.title}</h3>
                     <div className={styles.addonPricing}>
-                      <p className={styles.dailyPrice}>₪{addon.pricePerDay} Per day</p>
+                      <p className={styles.dailyPrice}>${addon.pricePerDay} Per day</p>
                       <p className={styles.totalDaysPrice}>
-                        Total for {calculateTotalDays()} days: ₪{addon.pricePerDay * calculateTotalDays()}
+                        Total for {calculateTotalDays()} days: ${addon.pricePerDay * calculateTotalDays()}
                       </p>
                     </div>
                     <button 

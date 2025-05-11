@@ -17,7 +17,7 @@ const ReturnCar = () => {
         isReadyToReturn: true
       });
 
-        alert('החזרת הרכב בוצעה בהצלחה');
+        alert("The vehicle has been successfully returned");
         setIsReadyToReturn(true);
 
 
@@ -26,7 +26,7 @@ const ReturnCar = () => {
           }, 3000);
       
     } catch (error) {
-      alert('שגיאה בחיבור לשרת');
+      alert("Connection error to the server")
     }
   };
 
@@ -38,19 +38,19 @@ const ReturnCar = () => {
 
   return (
     <div className={styles.container}>
-        {isReadyToReturn && <p className={styles.description}> החזרת הרכב בוצעה בהצלחה שמחנו לתת שרות!</p>}
-        {!isReadyToReturn && <div> <h1 className={styles.title}>החזרת רכב</h1>
-      <p className={styles.description}>שלום {user.firstName + " " + user.lastName},</p>
+        {isReadyToReturn && <p className={styles.description}> The vehicle has been successfully returned. We were happy to serve you!</p>}
+        {!isReadyToReturn && <div> <h1 className={styles.title}>Vehicle Return</h1>
+      <p className={styles.description}>Hello {user.firstName + " " + user.lastName},</p>
       <p className={styles.description}>
-        נהנית בשימוש ברכב {user.rentalDetails.carModel}, מספר רכב: {user.rentalDetails.carNumber}.
+        נהנית בשימוש ברכב {user.rentalDetails.carModel},  Car number: {user.rentalDetails.carNumber}.
       </p>
-      <p className={styles.description}>האם הרכב מוכן להחזרה?</p>
+      <p className={styles.description}>Is the vehicle ready for return?</p>
       <button
         className={`${styles.button} ${isReadyToReturn ? styles.disabled : ''}`}
         onClick={() => handleReturnCar()}
         disabled={isReadyToReturn}
       >
-        {!isReadyToReturn && 'החזר את הרכב'}
+        {!isReadyToReturn && "Return the vehicle"}
       </button> </div>}
      
     </div>

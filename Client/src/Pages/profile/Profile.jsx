@@ -14,7 +14,7 @@ const Profile = () => {
   const handlePasswordChange = async (e) => {
     e.preventDefault();
     if (newPassword !== confirmPassword) {
-      setError('הסיסמאות החדשות אינן תואמות');
+      setError("The passwords do not match");
       return;
     }
     try {
@@ -25,7 +25,7 @@ const Profile = () => {
       setConfirmPassword('');
       setError('');
     } catch (err) {
-      setError(err.response?.data?.message || 'שגיאה בעדכון הסיסמה');
+      setError(err.response?.data?.message || "Error to change the password");
     }
   };
 
@@ -62,26 +62,26 @@ const Profile = () => {
                 type="password"
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
-                placeholder="סיסמה נוכחית"
+                placeholder="Current Password"
                 required
               />
               <input
                 type="password"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
-                placeholder="סיסמה חדשה"
+                placeholder="New password"
                 required
               />
               <input
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="אימות סיסמה חדשה"
+                placeholder="New password Confirmation"
                 required
               />
               {error && <div className={style.error}>{error}</div>}
               <div className={style.buttonGroup}>
-                <button type="submit">שמור</button>
+                <button type="submit">Save</button>
                 <button 
                   type="button" 
                   onClick={() => {
@@ -92,7 +92,7 @@ const Profile = () => {
                     setConfirmPassword('');
                   }}
                 >
-                  ביטול
+                  Cancel
                 </button>
               </div>
             </form>

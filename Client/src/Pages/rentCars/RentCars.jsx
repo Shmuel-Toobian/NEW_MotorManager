@@ -42,25 +42,25 @@ const RentCars = () => {
   const addons = [
     {
       id: 'additional_driver',
-      title: 'נהג נוסף',
+      title: "Additional Driver",
       image: 'https://rent.eldan.co.il/media/1239/additional-driver_AdditionIconReservationProcess.jpg',
       pricePerDay: 40
     },
     {
       id: 'baby_seat',
-      title: 'כסא תינוק',
+      title: "Child Seat",
       image: 'https://rent.eldan.co.il/media/1237/baby-seat-small_AdditionIconReservationProcess.jpg',
       pricePerDay: 30
     },
     {
       id: 'insurance_waiver',
-      title: 'ביטול השתתפות',
+      title: "Cancel Participation",
       image: 'https://rent.eldan.co.il/media/1241/excess-waiver_AdditionIconReservationProcess.jpg',
       pricePerDay: 50
     },
     {
       id: 'young_driver',
-      title: 'נהג צעיר 18-21',
+      title: "Young Driver",
       image: 'https://rent.eldan.co.il/media/1239/additional-driver_AdditionIconReservationProcess.jpg',
       pricePerDay: 60
     }
@@ -170,12 +170,12 @@ const RentCars = () => {
     today.setHours(0, 0, 0, 0);
 
     if (start < today) {
-      alert('לא ניתן להזמין רכב בתאריך שעבר');
+      alert("Cannot book a car for a past date");
       return false;
     }
 
     if (end <= start) {
-      alert('תאריך הסיום חייב להיות אחרי תאריך ההתחלה');
+      alert("The end date must be after the start date");
       return false;
     }
 
@@ -183,7 +183,7 @@ const RentCars = () => {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
     if (diffDays < 1) {
-      alert('לא ניתן להזמין רכב לפחות מיום שלם');
+      alert("Cannot book a car for less than a full day");
       return false;
     }
 
@@ -273,7 +273,7 @@ const RentCars = () => {
     
     const carIndex = cars.findIndex(c => c.model === car.model);
     if (isCarRentedForDates(carIndex, filters.startDate, filters.endDate)) {
-      alert('הרכב כבר מושכר בתאריכים אלו');
+      alert("The vehicle is already rented for these dates");
       return;
     }
     
@@ -288,7 +288,7 @@ const RentCars = () => {
       startDate: filters.startDate,
       endDate: filters.endDate
     }]);
-    alert('ההזמנה בוצעה בהצלחה!');
+    alert("The order was successfully completed!");
     setShowBookingModal(false);
   };
 
@@ -393,23 +393,23 @@ const RentCars = () => {
     let isValid = true;
 
     if (!formData.firstName.trim()) {
-      newErrors.firstName = 'נא למלא שם פרטי';
+      newErrors.firstName = "Please enter a first name";
       isValid = false;
     }
     if (!formData.lastName.trim()) {
-      newErrors.lastName = 'נא למלא שם משפחה';
+      newErrors.lastName = "Please enter a first last name";
       isValid = false;
     }
     if (!formData.email.trim()) {
-      newErrors.email = 'נא למלא כתובת אימייל';
+      newErrors.email = "Please enter a email";
       isValid = false;
     }
     if (!formData.phone.trim()) {
-      newErrors.phone = 'נא למלא מספר טלפון';
+      newErrors.phone = "Please enter a phone number";
       isValid = false;
     }
     if (!formData.address.trim()) {
-      newErrors.address = 'נא למלא כתובת';
+      newErrors.address = "Please enter a address";
       isValid = false;
     }
 
@@ -433,7 +433,7 @@ const RentCars = () => {
       return;
     }
     if (!selectedCar) {
-      alert('אנא בחר רכב תחילה');
+      alert("Please select car first");
       return;
     }
     // חישוב הסכום הסופי
@@ -471,7 +471,7 @@ const RentCars = () => {
       }
     } catch (error) {
       console.error('Payment Error:', error);
-      alert('שגיאה בתהליך ההזמנה: ' + (error.response?.data?.message || error.message));
+      alert('Order error: ' + (error.response?.data?.message || error.message));
     }
   };
 
@@ -715,11 +715,11 @@ const RentCars = () => {
                   <span>₪{(selectedCar.price / 100).toLocaleString()}</span>
                 </p>
                 <p>
-                  <span>תוספות:</span>
+                  <span>Extra</span>
                   <span>₪{calculateAddonsTotal().toLocaleString()}</span>
                 </p>
                 <div className={styles.totalPrice}>
-                  <span>סה"כ לתשלום:</span>
+                  <span>Total price</span>
                   <span>₪{(calculateTotalPrice(selectedCar.price) + calculateAddonsTotal()).toLocaleString()}</span>
                 </div>
               </div>
@@ -732,7 +732,7 @@ const RentCars = () => {
                     handlePayment();
                   }}
                 >
-                  לתשלום
+                  To payment
                 </button>
                 <button 
                   className={styles.backButton}
@@ -836,7 +836,7 @@ const RentCars = () => {
                     <img src={addon.image} alt={addon.title} className={styles.addonImage} />
                     <h3>{addon.title}</h3>
                     <div className={styles.addonPricing}>
-                      <p className={styles.dailyPrice}>₪{addon.pricePerDay} ליום</p>
+                      <p className={styles.dailyPrice}>₪{addon.pricePerDay} Per day</p>
                       <p className={styles.totalDaysPrice}>
                         Total for {calculateTotalDays()} days: ₪{addon.pricePerDay * calculateTotalDays()}
                       </p>
@@ -845,7 +845,7 @@ const RentCars = () => {
                       className={`${styles.addButton} ${selectedAddons[addon.id] ? styles.selected : ''}`}
                       onClick={() => toggleAddon(addon.id)}
                     >
-                      {selectedAddons[addon.id] ? 'הסר תוספת' : 'הוסף תוספת'}
+                      {selectedAddons[addon.id] ? "Remove extra" : "Add extra"}
                     </button>
                   </div>
                 ))}

@@ -192,8 +192,8 @@ const checkCarLocationStatus = async (carNumber) => {
                         }`}
                       >
                         {carLocationStatus
-                          ? "הרכב נמצא במקום ✓"
-                          : "הרכב מחכה למיקום ✗"}
+                            ? "The vehicle is in place ✓"
+                            : "The vehicle is awaiting location ✗"}
                       </div>
                     </div>
 

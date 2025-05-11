@@ -17,7 +17,7 @@ import { AdminPanel } from "./Pages/admin/adminPanel";
 import Renters from "./Pages/admin/renters/Renters";
 import Profile from "./Pages/profile/Profile";
 import CarWash from "./Pages/employees/CarWash";
-import CarLocation from "./Pages/employees/CarLocation";
+import CarLocation from "./Pages/employees/carLocation";
 import ReturnCar from "./components/returnCar/ReturnCar";
 import FixCar from "./Pages/employees/FixCar";
 

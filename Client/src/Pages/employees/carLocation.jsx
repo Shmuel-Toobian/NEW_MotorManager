@@ -272,7 +272,7 @@ const CarLocation = () => {
 
       <div>
         <div className={styles.section}>
-          <h1 className={styles.title}>רכבים להחזרה</h1>
+          <h1 className={styles.title}>Vehicles to Return</h1>
           <div className={styles.cardsGrid}>
             {notReturnedUsers.map((user) => {
               // חפש את הרכב של המשתמש
@@ -293,17 +293,17 @@ const CarLocation = () => {
                         {user.firstName} {user.lastName}
                       </h3>
                       <p className={styles.carNumber}>
-                        מספר רכב: {user.rentalDetails?.carNumber || "לא צוין"}
+                        Car number: {user.rentalDetails?.carNumber || "“Not specified"}
                       </p>
                     </div>
                     <div className={styles.basicInfo}>
                       <div className={styles.infoItem}>
                         <span className={styles.icon}>📞</span>
-                        טלפון: {user.phone || "לא צוין"}
+                        Phone number: {user.phone || "“Not specified"}
                       </div>
                       <div className={styles.infoItem}>
                         <span className={styles.icon}>📍</span>
-                        כתובת: {user.address || "לא צוין"}
+                        address: {user.address || "“Not specified"}
                       </div>
 
                       <button
@@ -314,7 +314,7 @@ const CarLocation = () => {
                           )
                         }
                       >
-                        הרכב חזר לחברה
+                        The vehicle return to the Company 
                       </button>
 
                       <button onClick={()=> fixcar(user.rentalDetails?.carNumber)}>fix</button>

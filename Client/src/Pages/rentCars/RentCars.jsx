@@ -1,11 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, createContext, useContext } from 'react';
 import styles from './rentCars.module.css';
 import axios from 'axios';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import Payment from '../payment/Payment';
+import { useAppContext } from '../../components/global';
 
 const RentCars = () => {
 
+  const { setSharedValue } = useAppContext();
   const navigate = useNavigate();
   const [cars, setCars] = useState([]);
   const [filters, setFilters] = useState({
@@ -438,6 +440,7 @@ const RentCars = () => {
     }
     // חישוב הסכום הסופי
     const finalPrice = calculateTotalPrice(selectedCar.price) + calculateAddonsTotal();
+    setSharedValue(finalPrice)
     
     // מספר הרכב מהרכב שנבחר
     const carNumber = selectedCar.carNumber;

@@ -179,8 +179,8 @@ const checkCarLocationStatus = async (carNumber) => {
                         }`}
                       >
                         {carWashStatus
-                          ? "הרכב נקי ✓"
-                          : "הרכב מחכה לשטיפה ✗"}
+                          ? "The vehicle is wash ✓"
+                          : "The vehicle is waiting for washing ✗"}
                       </div>
 
                       <label>{user.rentalDetails.carNumber}Location status</label>
@@ -225,7 +225,7 @@ const checkCarLocationStatus = async (carNumber) => {
           disabled={currentPage === totalPages}
           className={styles.pageButton}
         >
-          הבא
+          Next
         </button>
 
         {[...Array(totalPages)].reverse().map((_, index) => {

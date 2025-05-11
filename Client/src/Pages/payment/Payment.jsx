@@ -1,12 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import styles from './payment.module.css';
 import { useLocation } from 'react-router-dom';
+import { useAppContext } from '../../components/global';
 
 const Payment = () => {
+  const { sharedValue } = useAppContext();
   const paypal = useRef();
-  const location = useLocation();
-  const finalPrice = location.state?.totalPrice || 1;
-  console.log("Final Price:", finalPrice);
+  const totalPrice = sharedValue; // השתמש ב-totalPrice במקום finalPrice
+  console.log("Final Price:", totalPrice);
 
   useEffect(() => {
     window.paypal.Buttons({
@@ -18,11 +19,13 @@ const Payment = () => {
               description: "Car Rental Payment",
               amount: {
                 currency_code: "ILS",
-                value: finalPrice.toString(),
+                value: totalPrice, // השתמש ב-totalPrice כאן
               },
             },
           ],
+
         });
+        
       },
       onApprove: async (data, actions) => {
         const order = await actions.order.capture();
@@ -32,7 +35,7 @@ const Payment = () => {
         console.log(err);
       },
     }).render(paypal.current);
-  }, [finalPrice]);
+  }, [totalPrice]); // הוסף את totalPrice כתלות ב-useEffect
 
   return (
     <div className={styles.wrapper}>

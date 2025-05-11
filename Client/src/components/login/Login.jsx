@@ -57,7 +57,6 @@ const Login = () => {
           required
           className={style.loginInput}
         />
-        <small className={style.passwordHint}>Default password: 1234</small>
       </div>
       <button type="submit" className={style.loginButton}>
         Login

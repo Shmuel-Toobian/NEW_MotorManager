@@ -42,7 +42,7 @@ const ReturnCar = () => {
         {!isReadyToReturn && <div> <h1 className={styles.title}>Vehicle Return</h1>
       <p className={styles.description}>Hello {user.firstName + " " + user.lastName},</p>
       <p className={styles.description}>
-        נהנית בשימוש ברכב {user.rentalDetails.carModel},  Car number: {user.rentalDetails.carNumber}.
+      Did you enjoy using the vehicle? {user.rentalDetails.carModel},  Car number: {user.rentalDetails.carNumber}.
       </p>
       <p className={styles.description}>Is the vehicle ready for return?</p>
       <button

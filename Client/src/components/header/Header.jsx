@@ -48,7 +48,7 @@ const Header = () => {
               className={style.profileImage}
               onClick={() => setShowDropdown(!showDropdown)}
             />
-            {showDropdown && (
+            {showDropdown &&  (
               <div className={style.dropdown}>
                 <div className={style.dropdownItem} onClick={() => {
                   navigate("/profile");
@@ -56,13 +56,6 @@ const Header = () => {
                 }}>
                   Profile
                 </div>
-                <div className={style.dropdownItem} onClick={() => {
-                  deleteCookie();
-                  setShowDropdown(false);
-                }}>
-                  Logout
-                </div>
-                
               </div>
             )}
           </div>

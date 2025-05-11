@@ -141,7 +141,7 @@ const checkCarLocationStatus = async (carNumber) => {
                     </div> */}
                     <div className={styles.infoItem}>
                       <span className={styles.icon}>🚗</span>
-                      מספר רכב: {user.rentalDetails.carNumber}
+                     Car number {user.rentalDetails.carNumber}
                     </div>
                     <div className={styles.infoItem}>
                       <span className={styles.icon}>📅</span>

@@ -160,7 +160,7 @@ const RentCars = () => {
 
   const validateDates = (startDate, endDate) => {
     if (!startDate || !endDate) {
-      alert('נא לבחור תאריכי השכרה');
+      alert("Please enter rental Dates");
       return false;
     }
 
@@ -616,7 +616,7 @@ const RentCars = () => {
                 <p>Color: {car.color}</p>
                 <p>Price per day: ₪{(car.price / 100).toLocaleString()}</p>
 
-                <p className={styles.carNumber}>מספר רכב: {car.carNumber}</p>
+                <p className={styles.carNumber}>Car number: {car.carNumber}</p>
                 {calculateTotalDays() > 0 && (
                   <p className={styles.totalPrice}>
                     Total for {calculateTotalDays()} days: ₪{calculateTotalPrice(car.price).toLocaleString()}

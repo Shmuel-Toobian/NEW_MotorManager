@@ -163,14 +163,14 @@ const checkCarLocationStatus = async (carNumber) => {
                     </div>
                     <div className={styles.infoItem}>
                       <span className={styles.icon}>💰</span>
-                      מחיר כולל: ₪{user.rentalDetails.totalPrice}
+                      Total price: ${user.rentalDetails.totalPrice}
                     </div>
 
 
 
 
                     <div className={styles.formGroup}>
-                      <label>{user.rentalDetails.carNumber}:סטטוס ניקיון</label>
+                      <label>{user.rentalDetails.carNumber}Cleaning status</label>
                       <div
                         className={`${styles.washStatus} ${
                           carWashStatus
@@ -183,7 +183,7 @@ const checkCarLocationStatus = async (carNumber) => {
                           : "הרכב מחכה לשטיפה ✗"}
                       </div>
 
-                      <label>{user.rentalDetails.carNumber}:סטטוס מיקום</label>
+                      <label>{user.rentalDetails.carNumber}Location status</label>
                       <div
                         className={`${styles.washStatus} ${
                           carLocationStatus
@@ -213,7 +213,7 @@ const checkCarLocationStatus = async (carNumber) => {
                 toggleCard(user._id,user.rentalDetails.carNumber);
               }}
             >
-              {expandedCard === user._id ? "הצג פחות" : "הצג עוד"}
+              {expandedCard === user._id ? "Less" : "More"}
             </button>
           </div>
         ))}
@@ -248,7 +248,7 @@ const checkCarLocationStatus = async (carNumber) => {
           disabled={currentPage === 1}
           className={styles.pageButton}
         >
-          הקודם
+          Previous
         </button>
       </div>
     </div>

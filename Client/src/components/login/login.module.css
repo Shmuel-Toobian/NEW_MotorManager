@@ -26,7 +26,7 @@
 }
 
 .loginInput {
-  width: 100%;
+  width: 200px;
   padding: 14px; /* ריווח פנימי גדול יותר */
   margin-bottom: 20px; /* מרווח בין האלמנטים */
   border: 1px solid #ccc;

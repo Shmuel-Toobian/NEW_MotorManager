@@ -113,28 +113,28 @@ const checkCarLocationStatus = async (carNumber) => {
               <div className={styles.expandedInfo}>
                 <div className={styles.infoItem}>
                   <span className={styles.icon}>👤</span>
-                  שם מלא: {user.firstName} {user.lastName}
+                 Full name: {user.firstName} {user.lastName}
                 </div>
                 <div className={styles.infoItem}>
                   <span className={styles.icon}>👑</span>
-                  סוג משתמש: {user.role}
+                 Adress {user.role}
                 </div>
                 {user.city && (
                   <div className={styles.infoItem}>
                     <span className={styles.icon}>🏠</span>
-                    עיר: {user.city}
+                    city {user.city}
                   </div>
                 )}
                 {user.address && (
                   <div className={styles.infoItem}>
                     <span className={styles.icon}>📍</span>
-                    רחוב: {user.address}
+                   address {user.address}
                   </div>
                 )}
 
                 {user.rentalDetails && (
                   <div className={styles.rentalInfo}>
-                    <h4>פרטי השכרה:</h4>
+                    <h4>Rentel details</h4>
                     {/* <div className={styles.infoItem}>
                       <span className={styles.icon}>🚗</span>
                       דגם: {user.rentalDetails.model}
@@ -145,21 +145,21 @@ const checkCarLocationStatus = async (carNumber) => {
                     </div>
                     <div className={styles.infoItem}>
                       <span className={styles.icon}>📅</span>
-                      תאריך התחלה:{" "}
+                     Start date:{" "}
                       {new Date(
                         user.rentalDetails.startDate
                       ).toLocaleDateString()}
                     </div>
                     <div className={styles.infoItem}>
                       <span className={styles.icon}>📅</span>
-                      תאריך סיום:{" "}
+                      End date:{" "}
                       {new Date(
                         user.rentalDetails.endDate
                       ).toLocaleDateString()}
                     </div>
                     <div className={styles.infoItem}>
                       <span className={styles.icon}>⏱</span>
-                      מספר ימים: {user.rentalDetails.totalDays}
+                      Number of days: {user.rentalDetails.totalDays}
                     </div>
                     <div className={styles.infoItem}>
                       <span className={styles.icon}>💰</span>

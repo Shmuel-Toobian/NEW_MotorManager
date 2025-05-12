@@ -1,21 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "./header.module.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../store/authProvider";
 
 const Header = () => {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
   console.log("Current user:", user);
 
   const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(false);
+
 
   const deleteCookie = async () => {
     try {
       // הוסף את withCredentials: true כדי לשלוח את ה-cookie
       const response = await axios.post('http://localhost:3000/user/logout', {}, { withCredentials: true });
       console.log(response.data);  // הצגת התגובה שהתקבלה מהשרת
+      setUser(null);
+      navigate("/")
     } catch (error) {
       console.log('Error logging out:', error);
     }
@@ -55,6 +58,12 @@ const Header = () => {
                   setShowDropdown(false);
                 }}>
                   Profile
+                </div>
+                <div className={style.dropdownItem} onClick={() => {
+                 deleteCookie()
+                  
+                }}>
+                  Logout
                 </div>
               </div>
             )}

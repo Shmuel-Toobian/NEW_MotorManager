@@ -6,7 +6,7 @@ const Footer = () => {
     <footer className={style.footer}>
       <div className={style.footerContent}>
         <div className={style.companyInfo}>
-          <h1 className={style.title}>Whellway</h1>
+          <h1 className={style.title}>WheelWay</h1>
           <p className={style.rights}>© All rights reserved - Eliran and Shmuel</p>
         </div>
 

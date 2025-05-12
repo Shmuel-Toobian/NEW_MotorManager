@@ -44,6 +44,12 @@ export const AdminPanel = () => {
                         Car Location
                     </button>
                 </div>
+                <div className={styles.section}>
+                    <h2 className={styles.sectionTitle}>Car fixer Management</h2>
+                    <button className={styles.button} onClick={() => navigate('/fixcar')}>
+                        Car fixer
+                    </button>
+                </div>
             </div>
         </div>
     );

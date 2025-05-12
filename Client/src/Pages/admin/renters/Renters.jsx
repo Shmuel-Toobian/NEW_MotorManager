@@ -117,7 +117,7 @@ const checkCarLocationStatus = async (carNumber) => {
                 </div>
                 <div className={styles.infoItem}>
                   <span className={styles.icon}>👑</span>
-                 Adress {user.role}
+                 Adress {user.address}
                 </div>
                 {user.city && (
                   <div className={styles.infoItem}>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./carLocation.module.css";
+import { Navigate } from "react-router-dom";
 
 const CarLocation = () => {
   const [users, setUsers] = useState([]);
@@ -74,7 +75,7 @@ const CarLocation = () => {
       const car = carResponse.data;
 
       if (!car.isWashed) {
-        alert("לא ניתן לעדכן מיקום - הרכב עדיין לא שטוף!");
+        alert("The car need to be wash");
         return;
       }
 
@@ -111,8 +112,7 @@ const CarLocation = () => {
 
       alert("הרכב הוחזר בהצלחה והמשתמש נמחק");
     } catch (error) {
-      console.error("Error handling car return or user deletion:", error);
-      alert("אירעה שגיאה בהחזרת הרכב או מחיקת המשתמש");
+      
     }
   };
 
@@ -175,7 +175,6 @@ const CarLocation = () => {
   };
 
   if (loading) return <div className={styles.container}>טוען...</div>;
-  if (error) return <div className={styles.container}>שגיאה: {error}</div>;
   if (!users.length)
     return <div className={styles.container}>אין שוכרים להצגה</div>;
 
